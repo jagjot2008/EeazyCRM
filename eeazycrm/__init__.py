@@ -34,6 +34,7 @@ def create_app(config_class=Config):
     from eeazycrm.main.routes import main
     from eeazycrm.users.routes import users
     from eeazycrm.leads.routes import leads
+    from eeazycrm.accounts.routes import accounts
     from eeazycrm.settings.routes import settings
 
     # register routes with blueprint
@@ -41,6 +42,7 @@ def create_app(config_class=Config):
     app.register_blueprint(users)
     app.register_blueprint(settings)
     app.register_blueprint(leads)
+    app.register_blueprint(accounts)
 
     return app
 

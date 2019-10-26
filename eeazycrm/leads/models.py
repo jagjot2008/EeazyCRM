@@ -23,7 +23,7 @@ class Lead(db.Model):
     post_code = db.Column(db.String(20))
     country = db.Column(db.String(20))
     company_name = db.Column(db.String(40))
-    notes = db.Column(db.String(100))
+    notes = db.Column(db.String(200))
     lead_source_id = db.Column(db.Integer, db.ForeignKey('lead_source.id', ondelete='SET NULL'), nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'), nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
