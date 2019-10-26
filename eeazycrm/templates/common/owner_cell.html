@@ -1,0 +1,13 @@
+{% if owner %}
+    {% if owner.avatar %}
+        <img class="rounded-circle account-img"
+         src="{{ url_for('static', filename='profile_imgs/' + owner.avatar) }}"
+         width="28" height="28" />
+    {% else %}
+        <img class="rounded-circle account-img"
+         src="{{ url_for('static', filename='imgs/default_avatar.png') }}"
+         width="28" height="28" />
+    {% endif %}
+
+    {{ owner.first_name + ' ' + owner.last_name }}
+{% endif %}

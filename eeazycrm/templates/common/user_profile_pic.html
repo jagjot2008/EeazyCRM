@@ -1,0 +1,11 @@
+{% if user %}
+    {% if user.avatar %}
+        <img class="rounded-circle account-img"
+         src="{{ url_for('static', filename='profile_imgs/' + user.avatar) }}"
+         width="128" height="128" />
+    {% else %}
+        <img class="rounded-circle account-img"
+         src="{{ url_for('static', filename='imgs/default_avatar.png') }}"
+         width="128" height="128" />
+    {% endif %}
+{% endif %}

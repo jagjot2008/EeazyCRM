@@ -1,0 +1,90 @@
+{% extends './layout.html' %}
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('settings.settings_roles_new') }}">
+                <span data-feather="plus"></span>
+                      Add New Role
+            </a>
+        </div>
+    </div>
+    {% if roles.items|length > 0 %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th></th>
+                <th scope="col">Role Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for role in roles.items %}
+                <tr>
+                    <td scope="row">{{ role.id }}</td>
+                    <td>
+                        <a href="{{ url_for('settings.settings_roles_update', role_id=role.id) }}"
+                           class="btn btn-outline-secondary btn-sm mr-3" role="button">
+                            <span data-feather="edit"></span>
+                        </a>
+                        <a href="#" data-target="#deleteNotificationModal_{{ role.id }}"
+                           class="btn btn-outline-secondary btn-sm mr-3" data-toggle="modal" role="button">
+                            <span data-feather="trash"></span>
+                        </a>
+                        <a href="#"
+                           class="btn btn-outline-secondary btn-sm mr-3" role="button">
+                            <span data-feather="arrow-up-right"></span>
+                        </a>
+
+                        <!-- Delete Warning Modal -->
+                            <div class="modal fade" id="deleteNotificationModal_{{ role.id }}"
+                                 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_{{ role.id }}" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel_{{ role.id }}">Delete Role `{{ role.name }}`?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body text-center">
+                                      <div>
+                                          <strong>Are you sure you want delete this role?</strong>
+                                      </div>
+                                      <div>Please note that once deleted the role entry will be permanently deleted</div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" id="del_{{ role.id }}" class="btn btn-outline-primary">Delete Role</button>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#del_{{ role.id }}").on("click", function(e) {
+                                                window.location="{{ url_for('settings.settings_roles_remove', role_id=role.id) }}"
+                                            });
+                                        });
+                                    </script>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </td>
+                    <td scope="row">{{ role.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <!-- pagination -->
+        {% if roles.total > 10 %}
+            {% with view_id="settings.settings_roles_view", items=roles %}
+                {% include "common/pagination.html" %}
+            {% endwith %}
+        {% endif %}
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>You have not added any role as yet ...</p>
+        </div>
+    {% endif %}
+{% endblock %}

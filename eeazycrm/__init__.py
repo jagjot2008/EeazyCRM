@@ -1,0 +1,47 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
+
+from .config import Config
+
+# database handle
+db = SQLAlchemy(session_options={"autoflush": False})
+
+# encryptor handle
+bcrypt = Bcrypt()
+
+# manage user login
+login_manager = LoginManager()
+
+# function name of the login route that
+# tells the path which facilitates authentication
+login_manager.login_view = 'users.login'
+
+
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    app.url_map.strict_slashes = False
+    app.jinja_env.globals.update(zip=zip)
+
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+
+    # include the routes
+    # from eeazycrm import routes
+    from eeazycrm.main.routes import main
+    from eeazycrm.users.routes import users
+    from eeazycrm.leads.routes import leads
+    from eeazycrm.settings.routes import settings
+
+    # register routes with blueprint
+    app.register_blueprint(main)
+    app.register_blueprint(users)
+    app.register_blueprint(settings)
+    app.register_blueprint(leads)
+
+    return app
+
+

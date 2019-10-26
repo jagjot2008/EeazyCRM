@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ url_for('leads.get_leads_view') }}" class="btn btn-md btn-outline-primary mr-2" role="button">
+                <span data-feather="arrow-left"></span>
+                  Convert
+            </a>
+            <a href="{{ url_for('leads.get_leads_view') }}" class="btn btn-md btn-outline-secondary" role="button">
+                <span data-feather="arrow-left"></span>
+                  Back to List
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item g_field">
+                  <div class="label">Title</div>
+                  <div class="text">{{ lead.title if lead.title else '_' }}</div>
+              </li>
+              <li class="list-group-item g_field">
+                  <div class="label">Name</div>
+                  <div class="text">{{ lead.first_name if lead.first_name else '_' }} {{ lead.last_name if lead.last_name else '_' }}</div>
+              </li>
+                <li class="list-group-item g_field">
+                  <div class="label">Email</div>
+                  <div class="text">{{ lead.email if lead.email else '_' }}</div>
+              </li>
+                <li class="list-group-item g_field">
+                  <div class="label">Company</div>
+                  <div class="text">{{ lead.company_name if lead.company_name else '_' }}</div>
+              </li>
+                <li class="list-group-item g_field">
+                  <div class="label">Lead Source</div>
+                  <div class="text">{{ lead.source if lead.company_name else '_' }}</div>
+              </li>
+            </ul>
+        </div>
+        <div class="col-5">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item g_field col-12">
+                  <div class="label">Address</div>
+                  <div class="text">{{ lead.address_line if lead.address_line else '_' }}</div>
+              </li>
+              <li class="list-group-item g_field col-12">
+                  <div class="row">
+                      <div class="col-6">
+                          <div class="label">State</div>
+                          <div class="text">{{ lead.addr_state if lead.addr_state else '_' }}</div>
+                      </div>
+                      <div class="col-6">
+                          <div class="label">City</div>
+                          <div class="text">{{ lead.addr_city if lead.addr_city else '_' }}</div>
+                      </div>
+                  </div>
+              </li>
+                <li class="list-group-item g_field col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="label">Postcode</div>
+                            <div class="text">{{ lead.post_code if lead.post_code else '_' }}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Country</div>
+                            <div class="text">{{ lead.country if lead.country else '_' }}</div>
+                        </div>
+                    </div>
+              </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <div></div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item g_field col-12">
+                    <div class="label">Notes</div>
+                    <div class="text">{{ lead.notes if lead.notes else '_' }}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endblock %}

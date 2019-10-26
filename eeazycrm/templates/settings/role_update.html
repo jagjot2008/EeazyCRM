@@ -1,0 +1,81 @@
+{% extends './layout.html' %}
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-secondary" role="button" href="{{ url_for('settings.settings_roles_view') }}">
+                <span data-feather="arrow-left"></span>
+                      Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- start: USER UPDATE FORM -->
+    <div class="content-section col-12">
+        <form class="form-signin" method="POST">
+            {{ form.hidden_tag() }} <!-- security 'csrf' token -->
+            <div class="row">
+                <!-- FORM -->
+                <div class="col-6">
+                    <div class="form-group text-left">
+                        {{ form.name.label(class="form-control-label") }}
+                        {% if form.name.errors %}
+                            {{ form.name(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback text-left">
+                                {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.name(class="form-control from-control-lg", placeholder="role name ...") }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- PERMISSIONS -->
+            <div class="row">
+                <div class="col-6">
+                    <h4>User Permissions</h4>
+                        <div class="form-group text-left">
+                            <ul class="list-group">
+                                {% for permission in form.permissions %}
+                                <li class="list-group-item">
+                                    {{ permission.form.hidden_tag() }}
+                                    <div>{{ permission.form.name(class="label-simple heading") }}</div>
+                                    <div class="form-check form-check-inline">
+                                      {{ permission.form.can_view(class="form-check-input") }}
+                                      {{ permission.form.can_view.label(class="form-check-label") }}
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      {{ permission.form.can_create(class="form-check-input") }}
+                                      {{ permission.form.can_create.label(class="form-check-label") }}
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      {{ permission.form.can_edit(class="form-check-input") }}
+                                      {{ permission.form.can_edit.label(class="form-check-label") }}
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      {{ permission.form.can_delete(class="form-check-input") }}
+                                      {{ permission.form.can_delete.label(class="form-check-label") }}
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2">
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-lg btn-outline-info") }}
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

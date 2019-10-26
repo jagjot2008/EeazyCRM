@@ -1,0 +1,92 @@
+{% extends './layout.html' %}
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('settings.settings_staff_new') }}">
+                <span data-feather="plus"></span>
+                      Add New User
+            </a>
+        </div>
+    </div>
+    {% if users.items|length > 0 %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th></th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Is Active</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users.items %}
+                <tr>
+                    <td scope="row">{{ user.id }}</td>
+                    <td>
+                        <a href="{{ url_for('settings.settings_staff_update', user_id=user.id) }}"
+                           class="btn btn-outline-secondary btn-sm mr-3" role="button">
+                            <span data-feather="edit"></span>
+                        </a>
+                        <a href="#" data-target="#deleteNotificationModal_{{ user.id }}"
+                           class="btn btn-outline-secondary btn-sm mr-3" data-toggle="modal" role="button">
+                            <span data-feather="trash"></span>
+                        </a>
+                        <a href="{{ url_for('settings.settings_staff_view', user_id=user.id) }}"
+                           class="btn btn-outline-secondary btn-sm mr-3" role="button">
+                            <span data-feather="arrow-up-right"></span>
+                        </a>
+
+                        <!-- Delete Warning Modal -->
+                            <div class="modal fade" id="deleteNotificationModal_{{ user.id }}"
+                                 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_{{ user.id }}" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel_{{ user.id }}">Delete User?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body text-center">
+                                      <div class="user_profile_pic">
+                                          {% include "common/user_profile_pic.html" %}
+                                          <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                                      </div>
+                                      <div>
+                                          <strong>Are you sure you want delete this user?</strong>
+                                      </div>
+                                      <div>Please note that once deleted the user cannot be recovered</div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-outline-primary">Delete User</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                    </td>
+                    <td>{% with owner=user %}{% include 'common/owner_cell.html' %}{% endwith %}</td>
+                    <td><span data-feather="mail" class="mr-1"></span> {{ user.email }}</td>
+                    <td>{{ 'Yes' if user.is_user_active==True else 'No' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <!-- pagination -->
+        {% if users.total > 10 %}
+            {% with view_id="settings.settings_staff_list", items=users %}
+                {% include "common/pagination.html" %}
+            {% endwith %}
+        {% endif %}
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>You have not added any staff member as yet ...</p>
+        </div>
+    {% endif %}
+{% endblock %}

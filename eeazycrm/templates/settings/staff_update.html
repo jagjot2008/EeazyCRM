@@ -1,0 +1,117 @@
+{% extends './layout.html' %}
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-secondary" role="button" href="{{ url_for('settings.settings_staff_list') }}">
+                <span data-feather="arrow-left"></span>
+                      Back to List
+            </a>
+        </div>
+    </div>
+
+        <div class="content-section mb-4">
+            <div class="media">
+                {% if form.picture.data %}
+                    <img class="rounded-circle account-img" width="128" height="128" src="{{ url_for('static', filename='profile_imgs/' + form.picture.data) }}"/>
+                {% else %}
+                    <img class="rounded-circle account-img" width="128" height="128" src="{{ url_for('static', filename='imgs/default_avatar.png') }}"/>
+                {% endif %}
+                <div class="media-body ml-3 mt-3">
+                    <h2 class="account-heading">{{ form.first_name.data + ' ' + form.last_name.data }}</h2>
+                    <p class="text-secondary"><span data-feather="mail"></span> {{ form.email.data }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- start: USER UPDATE FORM -->
+        <div class="content-section col-12">
+            <form class="form-signin" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }} <!-- security 'csrf' token -->
+
+                <div class="row">
+                    <!-- FORM -->
+                    <div class="col-6">
+                        <div class="form-group text-left">
+                            {{ form.first_name.label(class="form-control-label") }}
+                            {% if form.first_name.errors %}
+                            {{ form.first_name(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback text-left">
+                                {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.first_name(class="form-control from-control-lg", placeholder="first name ...") }}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group text-left">
+                            {{ form.last_name.label(class="form-control-label") }}
+                            {% if form.last_name.errors %}
+                            {{ form.last_name(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback text-left">
+                                {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.last_name(class="form-control from-control-lg", placeholder="last name ...") }}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group text-left">
+                            {{ form.email.label(class="form-control-label") }}
+                            {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.email(class="form-control from-control-lg", placeholder="Your Email Address ...") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group text-left">
+                            {{ form.picture.label() }}
+                            {{ form.picture(class="form-control-file") }}
+                            {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span><br/>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="form-group text-left">
+                            {{ form.role.label(class="form-control-label") }}
+                            {{ form.role(class="form-control from-control-lg") }}
+                            <div class="alert alert-warning mt-2" role="alert">
+                                <strong>CAUTION</strong>: Setting users as <em>admin</em> will give them full access to all the resources within the system.
+                            </div>
+                        </div>
+                        <div class="form-group text-left">
+                            <div class="form-check">
+                              {{form.is_user_active(class="form-check-input")}}
+                              {{form.is_user_active.label(class="form-check-label")}}
+                            </div>
+                        </div>
+                        <div class="form-group text-left">
+                            <div class="form-check">
+                              {{form.is_first_login(class="form-check-input")}}
+                              {{form.is_first_login.label(class="form-check-label")}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-lg btn-outline-info") }}
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    {% endblock %}

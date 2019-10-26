@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+    {% block content %}
+<form class="form-new-lead" method="POST">
+    {{ form.hidden_tag() }} <!-- security 'csrf' token -->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            {{ form.submit(class="btn btn-md btn-outline-info mr-2") }}
+            <input type="reset" class="btn btn-md btn-outline-secondary mr-2" />
+            <a href="{{ url_for('leads.get_leads_view') }}" class="btn btn-md btn-outline-secondary" role="button">
+                <span data-feather="arrow-left"></span>
+                  Back to List
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            <div class="form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {{ form.title(class="form-control from-control-lg", placeholder="what is the lead about? ...") }}
+            </div>
+
+            <div class="form-row mb-3">
+                <div class="col">
+                    {{ form.first_name.label(class="form-control-label") }}
+                    {{ form.first_name(class="form-control from-control-lg", placeholder="first name ...") }}
+                </div>
+                <div class="col">
+                    {{ form.last_name.label(class="form-control-label") }}
+                   {{ form.last_name(class="form-control from-control-lg", placeholder="last name ...") }}
+                </div>
+            </div>
+
+            <div class="form-row mb-3">
+                <div class="col">
+                    {{ form.email.label(class="form-control-label") }}
+                  {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg required is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.email(class="form-control required from-control-lg", placeholder="email address ...") }}
+                  {% endif %}
+                </div>
+                <div class="col">
+                    {{ form.company.label(class="form-control-label") }}
+                  {% if form.company.errors %}
+                    {{ form.company(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.company.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.company(class="form-control from-control-lg", placeholder="company name ...") }}
+                  {% endif %}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-9">
+                    {{ form.address_line.label(class="form-control-label") }}
+                    {{ form.address_line(class="form-control from-control-lg", placeholder="address line ...") }}
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col-3">
+                        {{ form.addr_state(class="form-control from-control-lg", placeholder="state ...") }}
+                    </div>
+                    <div class="col-3">
+                        {{ form.addr_city(class="form-control from-control-lg", placeholder="city ...") }}
+                    </div>
+                    <div class="col-3">
+                        {{ form.post_code(class="form-control from-control-lg", placeholder="postcode ...") }}
+                    </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    {{ form.country(class="form-control from-control-lg", placeholder="country ...") }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                 <div class="form-group col-6">
+                    {{ form.lead_source.label(class="form-control-label") }}
+                    {{ form.lead_source(class="form-control from-control-lg") }}
+                 </div>
+            </div>
+
+            {% if current_user.role.name == 'admin' %}
+            <div class="form-row">
+                 <div class="form-group col-6">
+                     {{ form.assignees.label(class="form-control-label") }}
+                    {{ form.assignees(class="form-control from-control-lg") }}
+                 </div>
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                {{ form.notes.label(class="form-control-label") }}
+                {{ form.notes(class="form-control from-control-lg") }}
+            </div>
+
+    </div>
+    </div>
+</form>
+    {% endblock %}
