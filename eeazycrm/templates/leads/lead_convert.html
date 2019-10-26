@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ url_for('leads.get_lead_view', lead_id=lead.id) }}" class="btn btn-md btn-outline-secondary" role="button">
+                <span data-feather="arrow-left"></span>
+                  Back to View
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            Lead Convert Form
+        </div>
+    </div>
+    {% endblock %}

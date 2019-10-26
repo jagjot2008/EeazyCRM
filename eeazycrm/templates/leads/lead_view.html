@@ -3,13 +3,13 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ url_for('leads.get_leads_view') }}" class="btn btn-md btn-outline-primary mr-2" role="button">
+            <a href="{{ url_for('leads.convert_lead', lead_id=lead.id) }}" class="btn btn-md btn-outline-primary mr-2" role="button">
                 <span data-feather="arrow-left"></span>
                   Convert
             </a>
             <a href="{{ url_for('leads.get_leads_view') }}" class="btn btn-md btn-outline-secondary" role="button">
                 <span data-feather="arrow-left"></span>
-                  Back to List
+                  Back to View
             </a>
         </div>
     </div>

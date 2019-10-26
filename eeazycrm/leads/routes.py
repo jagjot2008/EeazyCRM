@@ -74,6 +74,14 @@ def get_lead_view(lead_id):
     return render_template("leads/lead_view.html", title="View Lead", lead=lead)
 
 
+@leads.route("/leads/convert/<int:lead_id>")
+@login_required
+@check_access('leads', 'view')
+def convert_lead(lead_id):
+    lead = Lead.query.filter_by(id=lead_id).first()
+    return render_template("leads/lead_convert.html", title="Covert Lead", lead=lead)
+
+
 @leads.route("/leads/import", methods=['GET', 'POST'])
 def import_bulk_leads():
     form = ImportLeads()
