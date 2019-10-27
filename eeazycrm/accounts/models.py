@@ -15,7 +15,12 @@ class Account(db.Model):
     phone = db.Column(db.String(20))
     is_active = db.Column(db.Boolean, default=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'), nullable=True)
-    contact_id = db.Column(db.Integer, db.ForeignKey('contact.id', ondelete='SET NULL'), nullable=True)
+    contacts = db.relationship(
+        'Contact',
+        uselist=False,
+        backref='account',
+        lazy=True
+    )
     notes = db.Column(db.String(200))
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
