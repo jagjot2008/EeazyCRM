@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            {% if current_user.is_admin %}
+            <a class="btn btn-sm btn-outline-secondary mr-2" role="button" href="{{ url_for('leads.import_bulk_leads') }}">
+                <span data-feather="upload"></span>
+                  import contacts ...
+            </a>
+            {% endif %}
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('leads.new_lead') }}">
+                <span data-feather="plus"></span>
+                  New
+            </a>
+        </div>
+    </div>
+    {% if contacts.items|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover fixed-layout-table">
+              <thead class="thead-light">
+                <tr>
+                  <th width="40" scope="col">#</th>
+                    <th width="250"></th>
+                    <th width="300" scope="col">Title</th>
+                  <th width="150" scope="col">First Name</th>
+                  <th width="150" scope="col">Last Name</th>
+                  <th width="300" scope="col">Email</th>
+                    <th width="250" scope="col">Company Name</th>
+                    <th width="250" scope="col">Owner</th>
+                    <th width="200" scope="col">Lead Source</th>
+                    <th width="200" scope="col">Date Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for lead in contacts.items %}
+                <tr>
+                  <th scope="row">{{ lead.id }}</th>
+                    <th>
+                        <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                            <span data-feather="edit"></span>
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                            <span data-feather="trash"></span>
+                        </a>
+                        <a href="{{ url_for('leads.get_lead_view', lead_id=lead.id) }}"
+                           class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                            <span data-feather="arrow-up-right"></span>
+                        </a>
+                    </th>
+                    <td>{{ lead.title }}</td>
+                  <td>{{ lead.first_name }}</td>
+                  <td>{{ lead.last_name }}</td>
+                    <td>{{ lead.email }}</td>
+                    <td>{{ lead.company_name }}</td>
+                    <td>{% with owner=lead.owner %}{% include 'common/owner_cell.html' %}{% endwith %}</td>
+                    <td>{{ lead.source.source_name }}</td>
+                    <td>{{ lead.date_created.strftime('%Y-%m-%d') if lead.date_created }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+        <!-- pagination -->
+        {% if contacts.total > 10 %}
+            {% with view_id="leads.get_leads_view", items=leads %}
+                {% include "common/pagination.html" %}
+            {% endwith %}
+        {% endif %}
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>No contacts found. Please create your first contact.</p>
+        </div>
+    {%  endif %}
+{% endblock %}

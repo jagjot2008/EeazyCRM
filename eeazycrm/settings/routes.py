@@ -289,3 +289,29 @@ def settings_roles_remove(role_id):
     db.session.commit()
     return redirect(url_for('settings.settings_roles_view'))
 
+
+# just for testing
+@settings.route("/settings/resource/create")
+@login_required
+@is_admin
+def create_resource():
+    roles = Role.query \
+        .filter(Role.name != 'admin') \
+        .order_by(Role.id.asc())
+
+    resources = ['staff', 'leads', 'accounts', 'contacts', 'deals']
+
+    for role in roles:
+        for res in resources:
+            resource = Resource()
+            resource.name = res
+            resource.can_view = False
+            resource.can_create = False
+            resource.can_edit = False
+            resource.can_delete = False
+            role.resources.append(resource)
+
+    db.session.add(role)
+    db.session.commit()
+
+
