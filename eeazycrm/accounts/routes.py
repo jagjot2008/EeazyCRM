@@ -5,6 +5,7 @@ from sqlalchemy import or_
 
 from eeazycrm import db
 from .models import Account
+from .forms import NewAccount
 
 from eeazycrm.rbac import check_access
 
@@ -31,4 +32,38 @@ def get_accounts_view():
         .paginate(per_page=per_page, page=page)
 
     return render_template("accounts/accounts_list.html", title="Accounts View", accounts=accounts_list)
+
+
+@accounts.route("/accounts/new", methods=['GET', 'POST'])
+@login_required
+@check_access('accounts', 'create')
+def new_account():
+    form = NewAccount()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            account = Account(name=form.name.data,
+                              website=form.website.data,
+                              email=form.email.data,
+                              phone=form.phone.data,
+                              address_line=form.address_line.data,
+                              addr_state=form.addr_state.data,
+                              addr_city=form.addr_city.data,
+                              post_code=form.post_code.data,
+                              country=form.country.data,
+                              notes=form.notes.data)
+
+            if current_user.role.name == 'admin':
+                account.account_owner = form.assignees.data
+            else:
+                account.account_owner = current_user
+
+            db.session.add(account)
+            db.session.commit()
+            flash('Account has been successfully created!', 'success')
+            return redirect(url_for('accounts.get_accounts_view'))
+        else:
+            for error in form.errors:
+                print(error)
+            flash('Your form has errors! Please check the fields', 'danger')
+    return render_template("accounts/new_account.html", title="New Account", form=form)
 
