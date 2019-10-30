@@ -23,6 +23,14 @@ class Account(db.Model):
     notes = db.Column(db.String(200))
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
+    @staticmethod
+    def account_list_query():
+        return Account.query
+
+    @staticmethod
+    def get_label(account):
+        return account.name
+
     def __repr__(self):
         return f"Account('{self.name}', '{self.email}', '{self.website}')"
 

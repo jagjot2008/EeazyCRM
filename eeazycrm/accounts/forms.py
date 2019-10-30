@@ -1,25 +1,10 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from flask_login import current_user
-from wtforms import StringField, SubmitField, HiddenField
+from wtforms import StringField, SubmitField
 from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, Email
 from wtforms_sqlalchemy.fields import QuerySelectField
 
-from .models import Account
 from eeazycrm.users.models import User
-
-
-def user_list_query():
-    return User.query
-
-
-def get_user():
-    return User.query.filter_by(id=current_user.id).first()
-
-
-def get_label(user):
-    return user.get_name()
 
 
 class NewAccount(FlaskForm):
@@ -35,6 +20,6 @@ class NewAccount(FlaskForm):
     post_code = StringField('Postcode')
     country = StringField('Country')
     notes = StringField('Notes', widget=TextArea())
-    assignees = QuerySelectField('Assign To', query_factory=user_list_query, get_pk=lambda a: a.id,
-                                 get_label=get_label, default=get_user)
+    assignees = QuerySelectField('Assign To', query_factory=User.user_list_query, get_pk=lambda a: a.id,
+                                 get_label=User.get_label, default=User.get_current_user)
     submit = SubmitField('Create New Account')

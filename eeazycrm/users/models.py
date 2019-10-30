@@ -1,5 +1,5 @@
 from eeazycrm import db, login_manager
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 
 
 @login_manager.user_loader
@@ -22,6 +22,18 @@ class User(db.Model, UserMixin):
     is_first_login = db.Column(db.Boolean, nullable=False, default=True)
     is_user_active = db.Column(db.Boolean, nullable=False, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='SET NULL'), nullable=True)
+
+    @staticmethod
+    def get_label(user):
+        return user.get_name()
+
+    @staticmethod
+    def user_list_query():
+        return User.query
+
+    @staticmethod
+    def get_current_user():
+        return User.query.filter_by(id=current_user.id).first()
 
     def get_name(self):
         return self.first_name + ' ' + self.last_name
