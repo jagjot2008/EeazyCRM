@@ -75,3 +75,13 @@ def new_account():
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("accounts/new_account.html", title="New Account", form=form)
 
+
+@accounts.route("/accounts/del/<int:account_id>")
+@login_required
+@check_access('accounts', 'delete')
+def delete_account(account_id):
+    Account.query.filter_by(id=account_id).delete()
+    db.session.commit()
+    flash('Account removed successfully!', 'success')
+    return redirect(url_for('accounts.get_accounts_view'))
+

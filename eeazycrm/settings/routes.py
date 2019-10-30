@@ -283,8 +283,6 @@ def settings_roles_update(role_id):
 @is_admin
 def settings_roles_remove(role_id):
     role = Role.query.filter_by(id=role_id).first()
-    for resource in role.resources:
-        db.session.delete(resource)
     db.session.delete(role)
     db.session.commit()
     return redirect(url_for('settings.settings_roles_view'))

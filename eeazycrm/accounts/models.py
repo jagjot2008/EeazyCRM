@@ -17,7 +17,9 @@ class Account(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'), nullable=True)
     contacts = db.relationship(
         'Contact',
+        cascade='all,delete',
         backref='account',
+        passive_deletes=True,
         lazy=True
     )
     notes = db.Column(db.String(200))

@@ -42,8 +42,7 @@ def new_contact():
     form = NewContact()
     if request.method == 'POST':
         if form.validate_on_submit():
-            contact = Contact(account=form.account,
-                              first_name=form.first_name.data,
+            contact = Contact(first_name=form.first_name.data,
                               last_name=form.last_name.data,
                               email=form.email.data,
                               phone=form.phone.data,
@@ -54,6 +53,8 @@ def new_contact():
                               post_code=form.post_code.data,
                               country=form.country.data,
                               notes=form.notes.data)
+
+            contact.account = form.accounts.data
 
             if form.avatar.data:
                 picture_file = upload_avatar(contact, form.avatar.data)
@@ -69,7 +70,7 @@ def new_contact():
             flash('Contact has been successfully created!', 'success')
             return redirect(url_for('contacts.get_contacts_view'))
         else:
-            for error in form.errors:
-                print(error)
+            print(form.errors)
+
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("contacts/new_contact.html", title="New Contact", form=form)

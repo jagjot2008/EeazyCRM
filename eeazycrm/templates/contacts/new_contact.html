@@ -21,7 +21,7 @@
                          {% if form.accounts.errors %}
                              {{ form.accounts(class="form-control form-control-lg required is-invalid") }}
                             <div class="invalid-feedback">
-                                {% for error in form.last_name.errors %}
+                                {% for error in form.accounts.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
@@ -54,14 +54,14 @@
                 <div class="col">
                     {{ form.email.label(class="form-control-label") }}
                   {% if form.email.errors %}
-                    {{ form.email(class="form-control form-control-lg required is-invalid") }}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.email.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                   {% else %}
-                    {{ form.email(class="form-control required from-control-lg", placeholder="email address ...") }}
+                    {{ form.email(class="form-control from-control-lg", placeholder="email address ...") }}
                   {% endif %}
                 </div>
                 <div class="col">

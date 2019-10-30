@@ -25,7 +25,8 @@ class NewContact(FlaskForm):
     country = StringField('Country')
     notes = StringField('Notes', widget=TextArea())
     accounts = QuerySelectField('Account', query_factory=Account.account_list_query, get_pk=lambda a: a.id,
-                                 get_label=Account.get_label, blank_text='Select An Account', allow_blank=True)
+                                 get_label=Account.get_label, blank_text='Select An Account', allow_blank=True,
+                                validators=[DataRequired(message='Please choose an account for the contact')])
     assignees = QuerySelectField('Assign To', query_factory=User.user_list_query, get_pk=lambda a: a.id,
                                  get_label=User.get_label, default=User.get_current_user)
     submit = SubmitField('Create New Contact')

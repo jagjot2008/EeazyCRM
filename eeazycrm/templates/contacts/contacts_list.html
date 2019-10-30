@@ -22,20 +22,25 @@
                 <tr>
                   <th width="40" scope="col">#</th>
                     <th width="250"></th>
-                    <th width="300" scope="col">Title</th>
                   <th width="150" scope="col">First Name</th>
                   <th width="150" scope="col">Last Name</th>
+                    <th width="300" scope="col">Account</th>
                   <th width="300" scope="col">Email</th>
-                    <th width="250" scope="col">Company Name</th>
-                    <th width="250" scope="col">Owner</th>
-                    <th width="200" scope="col">Lead Source</th>
+                    <th width="150" scope="col">Phone</th>
+                    <th width="150" scope="col">Mobile</th>
+                    <th width="250" scope="col">Address</th>
+                    <th width="250" scope="col">State</th>
+                    <th width="200" scope="col">City</th>
+                    <th width="100" scope="col">Pincode</th>
+                    <th width="100" scope="col">Country</th>
+                    <th width="200" scope="col">Owner</th>
                     <th width="200" scope="col">Date Created</th>
                 </tr>
               </thead>
               <tbody>
-                {% for lead in contacts.items %}
+                {% for contact in contacts.items %}
                 <tr>
-                  <th scope="row">{{ lead.id }}</th>
+                  <th scope="row">{{ contact.id }}</th>
                     <th>
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="edit"></span>
@@ -43,19 +48,24 @@
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="trash"></span>
                         </a>
-                        <a href="{{ url_for('leads.get_lead_view', lead_id=lead.id) }}"
+                        <a href="#"
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="arrow-up-right"></span>
                         </a>
                     </th>
-                    <td>{{ lead.title }}</td>
-                  <td>{{ lead.first_name }}</td>
-                  <td>{{ lead.last_name }}</td>
-                    <td>{{ lead.email }}</td>
-                    <td>{{ lead.company_name }}</td>
-                    <td>{% with owner=lead.owner %}{% include 'common/owner_cell.html' %}{% endwith %}</td>
-                    <td>{{ lead.source.source_name }}</td>
-                    <td>{{ lead.date_created.strftime('%Y-%m-%d') if lead.date_created }}</td>
+                  <td>{{ contact.first_name }}</td>
+                  <td>{{ contact.last_name }}</td>
+                    <td>{{ contact.account.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>{{ contact.mobile }}</td>
+                     <td>{{ contact.address_line }}</td>
+                     <td>{{ contact.addr_state }}</td>
+                     <td>{{ contact.addr_city }}</td>
+                     <td>{{ contact.pin_code }}</td>
+                     <td>{{ contact.country }}</td>
+                    <td>{% with owner=contact.contact_owner %}{% include 'common/owner_cell.html' %}{% endwith %}</td>
+                    <td>{{ contact.date_created.strftime('%Y-%m-%d') if contact.date_created }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -64,7 +74,7 @@
 
         <!-- pagination -->
         {% if contacts.total > 10 %}
-            {% with view_id="leads.get_leads_view", items=leads %}
+            {% with view_id="contacts.get_contacts_view", items=leads %}
                 {% include "common/pagination.html" %}
             {% endwith %}
         {% endif %}

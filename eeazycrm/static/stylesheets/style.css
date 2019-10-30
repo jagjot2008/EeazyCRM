@@ -162,3 +162,8 @@ body {
     word-wrap: break-word;
 }
 
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    font-size: 1rem;
+    height: calc(1.3em + 1rem + 2px)
+}
+
