@@ -74,3 +74,21 @@ def new_contact():
 
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("contacts/new_contact.html", title="New Contact", form=form)
+
+
+@contacts.route("/contacts/<int:contact_id>")
+@login_required
+@check_access('contacts', 'view')
+def get_contact_view(contact_id):
+    contact = Contact.query.filter_by(id=contact_id).first()
+    return render_template("contacts/contact_view.html", title="View Contact", contact=contact)
+
+
+@contacts.route("/contacts/del/<int:contact_id>")
+@login_required
+@check_access('contacts', 'delete')
+def delete_contact(contact_id):
+    Contact.query.filter_by(id=contact_id).delete()
+    db.session.commit()
+    flash('Contact removed successfully!', 'success')
+    return redirect(url_for('contacts.get_contacts_view'))
