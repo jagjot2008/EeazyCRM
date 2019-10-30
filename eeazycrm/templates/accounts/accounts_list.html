@@ -46,7 +46,7 @@
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="trash"></span>
                         </a>
-                        <a href="#"
+                        <a href="{{ url_for('accounts.get_account_view', account_id=account.id) }}"
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="arrow-up-right"></span>
                         </a>

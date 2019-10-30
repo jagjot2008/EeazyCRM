@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="#" class="btn btn-md btn-outline-primary mr-2" role="button">
+                <span data-feather="arrow-left"></span>
+                  Edit
+            </a>
+            <a href="#" class="btn btn-md btn-outline-secondary mr-2" data-toggle="modal" data-target="#viewContactsModal" role="button">
+                <span data-feather="users"></span>
+                  View Contacts
+            </a>
+            <a href="{{ url_for('accounts.get_accounts_view') }}" class="btn btn-md btn-outline-secondary" role="button">
+                <span data-feather="arrow-left"></span>
+                  Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+                <div class="modal fade" id="viewContactsModal" tabindex="-1" role="dialog" aria-labelledby="viewContactsModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Contacts</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body text-center">
+                        {% if account.contacts|length > 0 %}
+                          <div class="mt-2 mb-4">Contacts of <strong>{{ account.name }}</strong></div>
+                          {% else %}
+                          <div class="mt-4 mb-4">No contacts have been created for <strong>{{ account.name }}</strong></div>
+                          <a href="#" class="btn btn-md btn-outline-primary mb-4" role="button">
+                              <span data-feather="users"></span> Create New Contact
+                          </a>
+                          {% endif %}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+    <div class="row">
+        <div class="col-5">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item g_field">
+                  <div class="label">Account Name</div>
+                  <div class="text">{{ account.name if account.name else '_' }}</div>
+              </li>
+                <li class="list-group-item g_field">
+                  <div class="label">Email</div>
+                    {% if account.email %}
+                        <div class="text">
+                            <span data-feather="mail" class="mr-1"></span>
+                            <a href="mailto: {{ account.email }}">{{ account.email }}</a>
+                        </div>
+                    {% else %}
+                        <div class="text"><span data-feather="mail"></span> _</div>
+                    {% endif %}
+              </li>
+              <li class="list-group-item g_field">
+                  <div class="label">Website</div>
+                  {% if account.website %}
+                  <div class="text">
+                      <span data-feather="globe" class="mr-1"></span>
+                      <a href="{{ account.website }}" target="_blank">{{ account.website }}</a>
+                  </div>
+                  {% else %}
+                    <div class="text"><span data-feather="globe"></span> _</div>
+                  {% endif %}
+              </li>
+
+                <li class="list-group-item g_field">
+                  <div class="label">Phone</div>
+                  <div class="text"><span data-feather="phone" class="mr-1"></span> {{ account.phone if account.phone else '_' }}</div>
+              </li>
+
+                <li class="list-group-item g_field">
+                  <div class="label">Owner</div>
+                    {% if account.account_owner %}
+                    <div class="text">
+                        <div class="mt-1">
+                            {% with owner=account.account_owner %}{% include 'common/owner_cell.html' %}{% endwith %}
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="text">_</div>
+                    {% endif %}
+              </li>
+
+            </ul>
+        </div>
+        <div class="col-5">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item g_field col-12">
+                  <div class="label">Address</div>
+                  <div class="text">{{ account.address_line if account.address_line else '_' }}</div>
+              </li>
+              <li class="list-group-item g_field col-12">
+                  <div class="row">
+                      <div class="col-6">
+                          <div class="label">State</div>
+                          <div class="text">{{ account.addr_state if account.addr_state else '_' }}</div>
+                      </div>
+                      <div class="col-6">
+                          <div class="label">City</div>
+                          <div class="text">{{ account.addr_city if account.addr_city else '_' }}</div>
+                      </div>
+                  </div>
+              </li>
+                <li class="list-group-item g_field col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="label">Postcode</div>
+                            <div class="text">{{ account.post_code if account.post_code else '_' }}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="label">Country</div>
+                            <div class="text">{{ account.country if account.country else '_' }}</div>
+                        </div>
+                    </div>
+              </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <div></div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item g_field col-12">
+                    <div class="label">Notes</div>
+                    <div class="text">{{ account.notes if account.notes else '_' }}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endblock %}

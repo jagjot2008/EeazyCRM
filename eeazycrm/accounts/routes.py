@@ -34,6 +34,14 @@ def get_accounts_view():
     return render_template("accounts/accounts_list.html", title="Accounts View", accounts=accounts_list)
 
 
+@accounts.route("/accounts/<int:account_id>")
+@login_required
+@check_access('accounts', 'view')
+def get_account_view(account_id):
+    account = Account.query.filter_by(id=account_id).first()
+    return render_template("accounts/account_view.html", title="View Account", account=account)
+
+
 @accounts.route("/accounts/new", methods=['GET', 'POST'])
 @login_required
 @check_access('accounts', 'create')

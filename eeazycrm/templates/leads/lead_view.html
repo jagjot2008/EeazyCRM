@@ -26,7 +26,14 @@
               </li>
                 <li class="list-group-item g_field">
                   <div class="label">Email</div>
-                  <div class="text">{{ lead.email if lead.email else '_' }}</div>
+                    {% if lead.email %}
+                        <div class="text">
+                            <span data-feather="mail" class="mr-1"></span>
+                            <a href="mailto: {{ lead.email }}">{{ lead.email }}</a>
+                        </div>
+                    {% else %}
+                        <div class="text"><span data-feather="mail"></span> _</div>
+                    {% endif %}
               </li>
                 <li class="list-group-item g_field">
                   <div class="label">Company</div>
@@ -35,6 +42,18 @@
                 <li class="list-group-item g_field">
                   <div class="label">Lead Source</div>
                   <div class="text">{{ lead.source if lead.company_name else '_' }}</div>
+              </li>
+                <li class="list-group-item g_field">
+                  <div class="label">Owner</div>
+                    {% if lead.owner %}
+                    <div class="text">
+                        <div class="mt-1">
+                            {% with owner=lead.owner %}{% include 'common/owner_cell.html' %}{% endwith %}
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="text">_</div>
+                    {% endif %}
               </li>
             </ul>
         </div>
