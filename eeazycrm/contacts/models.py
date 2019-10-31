@@ -1,5 +1,6 @@
 from datetime import datetime
 from eeazycrm import db
+from flask import request
 
 
 class Contact(db.Model):
@@ -18,7 +19,24 @@ class Contact(db.Model):
     notes = db.Column(db.String(200))
     account_id = db.Column(db.Integer, db.ForeignKey('account.id', ondelete='cascade'), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'), nullable=True)
+    deals = db.relationship(
+        'Deal',
+        backref='contact',
+        lazy=True
+    )
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    @staticmethod
+    def contact_list_query():
+        account = request.args.get('acc', None, type=int)
+        return Contact.query.filter(Contact.account_id == account if account else True)
+
+    @staticmethod
+    def get_label(contact):
+        return contact.first_name + ' ' + contact.last_name
+
+    def get_contact_name(self):
+        return self.first_name + ' ' + self.last_name;
 
     def __repr__(self):
         return f"Account('{self.last_name}', '{self.email}', '{self.phone}')"

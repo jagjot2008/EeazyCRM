@@ -48,7 +48,7 @@
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="trash"></span>
                         </a>
-                        <a href="#"
+                        <a href="{{ url_for('contacts.get_contact_view', contact_id=contact.id) }}"
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="arrow-up-right"></span>
                         </a>

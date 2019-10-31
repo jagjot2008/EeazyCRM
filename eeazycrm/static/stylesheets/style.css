@@ -167,3 +167,64 @@ body {
     height: calc(1.3em + 1rem + 2px)
 }
 
+.kanban-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    min-height: 550px;
+    overflow-x: auto;
+}
+
+.kanban-container > .card.outer-card {
+    border-top: 3px solid #e2e2e2;
+    min-width: 25em;
+    max-width: 25em;
+    margin-right: 15px;
+}
+
+.kanban-container .card.outer-card:hover {
+    border-top: 3px solid #007bff;
+}
+
+.kanban-container .card.inner-card {
+    color: #616161;
+}
+
+.kanban-container .card.inner-card .card-title {
+    display: flex;
+    font-size: 16px;
+}
+
+.kanban-container .card.inner-card:hover {
+    box-shadow: 1px 6px 6px #ccc;
+    -moz-box-shadow: 1px 6px 6px #ccc;
+    -webkit-box-shadow: 1px 6px 6px #ccc;
+}
+
+.kanban-container .card.inner-card .card-title .dragicon {
+    flex: 0.15;
+    margin-right: 10px;
+    display: block;
+    cursor: pointer;
+    background: white;
+    padding-top: 3px;
+    text-align: center;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.card-text .price {
+    font-size: 24px;
+}
+
+.kanban-container .card.inner-card .card-title .text {
+    flex: 0.85;
+    color: #444;
+    font-weight: 600;
+}
+
+
+

@@ -1,6 +1,6 @@
-from flask import Blueprint
 from flask_login import current_user, login_required
-from flask import render_template, flash, url_for, redirect, request
+from flask import render_template, flash, url_for, redirect, request, Blueprint
+import json
 from sqlalchemy import or_
 
 from eeazycrm import db
@@ -33,6 +33,22 @@ def get_contacts_view():
         .paginate(per_page=per_page, page=page)
 
     return render_template("contacts/contacts_list.html", title="Contacts View", contacts=contacts_list)
+
+
+@contacts.route("/contacts/acc/<int:account_id>")
+@login_required
+@check_access('contacts', 'view')
+def get_account_contacts(account_id):
+    items = Contact.query\
+        .filter_by(account_id=account_id)\
+        .order_by(Contact.date_created.desc())\
+        .all()
+
+    d = []
+    for item in items:
+        f = {'id': item.id, 'name': item.get_contact_name()}
+        d.append(f)
+    return json.dumps(d)
 
 
 @contacts.route("/contacts/new", methods=['GET', 'POST'])

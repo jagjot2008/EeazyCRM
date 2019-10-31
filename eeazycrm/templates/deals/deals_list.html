@@ -9,7 +9,7 @@
                   import contacts ...
             </a>
             {% endif %}
-            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('leads.new_lead') }}">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('deals.new_deal') }}">
                 <span data-feather="plus"></span>
                   New
             </a>
@@ -23,19 +23,19 @@
                   <th width="40" scope="col">#</th>
                     <th width="250"></th>
                     <th width="300" scope="col">Title</th>
-                  <th width="150" scope="col">First Name</th>
-                  <th width="150" scope="col">Last Name</th>
-                  <th width="300" scope="col">Email</th>
-                    <th width="250" scope="col">Company Name</th>
+                  <th width="150" scope="col">Expected Close Price</th>
+                  <th width="150" scope="col">Expected Close Date</th>
+                  <th width="300" scope="col">Account</th>
+                    <th width="250" scope="col">Contact</th>
+                    <th width="200" scope="col">Deal Stage</th>
                     <th width="250" scope="col">Owner</th>
-                    <th width="200" scope="col">Lead Source</th>
                     <th width="200" scope="col">Date Created</th>
                 </tr>
               </thead>
               <tbody>
-                {% for lead in contacts.items %}
+                {% for deal in deals.items %}
                 <tr>
-                  <th scope="row">{{ lead.id }}</th>
+                  <th scope="row">{{ deal.id }}</th>
                     <th>
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="edit"></span>
@@ -43,19 +43,19 @@
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="trash"></span>
                         </a>
-                        <a href="{{ url_for('leads.get_lead_view', lead_id=lead.id) }}"
+                        <a href="#"
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="arrow-up-right"></span>
                         </a>
                     </th>
-                    <td>{{ lead.title }}</td>
-                  <td>{{ lead.first_name }}</td>
-                  <td>{{ lead.last_name }}</td>
-                    <td>{{ lead.email }}</td>
-                    <td>{{ lead.company_name }}</td>
-                    <td>{% with owner=lead.owner %}{% include 'common/owner_cell.html' %}{% endwith %}</td>
-                    <td>{{ lead.source.source_name }}</td>
-                    <td>{{ lead.date_created.strftime('%Y-%m-%d') if lead.date_created }}</td>
+                    <td>{{ deal.title }}</td>
+                  <td>$ {{ deal.expected_close_price }}</td>
+                  <td>{{ deal.expected_close_date.strftime('%Y-%m-%d') if deal.expected_close_date }}</td>
+                    <td>{{ deal.account.name }}</td>
+                    <td>{{ deal.dealstage.stage_name }}</td>
+                    <td>{{ deal.contact.first_name }} {{ deal.contact.last_name }}</td>
+                    <td>{% with owner=deal.deal_owner %}{% include 'common/owner_cell.html' %}{% endwith %}</td>
+                    <td>{{ deal.date_created.strftime('%Y-%m-%d') if deal.date_created }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -64,7 +64,7 @@
 
         <!-- pagination -->
         {% if deals.total > 10 %}
-            {% with view_id="leads.get_leads_view", items=leads %}
+            {% with view_id="deals.get_deals_view", items=deals %}
                 {% include "common/pagination.html" %}
             {% endwith %}
         {% endif %}

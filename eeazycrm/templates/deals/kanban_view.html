@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            {% if current_user.is_admin %}
+            <a class="btn btn-sm btn-outline-secondary mr-2" role="button" href="{{ url_for('leads.import_bulk_leads') }}">
+                <span data-feather="upload"></span>
+                  import contacts ...
+            </a>
+            {% endif %}
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('deals.new_deal') }}">
+                <span data-feather="plus"></span>
+                  New
+            </a>
+        </div>
+    </div>
+    {% if deals.items|length > 0 %}
+        <div class="container-fluid" style="background-color: #f1f1f1; padding: 20px;">
+            <div class="kanban-container">
+                {% for stage_item in deal_stages %}
+
+                <div class="card outer-card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ stage_item.stage_name }}</h5>
+
+                      {% for deal in deals.items %}
+                        {% if deal.dealstage.stage_name == stage_item.stage_name %}
+
+                            <div class="card inner-card bg-light mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <div class="text">{{ deal.title }}</div>
+                                        <div class="dragicon">
+                                            <img src="{{ url_for('static', filename='imgs/dnd.png') }}" alt="dragicon" />
+                                        </div>
+                                    </h5>
+                                    <div class="card-text">
+                                        <div class="price">$ {{ deal.expected_close_price }}</div>
+                                        <div>{{ deal.account.name }}</div>
+                                        <div><span data-feather="user"></span> {{ deal.contact.get_contact_name() }}</div>
+                                        <div><span data-feather="clock"></span> {{ deal.expected_close_date.strftime('%Y-%m-%d') if deal.expected_close_date else '_' }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                      {% endfor %}
+
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>No deals found. Please create your first deal.</p>
+        </div>
+    {%  endif %}
+    {% endblock %}

@@ -22,6 +22,13 @@ class Account(db.Model):
         passive_deletes=True,
         lazy=True
     )
+    deals = db.relationship(
+        'Deal',
+        cascade='all,delete',
+        backref='account',
+        passive_deletes=True,
+        lazy=True
+    )
     notes = db.Column(db.String(200))
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
@@ -32,6 +39,10 @@ class Account(db.Model):
     @staticmethod
     def get_label(account):
         return account.name
+
+    @staticmethod
+    def get_account(account_id):
+        return Account.query.filter_by(id=account_id).first()
 
     def __repr__(self):
         return f"Account('{self.name}', '{self.email}', '{self.website}')"
