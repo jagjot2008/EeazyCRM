@@ -21,13 +21,13 @@
                 {% for stage_item in deal_stages %}
 
                 <div class="card outer-card">
-                  <div class="card-body">
+                  <div class="card-body" ondrop="drop(event)" ondragover="allowDrop(event)">
                     <h5 class="card-title">{{ stage_item.stage_name }}</h5>
-
                       {% for deal in deals.items %}
                         {% if deal.dealstage.stage_name == stage_item.stage_name %}
 
-                            <div class="card inner-card bg-light mb-3">
+                            <div id="item_{{ deal.id }}" class="card inner-card bg-light mb-3"
+                                 draggable="true" dragstart="drag_start(event)" ondragstart="drag(event)">
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <div class="text">{{ deal.title }}</div>
@@ -58,4 +58,27 @@
             <p>No deals found. Please create your first deal.</p>
         </div>
     {%  endif %}
+<script>
+    function allowDrop(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.effectAllowed = "move";
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      ev.currentTarget.appendChild(document.getElementById(data));
+    }
+
+    function drag_start(ev) {
+        ev.preventDefault();
+    alert('started');
+
+    }
+</script>
     {% endblock %}

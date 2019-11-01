@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/imgs/dnd.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/new_deal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/accounts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/contacts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/contacts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/contacts/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/contacts/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/deals/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/deals/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/deals/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/accounts/account_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/accounts/account_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/contacts/contact_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/contact_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
+            <state relative-caret-position="703">
               <caret line="57" column="86" lean-forward="true" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
             </state>
           </provider>
@@ -50,8 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="41" column="68" selection-start-line="41" selection-start-column="68" selection-end-line="41" selection-end-column="68" />
+            <state relative-caret-position="158">
+              <caret line="23" column="91" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -62,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="623">
-              <caret line="225" column="21" selection-start-line="225" selection-start-column="21" selection-end-line="225" selection-end-column="21" />
+            <state relative-caret-position="-4">
+              <caret line="201" column="1" lean-forward="true" selection-start-line="201" selection-start-column="1" selection-end-line="201" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -147,8 +134,8 @@
         <option value="$PROJECT_DIR$/eeazycrm/templates/deals/new_deal.html" />
         <option value="$PROJECT_DIR$/eeazycrm/contacts/routes.py" />
         <option value="$PROJECT_DIR$/eeazycrm/deals/routes.py" />
-        <option value="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" />
+        <option value="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" />
       </list>
     </option>
@@ -822,13 +809,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="225" column="21" selection-start-line="225" selection-start-column="21" selection-end-line="225" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/deals/routes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
@@ -841,15 +821,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
+        <state relative-caret-position="703">
           <caret line="57" column="86" lean-forward="true" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="201" column="1" lean-forward="true" selection-start-line="201" selection-start-column="1" selection-end-line="201" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="41" column="68" selection-start-line="41" selection-start-column="68" selection-end-line="41" selection-end-column="68" />
+        <state relative-caret-position="158">
+          <caret line="23" column="91" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
           <folding>
             <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
           </folding>

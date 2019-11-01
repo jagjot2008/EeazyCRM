@@ -226,5 +226,10 @@ body {
     font-weight: 600;
 }
 
+.kanban-container .card.inner-card .card-content {
+    background: green;
+    margin-bottom: 15px;
+}
+
 
 
