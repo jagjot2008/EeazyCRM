@@ -177,8 +177,8 @@ body {
 
 .kanban-container > .card.outer-card {
     border-top: 3px solid #e2e2e2;
-    min-width: 25em;
-    max-width: 25em;
+    min-width: 18em;
+    max-width: 18em;
     margin-right: 15px;
 }
 
@@ -193,42 +193,57 @@ body {
 .kanban-container .card.inner-card .card-title {
     display: flex;
     font-size: 16px;
+    border-bottom: 1px solid #ccc;
+}
+
+.kanban-container .card.inner-card .card-title .text {
+    flex: 1;
+    color: #444;
+    font-weight: 600;
+    padding-bottom: 10px;
 }
 
 .kanban-container .card.inner-card:hover {
-    box-shadow: 1px 6px 6px #ccc;
-    -moz-box-shadow: 1px 6px 6px #ccc;
-    -webkit-box-shadow: 1px 6px 6px #ccc;
-}
-
-.kanban-container .card.inner-card .card-title .dragicon {
-    flex: 0.15;
-    margin-right: 10px;
-    display: block;
-    cursor: pointer;
-    background: white;
-    padding-top: 3px;
-    text-align: center;
-    height: 30px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    box-shadow: 1px 6px 6px #e1e1e1;
+    -moz-box-shadow: 1px 6px 6px #e1e1e1;
+    -webkit-box-shadow: 1px 6px 6px #e1e1e1;
 }
 
 .card-text .price {
     font-size: 24px;
 }
 
-.kanban-container .card.inner-card .card-title .text {
-    flex: 0.85;
-    color: #444;
-    font-weight: 600;
+.kanban-container .card.inner-card {
+    position: relative;
+}
+
+.kanban-container .card.inner-card > .card-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: #e1e1e1;
+    border: 3px dashed #fff;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    display: none;
 }
 
 .kanban-container .card.inner-card .card-content {
     background: green;
     margin-bottom: 15px;
+}
+
+.card-actions {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-actions .ca_item {
+    flex: 1;
 }
 
 

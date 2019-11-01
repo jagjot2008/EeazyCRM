@@ -67,6 +67,8 @@ def new_deal():
             else:
                 deal.deal_owner = current_user
 
+            print(deal)
+
             db.session.add(deal)
             db.session.commit()
             flash('Deal has been successfully created!', 'success')

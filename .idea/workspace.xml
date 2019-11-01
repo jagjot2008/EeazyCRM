@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/eeazycrm/deals/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/deals/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/deals/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" afterDir="false" />
     </list>
@@ -16,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/eeazycrm/deals/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+            <state relative-caret-position="543">
+              <caret line="72" column="12" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -26,19 +29,55 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html">
+        <entry file="file://$PROJECT_DIR$/eeazycrm/leads/routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="703">
-              <caret line="57" column="86" lean-forward="true" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
+            <state relative-caret-position="939">
+              <caret line="68" column="34" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eeazycrm/deals/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eeazycrm/deals/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="560">
+              <caret line="31" column="62" selection-start-line="31" selection-start-column="62" selection-end-line="31" selection-end-column="62" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="27" lean-forward="true" selection-start-column="27" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="23" column="91" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
+            <state relative-caret-position="224">
+              <caret line="40" column="60" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="60" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -47,10 +86,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="181">
+              <caret line="47" column="53" selection-start-line="47" selection-start-column="48" selection-end-line="47" selection-end-column="53" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4">
-              <caret line="201" column="1" lean-forward="true" selection-start-line="201" selection-start-column="1" selection-end-line="201" selection-end-column="1" />
+            <state relative-caret-position="376">
+              <caret line="239" column="18" selection-start-line="239" selection-start-column="18" selection-end-line="239" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -127,16 +175,16 @@
         <option value="$PROJECT_DIR$/eeazycrm/templates/accounts/account_view.html" />
         <option value="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" />
         <option value="$PROJECT_DIR$/eeazycrm/templates/contacts/contact_view.html" />
-        <option value="$PROJECT_DIR$/eeazycrm/deals/models.py" />
-        <option value="$PROJECT_DIR$/eeazycrm/deals/forms.py" />
         <option value="$PROJECT_DIR$/eeazycrm/accounts/models.py" />
         <option value="$PROJECT_DIR$/eeazycrm/contacts/models.py" />
         <option value="$PROJECT_DIR$/eeazycrm/templates/deals/new_deal.html" />
         <option value="$PROJECT_DIR$/eeazycrm/contacts/routes.py" />
-        <option value="$PROJECT_DIR$/eeazycrm/deals/routes.py" />
         <option value="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" />
-        <option value="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" />
+        <option value="$PROJECT_DIR$/eeazycrm/deals/forms.py" />
+        <option value="$PROJECT_DIR$/eeazycrm/deals/models.py" />
+        <option value="$PROJECT_DIR$/eeazycrm/deals/routes.py" />
         <option value="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" />
+        <option value="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" />
       </list>
     </option>
   </component>
@@ -565,16 +613,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/leads/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="64" lean-forward="true" selection-start-line="7" selection-start-column="64" selection-end-line="7" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/common/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -585,27 +623,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/accounts/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="23" column="68" lean-forward="true" selection-start-line="23" selection-start-column="68" selection-end-line="23" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/templates/settings/roles_list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="31" column="93" lean-forward="true" selection-start-line="31" selection-start-column="73" selection-end-line="31" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="70" column="44" selection-start-line="70" selection-start-column="44" selection-end-line="70" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -664,13 +685,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/templates/accounts/new_account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="601">
-          <caret line="98" column="18" lean-forward="true" selection-end-line="98" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/users/routes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="673">
@@ -718,26 +732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/deals/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="29" column="51" lean-forward="true" selection-start-line="29" selection-start-column="51" selection-end-line="29" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/deals/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="14" column="74" lean-forward="true" selection-start-line="14" selection-start-column="74" selection-end-line="14" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/accounts/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
@@ -752,16 +746,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
           <caret line="72" column="25" lean-forward="true" selection-start-line="69" selection-start-column="12" selection-end-line="72" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/leads/routes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="68" column="34" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -809,37 +793,101 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/leads/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="7" column="64" lean-forward="true" selection-start-line="7" selection-start-column="64" selection-end-line="7" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/accounts/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="23" column="68" lean-forward="true" selection-start-line="23" selection-start-column="68" selection-end-line="23" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/deals/routes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+        <state relative-caret-position="543">
+          <caret line="72" column="12" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html">
+    <entry file="file://$PROJECT_DIR$/eeazycrm/deals/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="57" column="86" lean-forward="true" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
+        <state relative-caret-position="342">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css">
+    <entry file="file://$PROJECT_DIR$/eeazycrm/deals/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4">
-          <caret line="201" column="1" lean-forward="true" selection-start-line="201" selection-start-column="1" selection-end-line="201" selection-end-column="1" />
+        <state relative-caret-position="560">
+          <caret line="31" column="62" selection-start-line="31" selection-start-column="62" selection-end-line="31" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/leads/routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="939">
+          <caret line="68" column="34" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" lean-forward="true" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/templates/accounts/new_account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="36" lean-forward="true" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="47" column="53" selection-start-line="47" selection-start-column="48" selection-end-line="47" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="23" column="91" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
+        <state relative-caret-position="224">
+          <caret line="40" column="60" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="60" />
           <folding>
             <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="239" column="18" selection-start-line="239" selection-start-column="18" selection-end-line="239" selection-end-column="18" />
         </state>
       </provider>
     </entry>
