@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 from sqlalchemy import or_
+import json
 
 from eeazycrm import db
 from .models import Deal, DealStage
@@ -67,8 +68,6 @@ def new_deal():
             else:
                 deal.deal_owner = current_user
 
-            print(deal)
-
             db.session.add(deal)
             db.session.commit()
             flash('Deal has been successfully created!', 'success')
@@ -78,3 +77,15 @@ def new_deal():
                 print(error)
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("deals/new_deal.html", title="New Deal", form=form)
+
+
+@deals.route("/deals/update_stage/<int:deal_id>/<int:stage_id>")
+@login_required
+@check_access('deals', 'update')
+def update_deal_stage_ajax(deal_id, stage_id):
+    deal = Deal.query.filter_by(id=deal_id).first()
+    deal.deal_stage_id = stage_id
+    db.session.commit()
+    return json.dumps({'success': True, 'message': 'Done'})
+
+

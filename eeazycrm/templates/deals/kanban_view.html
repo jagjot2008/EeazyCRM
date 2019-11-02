@@ -21,12 +21,13 @@
                 {% for stage_item in deal_stages %}
 
                 <div class="card outer-card">
-                  <div id="cb_{{ stage_item.id }}" class="card-body" ondrop="drop(event)" ondragover="allowDrop(event)">
+                  <div id="cb_{{ stage_item.id }}" class="card-body"
+                       data-dropstage="{{ stage_item.id }}" ondrop="drop(event)" ondragover="allowDrop(event)">
                     <h5 class="card-title">{{ stage_item.stage_name }}</h5>
                       {% for deal in deals.items %}
                         {% if deal.dealstage.stage_name == stage_item.stage_name %}
 
-                            <div id="item_{{ deal.id }}" class="card inner-card bg-light mb-3"
+                            <div id="item_{{ deal.id }}" data-dealid="{{ deal.id }}" class="card inner-card bg-light mb-3"
                                  draggable="true" ondragstart="dragStart(event)">
                                 <div class="card-body">
                                     <h5 class="card-title">
@@ -78,14 +79,38 @@
       ev.stopPropagation();
     }
 
+    function update_deal_stage(dealId, dealStageId) {
+
+        $('.ajax_indicator')
+            .css('display', 'block')
+            .text('processing')
+            .removeClass('done')
+            .addClass('processing');
+
+        $.ajax({
+            type: "GET",
+            url: "/deals/update_stage/" + dealId + "/" + dealStageId,
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function(data) {
+                $('.ajax_indicator')
+                    .html("<span data-feather='check'></span> " + data.message)
+                    .removeClass('processing')
+                    .addClass('done')
+                    .fadeOut(2000);
+
+            },
+        });
+    }
+
     function drop(ev) {
       ev.preventDefault();
       var data = ev.dataTransfer.getData("text");
       var node = document.getElementById(data);
-      node.children[1].style.display="none";
       var first_node = ev.currentTarget.children[1];
       if (node.parentNode.id !== ev.currentTarget.id) {
         ev.currentTarget.insertBefore(node, first_node);
+        update_deal_stage(node.dataset.dealid, ev.currentTarget.dataset.dropstage);
       }
       node.style.transform = 'rotate(0deg)';
     }

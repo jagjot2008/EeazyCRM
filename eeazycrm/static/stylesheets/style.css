@@ -246,5 +246,25 @@ body {
     flex: 1;
 }
 
+.ajax_indicator {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 50%;
+    margin-left: -75px; /* negative half of width. */
+    z-index: 10000;
+    text-align: center;
+    padding: 5px 15px 8px;
+    width: 150px;
+}
+
+.ajax_indicator.processing {
+    background-color: #FFFF00;
+}
+
+.ajax_indicator.done {
+    background-color: green;
+}
+
 
 

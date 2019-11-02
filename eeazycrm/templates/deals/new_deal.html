@@ -97,9 +97,19 @@
 <script>
     $(document).ready(function() {
         $('#deal_accounts').on('change', function() {
+
             $('#deal_contacts').empty();
             $('#deal_contacts').append('<option value="__None">Select A Contact</option>');
             var accId = $(this).val();
+
+            if (accId !== '__None') {
+                $('.ajax_indicator')
+                .css('display', 'block')
+                .text('loading ...')
+                .removeClass('done')
+                .addClass('processing');
+            }
+
             $.ajax({
                 type: "GET",
                 url: "/contacts/acc/" + accId,
@@ -108,6 +118,11 @@
                 success: function(data) {
                     $.each(data, function(i, d) {
                         $('#deal_contacts').append('<option value="' + d.id + '">' + d.name + '</option>');
+                        $('.ajax_indicator')
+                            .removeClass('processing')
+                            .addClass('done')
+                            .text("done")
+                            .fadeOut(2000);
                     })
                 },
             });
