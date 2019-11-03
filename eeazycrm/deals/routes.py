@@ -42,6 +42,14 @@ def get_deals_view():
         return render_template("deals/deals_list.html", title="Deals View", deals=deals_list)
 
 
+@deals.route("/deals/<int:deal_id>")
+@login_required
+@check_access('deals', 'view')
+def get_deal_view(deal_id):
+    deal = Deal.query.filter_by(id=deal_id).first()
+    return render_template("deals/deal_view.html", title="Deal View", deal=deal)
+
+
 @deals.route("/deals/new", methods=['GET', 'POST'])
 @login_required
 @check_access('deals', 'create')

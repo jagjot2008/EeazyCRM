@@ -3,6 +3,9 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
         <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary mr-2" role="button" href="{{ url_for('deals.get_deals_view') }}?view_t=kanban">
+                <span data-feather="trello"></span>
+            </a>
             {% if current_user.is_admin %}
             <a class="btn btn-sm btn-outline-secondary mr-2" role="button" href="{{ url_for('leads.import_bulk_leads') }}">
                 <span data-feather="upload"></span>
@@ -43,7 +46,7 @@
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="trash"></span>
                         </a>
-                        <a href="#"
+                        <a href="{{ url_for('deals.get_deal_view', deal_id=deal.id) }}"
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="arrow-up-right"></span>
                         </a>

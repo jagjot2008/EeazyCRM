@@ -1,68 +1,71 @@
-<div class="row">
-    <div class="col-md-2 offset-md-6">
-        <div class="form-group row justify-content-end">
-            <span style="padding-top: 7px; padding-right: 8px;">Showing</span>
-            <select class="form-control form-control-sm col-md-4 mt-1 pg_per_page" id="perpage">
-                <option {{
-                'selected' if items.items|length==10 }} value="{{ url_for(view_id, per_page=10)
-                }}">10</option>
-                <option {{
-                'selected' if items.items|length==20 }} value="{{ url_for(view_id, per_page=20)
-                }}">20</option>
-                <option {{
-                'selected' if items.items|length==30 }} value="{{ url_for(view_id, per_page=30)
-                }}">30</option>
-                <option {{
-                'selected' if items.items|length==40 }} value="{{ url_for(view_id, per_page=40)
-                }}">40</option>
-                <option {{
-                'selected' if items.items|length==50 }} value="{{ url_for(view_id, per_page=50)
-                }}">50</option>
-                <option {{
-                'selected' if items.items|length==100 }} value="{{ url_for(view_id, per_page=100)
-                }}">100</option>
-            </select>
-            <span style="padding-top:7px; padding-left: 8px;">of {{ items.total }}</span>
+<div class="page-items">
+    <div class="row">
+        <div class="col-md-2 offset-md-6">
+            <div class="form-group row justify-content-end">
+                <span style="padding-top: 7px; padding-right: 8px;">Showing</span>
+                <select class="form-control form-control-sm col-md-4 mt-1 pg_per_page" id="perpage">
+                    <option {{
+                    'selected' if items.items|length==10 }} value="{{ url_for(view_id, per_page=10)
+                    }}">10</option>
+                    <option {{
+                    'selected' if items.items|length==20 }} value="{{ url_for(view_id, per_page=20)
+                    }}">20</option>
+                    <option {{
+                    'selected' if items.items|length==30 }} value="{{ url_for(view_id, per_page=30)
+                    }}">30</option>
+                    <option {{
+                    'selected' if items.items|length==40 }} value="{{ url_for(view_id, per_page=40)
+                    }}">40</option>
+                    <option {{
+                    'selected' if items.items|length==50 }} value="{{ url_for(view_id, per_page=50)
+                    }}">50</option>
+                    <option {{
+                    'selected' if items.items|length==100 }} value="{{ url_for(view_id, per_page=100)
+                    }}">100</option>
+                </select>
+                <span style="padding-top:7px; padding-left: 8px;">of {{ items.total }}</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for(view_id, page=items.prev_num, per_page=items.per_page) }}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page_num in items.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                    {% if items.page == page_num %}
+                    <li class="page-item active">
+                        <a class="page-link"
+                           href="{{ url_for(view_id, page=page_num, per_page=items.per_page) }}">{{ page_num }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ url_for(view_id, page=page_num, per_page=items.per_page) }}">{{ page_num }}</a>
+                    </li>
+                    {% endif %}
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#"> ... </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for(view_id, page=items.next_num, per_page=items.per_page) }}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
-    <div class="col-md-4">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                <li class="page-item">
-                    <a class="page-link" href="{{ url_for(view_id, page=items.prev_num, per_page=items.per_page) }}"
-                       aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                {% for page_num in items.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                {% if page_num %}
-                {% if items.page == page_num %}
-                <li class="page-item active">
-                    <a class="page-link"
-                       href="{{ url_for(view_id, page=page_num, per_page=items.per_page) }}">{{ page_num }}</a>
-                </li>
-                {% else %}
-                <li class="page-item">
-                    <a class="page-link"
-                       href="{{ url_for(view_id, page=page_num, per_page=items.per_page) }}">{{ page_num }}</a>
-                </li>
-                {% endif %}
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="#"> ... </a>
-                </li>
-                {% endif %}
-                {% endfor %}
-                <li class="page-item">
-                    <a class="page-link" href="{{ url_for(view_id, page=items.next_num, per_page=items.per_page) }}"
-                       aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
 </div>
+
 <script type="text/javascript">
    $(document).ready(function () {
        $('.pg_per_page').on('change', function() {

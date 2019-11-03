@@ -7,7 +7,7 @@ from flask import render_template, flash, url_for, redirect, request
 
 from eeazycrm import db
 from .models import Lead
-from .forms import NewLead, ImportLeads
+from .forms import NewLead, ImportLeads, ConvertLead
 
 from eeazycrm.rbac import check_access
 
@@ -74,12 +74,45 @@ def get_lead_view(lead_id):
     return render_template("leads/lead_view.html", title="View Lead", lead=lead)
 
 
-@leads.route("/leads/convert/<int:lead_id>")
+@leads.route("/leads/convert/<int:lead_id>", methods=['GET', 'POST'])
 @login_required
 @check_access('leads', 'view')
+@check_access('accounts', 'create')
+@check_access('contacts', 'create')
+@check_access('deals', 'create')
 def convert_lead(lead_id):
     lead = Lead.query.filter_by(id=lead_id).first()
-    return render_template("leads/lead_convert.html", title="Covert Lead", lead=lead)
+    form = ConvertLead()
+    form.account_name.data = lead.company_name
+    form.account_email.data = lead.email
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            if form.use_account_information.data and form.use_contact_information.data:
+                # create both account and contact
+
+                pass
+            elif form.use_account_information.data and not form.use_contact_information.data:
+                # create account only (and contact if chosen from dropdown)
+                if not form.account_name.data:
+                    form.account_name.errors = ['Please enter account name']
+                if not form.account_name.data:
+                    form.account_email.errors = ['Please enter account email']
+            elif not form.use_account_information.data and form.use_contact_information.data:
+                pass
+                # create contact only (account dropdown must be selected)
+            elif not form.use_account_information.data and not form.use_contact_information.data:
+                # account must be selected in dropdown (and create contact if selected in dropdown)
+                if not form.accounts.data:
+                    form.accounts.errors = ['Please select an account']
+                pass
+
+            flash('Leads has been successfully converted!', 'success')
+        else:
+            flash('Your form has errors! Please check the fields', 'danger')
+    else:
+        form.title.data = lead.title
+    return render_template("leads/lead_convert.html", title="Convert Lead", lead=lead, form=form)
 
 
 @leads.route("/leads/import", methods=['GET', 'POST'])

@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="#" class="btn btn-md btn-outline-primary mr-2" role="button">
+                <span data-feather="edit-2"></span>
+                  Edit
+            </a>
+            <a href="{{ url_for('deals.get_deals_view') }}" class="btn btn-md btn-outline-secondary" role="button">
+                <span data-feather="arrow-left"></span>
+                  Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-10">
+            <ul class="list-group list-group-flush">
+
+                <li class="list-group-item g_field">
+                  <div class="label">Deal Title</div>
+                    <div class="text">{{ deal.title if deal.title else '_' }}</div>
+              </li>
+
+                <li class="list-group-item g_field col-12">
+                    <div class="row">
+                      <div class="col-6">
+                          <div class="label">Expected Close Price</div>
+                          <div class="text">{{ deal.expected_close_price if deal.expected_close_price else '_' }}</div>
+                      </div>
+                      <div class="col-6">
+                          <div class="label">Expected Close Date</div>
+                          <div class="text">{{ deal.expected_close_date.strftime('%d %B, %Y') if deal.expected_close_date else '_' }}</div>
+                      </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item g_field col-12">
+                    <div class="row">
+                      <div class="col-6">
+                          <div class="label">Account</div>
+                          <div class="text">
+                              {{ deal.account.name }}
+                          </div>
+                      </div>
+                      <div class="col-6">
+                          <div class="label">Contact Name</div>
+                          <div class="text">
+                              <span data-feather="user" class="mr-1"></span> {{ deal.contact.get_contact_name() if deal.contact else '_' }}
+                          </div>
+                      </div>
+                    </div>
+              </li>
+
+                <li class="list-group-item g_field">
+                  <div class="label">Owner</div>
+                    {% if deal.deal_owner %}
+                    <div class="text">
+                        <div class="mt-1">
+                            {% with owner=deal.deal_owner %}{% include 'common/owner_cell.html' %}{% endwith %}
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="text">_</div>
+                    {% endif %}
+              </li>
+
+                <li class="list-group-item g_field col-12">
+                    <div class="label">Notes</div>
+                    <div class="text">{{ deal.notes if deal.notes else '_' }}</div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    {% endblock %}
