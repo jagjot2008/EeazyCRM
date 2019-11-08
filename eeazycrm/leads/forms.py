@@ -6,7 +6,7 @@ from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, Email, Optional
 from wtforms_sqlalchemy.fields import QuerySelectField
 
-from eeazycrm.leads.models import LeadSource
+from eeazycrm.leads.models import LeadSource, LeadStatus
 from eeazycrm.users.models import User
 from eeazycrm.accounts.models import Account
 from eeazycrm.contacts.models import Contact
@@ -18,10 +18,11 @@ def lead_source_query():
 
 
 class NewLead(FlaskForm):
-    title = StringField('Lead Title')
+    title = StringField('Lead Title', validators=[DataRequired(message='Lead title is mandatory')])
     first_name = StringField('First Name')
     last_name = StringField('Last Name')
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[
+        DataRequired(message='Email address is mandatory'), Email(message='Invalid Email Address!')])
     company = StringField('Company Name')
     address_line = StringField('Address')
     addr_state = StringField('State')
@@ -31,6 +32,9 @@ class NewLead(FlaskForm):
     notes = StringField('Notes', widget=TextArea())
     lead_source = QuerySelectField(query_factory=lead_source_query, get_pk=lambda a: a.id,
                                    get_label='source_name', allow_blank=True, blank_text='Select Lead Source')
+
+    lead_status = QuerySelectField(query_factory=LeadStatus.lead_status_query, get_pk=lambda a: a.id,
+                                   get_label='status_name', allow_blank=True, blank_text='Select Lead Status')
 
     assignees = QuerySelectField('Assign To', query_factory=User.user_list_query, get_pk=lambda a: a.id,
                                  get_label=User.get_label, default=User.get_current_user)
