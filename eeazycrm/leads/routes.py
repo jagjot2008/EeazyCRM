@@ -1,13 +1,14 @@
 import pandas as pd
 from sqlalchemy import or_
+from sqlalchemy import text
 
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 
 from eeazycrm import db
 from .models import Lead
-from .forms import NewLead, ImportLeads, ConvertLead
+from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads
 
 from eeazycrm.rbac import check_access
 
@@ -26,7 +27,8 @@ def new_lead():
                         email=form.email.data, company_name=form.company.data,
                         address_line=form.address_line.data, addr_state=form.addr_state.data,
                         addr_city=form.addr_city.data, post_code=form.post_code.data,
-                        country=form.country.data, source=form.lead_source.data, notes=form.notes.data)
+                        country=form.country.data, source=form.lead_source.data,
+                        status=form.lead_status.data, notes=form.notes.data)
 
             if current_user.role.name == 'admin':
                 lead.owner = form.assignees.data
@@ -44,26 +46,48 @@ def new_lead():
     return render_template("leads/new_lead.html", title="New Lead", form=form)
 
 
-@leads.route("/leads")
+@leads.route("/leads", methods=['GET', 'POST'])
 @login_required
 @check_access('leads', 'view')
 def get_leads_view():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
-    search = request.args.get('sq', None, type=str)
-    search = f'%{search}%' if search else search
+    filters = FilterLeads()
 
-    leads_list = Lead.query\
-        .filter(or_(
-            Lead.first_name.ilike(search),
-            Lead.last_name.ilike(search),
-            Lead.email.ilike(search),
-            Lead.company_name.ilike(search)
-        ) if search else True)\
-        .order_by(Lead.date_created.desc())\
-        .paginate(per_page=per_page, page=page)
-
-    return render_template("leads/leads_list.html", title="Leads View", leads=leads_list)
+    if request.method == 'POST':
+        lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
+        lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
+        if isinstance(filters.assignees.data, list):
+            print(filters.assignees.data)
+            owners = tuple(map(lambda user: user.id, filters.assignees.data))
+        else:
+            filters.assignees.data = [current_user]
+            owners = tuple([current_user.id])
+        search = f'%{filters.txt_search.data}%'
+        query = Lead.query \
+            .filter(or_(
+                Lead.title.ilike(search),
+                Lead.first_name.ilike(search),
+                Lead.last_name.ilike(search),
+                Lead.email.ilike(search),
+                Lead.company_name.ilike(search)
+            ) if search else True) \
+            .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
+            .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
+            .filter(Lead.owner_id.in_(owners)) \
+            .order_by(Lead.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
+    else:
+        if current_user.role.name == 'admin':
+            query = Lead.query \
+                .order_by(Lead.date_created.desc()) \
+                .paginate(per_page=per_page, page=page)
+        else:
+            query = Lead.query \
+                .filter_by(owner_id=current_user.id) \
+                .order_by(Lead.date_created.desc()) \
+                .paginate(per_page=per_page, page=page)
+    return render_template("leads/leads_list.html", title="Leads View", leads=query, filters=filters)
 
 
 @leads.route("/leads/<int:lead_id>")

@@ -15,6 +15,7 @@
             </a>
         </div>
     </div>
+    {% include "leads/filters.html" %}
     {% if leads.items|length > 0 %}
         <div class="table-responsive">
             <table class="table table-striped table-hover fixed-layout-table">
@@ -31,6 +32,7 @@
                     <th width="250" scope="col">Company Name</th>
                     <th width="250" scope="col">Owner</th>
                     <th width="200" scope="col">Lead Source</th>
+                     <th width="200" scope="col">Lead Status</th>
                     <th width="200" scope="col">Date Created</th>
                 </tr>
               </thead>
@@ -59,6 +61,7 @@
                     <td>{{ lead.company_name }}</td>
                     <td>{% with owner=lead.owner %}{% include 'common/owner_cell.html' %}{% endwith %}</td>
                     <td>{{ lead.source.source_name }}</td>
+                    <td>{{ lead.status.status_name }}</td>
                     <td>{{ lead.date_created.strftime('%Y-%m-%d') if lead.date_created }}</td>
                 </tr>
                 {% endfor %}

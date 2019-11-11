@@ -4,7 +4,7 @@ from wtforms.fields.html5 import DateField
 from wtforms import StringField, SubmitField, FloatField, BooleanField
 from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, Email, Optional
-from wtforms_sqlalchemy.fields import QuerySelectField
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
 from eeazycrm.leads.models import LeadSource, LeadStatus
 from eeazycrm.users.models import User
@@ -39,6 +39,17 @@ class NewLead(FlaskForm):
     assignees = QuerySelectField('Assign To', query_factory=User.user_list_query, get_pk=lambda a: a.id,
                                  get_label=User.get_label, default=User.get_current_user)
     submit = SubmitField('Create New Lead')
+
+
+class FilterLeads(FlaskForm):
+    txt_search = StringField()
+    lead_source = QuerySelectMultipleField(query_factory=lead_source_query, get_pk=lambda a: a.id,
+                                           get_label='source_name', allow_blank=False)
+    lead_status = QuerySelectMultipleField(query_factory=LeadStatus.lead_status_query, get_pk=lambda a: a.id,
+                                            get_label='status_name', allow_blank=False)
+    assignees = QuerySelectMultipleField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
+                                            get_label=User.get_label, default=[User.get_current_user])
+    submit = SubmitField('Filter Leads')
 
 
 class ImportLeads(FlaskForm):

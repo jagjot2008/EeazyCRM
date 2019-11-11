@@ -21,6 +21,10 @@ class LeadSource(db.Model):
     leads = db.relationship('Lead', backref='source', lazy=True)
 
     @staticmethod
+    def get_by_id(lead_source_id):
+        return LeadSource.query.filter_by(id=lead_source_id).first()
+
+    @staticmethod
     def lead_source_query():
         return LeadSource.query
 
@@ -48,3 +52,4 @@ class Lead(db.Model):
 
     def __repr__(self):
         return f"Lead('{self.last_name}', '{self.email}', '{self.company_name}')"
+
