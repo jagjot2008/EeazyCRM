@@ -21,8 +21,7 @@
                 {% if current_user.role.name == 'admin' %}
                 <div class="col-md-3">
                     <div class="form-group text-left">
-                        {{ filters.assignees(class="my-select form-control",
-                            multiple=True, title="Select Owner") }}
+                        {{ filters.assignees(class="my-select form-control") }}
                     </div>
                 </div>
                 {% endif %}

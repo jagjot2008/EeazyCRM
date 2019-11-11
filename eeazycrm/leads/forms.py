@@ -47,8 +47,8 @@ class FilterLeads(FlaskForm):
                                            get_label='source_name', allow_blank=False)
     lead_status = QuerySelectMultipleField(query_factory=LeadStatus.lead_status_query, get_pk=lambda a: a.id,
                                             get_label='status_name', allow_blank=False)
-    assignees = QuerySelectMultipleField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
-                                            get_label=User.get_label, default=[User.get_current_user])
+    assignees = QuerySelectField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
+                                 get_label=User.get_label, allow_blank=True, blank_text='[-- Select Owner --]')
     submit = SubmitField('Filter Leads')
 
 

@@ -2,35 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Bold.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Light.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Light.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Light.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Medium.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Medium.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Medium.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Regular.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Thin.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Thin.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/font/roboto/Roboto-Thin.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/static/scripts/popper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/filters.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/leads/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/leads/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/leads/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/leads/filters.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/filters.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

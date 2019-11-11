@@ -57,13 +57,14 @@ def get_leads_view():
     if request.method == 'POST':
         lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
         lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
-        if isinstance(filters.assignees.data, list):
-            print(filters.assignees.data)
-            owners = tuple(map(lambda user: user.id, filters.assignees.data))
+
+        if current_user.role.name == 'admin':
+            owner = text('Lead.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
         else:
-            filters.assignees.data = [current_user]
-            owners = tuple([current_user.id])
+            owner = text('Lead.owner_id=%d' % current_user.id)
+
         search = f'%{filters.txt_search.data}%'
+
         query = Lead.query \
             .filter(or_(
                 Lead.title.ilike(search),
@@ -74,19 +75,15 @@ def get_leads_view():
             ) if search else True) \
             .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
             .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
-            .filter(Lead.owner_id.in_(owners)) \
+            .filter(owner) \
             .order_by(Lead.date_created.desc()) \
             .paginate(per_page=per_page, page=page)
     else:
-        if current_user.role.name == 'admin':
-            query = Lead.query \
-                .order_by(Lead.date_created.desc()) \
-                .paginate(per_page=per_page, page=page)
-        else:
-            query = Lead.query \
-                .filter_by(owner_id=current_user.id) \
-                .order_by(Lead.date_created.desc()) \
-                .paginate(per_page=per_page, page=page)
+        owner = True if current_user.role.name == 'admin' else text('Lead.owner_id=%d' % current_user.id)
+        query = Lead.query \
+            .filter(owner) \
+            .order_by(Lead.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
     return render_template("leads/leads_list.html", title="Leads View", leads=query, filters=filters)
 
 
