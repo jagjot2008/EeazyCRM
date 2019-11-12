@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/leads/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/leads/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/templates/leads/filters.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/filters.html" afterDir="false" />

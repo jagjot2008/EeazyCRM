@@ -54,9 +54,7 @@ def get_leads_view():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     filters = FilterLeads()
-
     today = date.today()
-    print((today - timedelta(1)).strftime('%Y-%m-%d'))
 
     if request.method == 'POST':
         lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
@@ -68,16 +66,26 @@ def get_leads_view():
         else:
             owner = text('Lead.owner_id=%d' % current_user.id)
 
-        if filters.advanced.data:
-            if filters.advanced.data['title'] == 'Unassigned':
+        if filters.advanced_admin.data:
+            if filters.advanced_admin.data['title'] == 'Unassigned':
                 owner = text('Lead.owner_id IS NULL')
-            elif filters.advanced.data['title'] == 'Created Today':
+            elif filters.advanced_admin.data['title'] == 'Created Today':
                 date_today_filter = text("Date(Lead.date_created)='%s'" % today)
-            elif filters.advanced.data['title'] == 'Created Yesterday':
+            elif filters.advanced_admin.data['title'] == 'Created Yesterday':
                 date_today_filter = text("Date(Lead.date_created)='%s'" % (today - timedelta(1)))
-            elif filters.advanced.data['title'] == 'Created In Last 7 Days':
+            elif filters.advanced_admin.data['title'] == 'Created In Last 7 Days':
                 date_today_filter = text("Date(Lead.date_created) > current_date - interval '7' day")
-            elif filters.advanced.data['title'] == 'Created In Last 30 Days':
+            elif filters.advanced_admin.data['title'] == 'Created In Last 30 Days':
+                date_today_filter = text("Date(Lead.date_created) > current_date - interval '30' day")
+
+        if filters.advanced_user.data:
+            if filters.advanced_user.data['title'] == 'Created Today':
+                date_today_filter = text("Date(Lead.date_created)='%s'" % today)
+            elif filters.advanced_user.data['title'] == 'Created Yesterday':
+                date_today_filter = text("Date(Lead.date_created)='%s'" % (today - timedelta(1)))
+            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
+                date_today_filter = text("Date(Lead.date_created) > current_date - interval '7' day")
+            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
                 date_today_filter = text("Date(Lead.date_created) > current_date - interval '30' day")
 
         search = f'%{filters.txt_search.data}%'
