@@ -6,20 +6,20 @@
                 <div class="col-md-3 pl-0">
                     {{ filters.txt_search(class="form-control from-control-lg", placeholder="search ...") }}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pl-0">
                     <div class="form-group text-left">
                         {{ filters.lead_source(class="my-select form-control",
                             multiple=True, title="Select Lead Source") }}
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pl-0">
                     <div class="form-group text-left">
                         {{ filters.lead_status(class="my-select form-control",
                             multiple=True, title="Select Lead Status") }}
                     </div>
                 </div>
                 {% if current_user.role.name == 'admin' %}
-                <div class="col-md-3">
+                <div class="col-md-3 pl-0">
                     <div class="form-group text-left">
                         {{ filters.assignees(class="my-select form-control") }}
                     </div>
@@ -29,9 +29,16 @@
         </div>
         <div class="btn-toolbar mb-1 mb-md-0">
             <div class="col-md-3 pl-0">
+                <div class="form-group text-left">
+                     {{ filters.advanced(class="my-select form-control") }}
+                </div>
+            </div>
+            <div class="col-md-3 pl-0">
                 {{ filters.submit(class="btn btn-md btn-outline-info mr-2") }}
+                <a href="{{ url_for('leads.get_leads_view') }}" class="btn btn-md btn-outline-secondary" role="button">
+                    <span data-feather="x-circle"></span>
+                </a>
             </div>
         </div>
     </div>
-
 </form>

@@ -46,9 +46,18 @@ class FilterLeads(FlaskForm):
     lead_source = QuerySelectMultipleField(query_factory=lead_source_query, get_pk=lambda a: a.id,
                                            get_label='source_name', allow_blank=False)
     lead_status = QuerySelectMultipleField(query_factory=LeadStatus.lead_status_query, get_pk=lambda a: a.id,
-                                            get_label='status_name', allow_blank=False)
+                                    get_label='status_name', allow_blank=False)
     assignees = QuerySelectField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
                                  get_label=User.get_label, allow_blank=True, blank_text='[-- Select Owner --]')
+    advanced = QuerySelectField(query_factory=lambda: [
+            {'id': 1, 'title': 'Unassigned'},
+            {'id': 2, 'title': 'Created Today'},
+            {'id': 3, 'title': 'Created Yesterday'},
+            {'id': 4, 'title': 'Created In Last 7 Days'},
+            {'id': 5, 'title': 'Created In Last 30 Days'}
+    ],
+                                get_pk=lambda a: a['id'], get_label=lambda a: a['title'],
+                                allow_blank=True, blank_text='[-- advanced filter --]')
     submit = SubmitField('Filter Leads')
 
 

@@ -2,13 +2,14 @@ import pandas as pd
 from sqlalchemy import or_
 from sqlalchemy import text
 
-from flask import Blueprint, jsonify
+from flask import Blueprint
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 
 from eeazycrm import db
 from .models import Lead
 from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads
+from datetime import date, timedelta
 
 from eeazycrm.rbac import check_access
 
@@ -54,14 +55,30 @@ def get_leads_view():
     per_page = request.args.get('per_page', 10, type=int)
     filters = FilterLeads()
 
+    today = date.today()
+    print((today - timedelta(1)).strftime('%Y-%m-%d'))
+
     if request.method == 'POST':
         lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
         lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
+        date_today_filter = True
 
         if current_user.role.name == 'admin':
             owner = text('Lead.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
         else:
             owner = text('Lead.owner_id=%d' % current_user.id)
+
+        if filters.advanced.data:
+            if filters.advanced.data['title'] == 'Unassigned':
+                owner = text('Lead.owner_id IS NULL')
+            elif filters.advanced.data['title'] == 'Created Today':
+                date_today_filter = text("Date(Lead.date_created)='%s'" % today)
+            elif filters.advanced.data['title'] == 'Created Yesterday':
+                date_today_filter = text("Date(Lead.date_created)='%s'" % (today - timedelta(1)))
+            elif filters.advanced.data['title'] == 'Created In Last 7 Days':
+                date_today_filter = text("Date(Lead.date_created) > current_date - interval '7' day")
+            elif filters.advanced.data['title'] == 'Created In Last 30 Days':
+                date_today_filter = text("Date(Lead.date_created) > current_date - interval '30' day")
 
         search = f'%{filters.txt_search.data}%'
 
@@ -76,6 +93,7 @@ def get_leads_view():
             .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
             .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
             .filter(owner) \
+            .filter(date_today_filter) \
             .order_by(Lead.date_created.desc()) \
             .paginate(per_page=per_page, page=page)
     else:
