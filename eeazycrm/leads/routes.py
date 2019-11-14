@@ -1,6 +1,5 @@
 import pandas as pd
-from sqlalchemy import or_
-from sqlalchemy import text
+from sqlalchemy import or_, text
 
 from flask import Blueprint
 from flask_login import current_user, login_required

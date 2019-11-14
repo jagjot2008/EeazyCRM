@@ -1,37 +1,75 @@
 from flask import Blueprint
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
-from sqlalchemy import or_
+from sqlalchemy import or_, text
+from datetime import date, timedelta
 
 from eeazycrm import db
 from .models import Account
-from .forms import NewAccount
+from .forms import NewAccount, FilterAccounts
 
 from eeazycrm.rbac import check_access
 
 accounts = Blueprint('accounts', __name__)
 
 
-@accounts.route("/accounts")
+@accounts.route("/accounts", methods=['GET', 'POST'])
 @login_required
 @check_access('accounts', 'view')
 def get_accounts_view():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
-    search = request.args.get('sq', None, type=str)
-    search = f'%{search}%' if search else search
+    filters = FilterAccounts()
 
-    accounts_list = Account.query\
-        .filter(or_(
+    if request.method == 'POST':
+        today = date.today()
+        date_today_filter = True
+        active = True
+        if current_user.role.name == 'admin':
+            owner = text('Account.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
+        else:
+            owner = text('Account.owner_id=%d' % current_user.id)
+
+        if filters.advanced_user.data:
+            if filters.advanced_user.data['title'] == 'Active':
+                active = text("Account.is_active=True")
+            elif filters.advanced_user.data['title'] == 'Inactive':
+                active = text("Account.is_active=False")
+            elif filters.advanced_user.data['title'] == 'Created Today':
+                date_today_filter = text("Date(Account.date_created)='%s'" % today)
+            elif filters.advanced_user.data['title'] == 'Created Yesterday':
+                date_today_filter = text("Date(Account.date_created)='%s'" % (today - timedelta(1)))
+            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
+                date_today_filter = text("Date(Account.date_created) > current_date - interval '7' day")
+            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
+                date_today_filter = text("Date(Account.date_created) > current_date - interval '30' day")
+
+        search = f'%{filters.txt_search.data}%'
+
+        query = Account.query.filter(or_(
             Account.name.ilike(search),
             Account.website.ilike(search),
             Account.email.ilike(search),
-            Account.address_line.ilike(search)
-        ) if search else True)\
-        .order_by(Account.date_created.desc())\
-        .paginate(per_page=per_page, page=page)
+            Account.phone.ilike(search),
+            Account.address_line.ilike(search),
+            Account.addr_state.ilike(search),
+            Account.addr_city.ilike(search),
+            Account.post_code.ilike(search)
+        ) if search else True) \
+            .filter(owner) \
+            .filter(active) \
+            .filter(date_today_filter) \
+            .order_by(Account.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
+    else:
+        owner = True if current_user.role.name == 'admin' else text('Account.owner_id=%d' % current_user.id)
+        query = Account.query \
+            .filter(owner) \
+            .order_by(Account.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
 
-    return render_template("accounts/accounts_list.html", title="Accounts View", accounts=accounts_list)
+    return render_template("accounts/accounts_list.html", title="Accounts View",
+                           accounts=query, filters=filters)
 
 
 @accounts.route("/accounts/<int:account_id>")
