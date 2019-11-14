@@ -1,11 +1,12 @@
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request, Blueprint
 import json
-from sqlalchemy import or_
+from sqlalchemy import or_, text
+from datetime import date, timedelta
 
 from eeazycrm import db
 from .models import Contact
-from .forms import NewContact
+from .forms import NewContact, FilterContacts
 from eeazycrm.users.utils import upload_avatar
 
 from eeazycrm.rbac import check_access
@@ -13,26 +14,60 @@ from eeazycrm.rbac import check_access
 contacts = Blueprint('contacts', __name__)
 
 
-@contacts.route("/contacts")
+@contacts.route("/contacts", methods=['GET', 'POST'])
 @login_required
 @check_access('contacts', 'view')
 def get_contacts_view():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
-    search = request.args.get('sq', None, type=str)
-    search = f'%{search}%' if search else search
+    filters = FilterContacts()
 
-    contacts_list = Contact.query\
-        .filter(or_(
-            Contact.name.ilike(search),
-            Contact.website.ilike(search),
+    if request.method == 'POST':
+        today = date.today()
+        date_today_filter = True
+        if current_user.role.name == 'admin':
+            owner = text('Contact.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
+        else:
+            owner = text('Contact.owner_id=%d' % current_user.id)
+
+        account = text('Contact.account_id=%d' % filters.accounts.data.id) if filters.accounts.data else True
+
+        if filters.advanced_user.data:
+            if filters.advanced_user.data['title'] == 'Created Today':
+                date_today_filter = text("Date(Contact.date_created)='%s'" % today)
+            elif filters.advanced_user.data['title'] == 'Created Yesterday':
+                date_today_filter = text("Date(Contact.date_created)='%s'" % (today - timedelta(1)))
+            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
+                date_today_filter = text("Date(Contact.date_created) > current_date - interval '7' day")
+            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
+                date_today_filter = text("Date(Contact.date_created) > current_date - interval '30' day")
+
+        search = f'%{filters.txt_search.data}%'
+
+        query = Contact.query.filter(or_(
+            Contact.first_name.ilike(search),
+            Contact.last_name.ilike(search),
             Contact.email.ilike(search),
-            Contact.address_line.ilike(search)
-        ) if search else True)\
-        .order_by(Contact.date_created.desc())\
-        .paginate(per_page=per_page, page=page)
+            Contact.phone.ilike(search),
+            Contact.mobile.ilike(search),
+            Contact.address_line.ilike(search),
+            Contact.addr_state.ilike(search),
+            Contact.addr_city.ilike(search),
+            Contact.post_code.ilike(search)
+        ) if search else True) \
+            .filter(account) \
+            .filter(owner) \
+            .filter(date_today_filter) \
+            .order_by(Contact.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
+    else:
+        owner = True if current_user.role.name == 'admin' else text('Contact.owner_id=%d' % current_user.id)
+        query = Contact.query \
+            .filter(owner) \
+            .order_by(Contact.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
 
-    return render_template("contacts/contacts_list.html", title="Contacts View", contacts=contacts_list)
+    return render_template("contacts/contacts_list.html", title="Contacts View", contacts=query, filters=filters)
 
 
 @contacts.route("/contacts/acc/<int:account_id>")

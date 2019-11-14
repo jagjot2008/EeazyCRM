@@ -1,5 +1,6 @@
 from datetime import datetime
 from eeazycrm import db
+from flask_login import current_user
 
 
 class Account(db.Model):
@@ -34,7 +35,10 @@ class Account(db.Model):
 
     @staticmethod
     def account_list_query():
-        return Account.query
+        if current_user.role.name == 'admin':
+            return Account.query
+        else:
+            return Account.query.filter_by(owner_id=current_user.id)
 
     @staticmethod
     def get_label(account):
