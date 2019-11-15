@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField
-from wtforms.fields.html5 import DateField
+from wtforms.fields.html5 import DateTimeLocalField
 from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, Optional
 from wtforms_sqlalchemy.fields import QuerySelectField
@@ -15,7 +15,7 @@ class NewDeal(FlaskForm):
     title = StringField('Deal Title', validators=[DataRequired('Deal title is mandatory')])
     expected_close_price = FloatField('Expected Close Price',
                                       validators=[DataRequired('Expected Close Price is mandatory')])
-    expected_close_date = DateField('Expected Close Date', format='%Y-%m-%d',
+    expected_close_date = DateTimeLocalField('Expected Close Date', format='%Y-%m-%dT%H:%M',
                                     validators=[Optional()])
     deal_stages = QuerySelectField('Deal Stage', query_factory=DealStage.deal_stage_list_query, get_pk=lambda a: a.id,
                                  get_label=DealStage.get_label, allow_blank=False,

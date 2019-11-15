@@ -36,14 +36,23 @@ def get_deals_view():
         contact = text('Deal.contact_id=%d' % filters.contacts.data.id) if filters.contacts.data else True
 
         if filters.advanced_user.data:
-            if filters.advanced_user.data['title'] == 'Created Today':
-                date_today_filter = text("Date(Contact.date_created)='%s'" % today)
+            if filters.advanced_user.data['title'] == 'All Expired Deals':
+                date_today_filter = text("current_timestamp > Deal.expected_close_date")
+            elif filters.advanced_user.data['title'] == 'All Active Deals':
+                date_today_filter = text("current_timestamp <= Deal.expected_close_date OR "
+                                         "Date(Deal.expected_close_date) IS NULL")
+            elif filters.advanced_user.data['title'] == 'Deals Expiring Today':
+                date_today_filter = text("expected_close_date "
+                                         "BETWEEN date_trunc('day', current_timestamp) AND "
+                                         "date_trunc('day', current_timestamp) + interval '1 day' - interval '1 second'")
+            elif filters.advanced_user.data['title'] == 'Created Today':
+                date_today_filter = text("date(Deal.date_created)='%s'" % today)
             elif filters.advanced_user.data['title'] == 'Created Yesterday':
-                date_today_filter = text("Date(Contact.date_created)='%s'" % (today - timedelta(1)))
+                date_today_filter = text("date(Deal.date_created)='%s'" % (today - timedelta(1)))
             elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
-                date_today_filter = text("Date(Contact.date_created) > current_date - interval '7' day")
+                date_today_filter = text("date(Deal.date_created) > current_date - interval '7' day")
             elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
-                date_today_filter = text("Date(Contact.date_created) > current_date - interval '30' day")
+                date_today_filter = text("date(Deal.date_created) > current_date - interval '30' day")
 
         search = f'%{filters.txt_search.data}%'
 

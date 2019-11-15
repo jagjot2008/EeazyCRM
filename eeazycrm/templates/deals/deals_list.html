@@ -29,8 +29,8 @@
                   </th>
                     <th width="250"></th>
                     <th width="300" scope="col">Title</th>
-                  <th width="150" scope="col">Expected Close Price</th>
-                  <th width="150" scope="col">Expected Close Date</th>
+                  <th width="200" scope="col">Expected Close Price</th>
+                  <th width="200" scope="col">Expected Close Date</th>
                   <th width="300" scope="col">Account</th>
                     <th width="250" scope="col">Contact</th>
                     <th width="200" scope="col">Deal Stage</th>
@@ -58,7 +58,7 @@
                     </th>
                     <td>{{ deal.title }}</td>
                   <td>$ {{ deal.expected_close_price }}</td>
-                  <td>{{ deal.expected_close_date.strftime('%Y-%m-%d') if deal.expected_close_date }}</td>
+                  <td>{{ deal.expected_close_date.strftime('%Y-%m-%d %I:%M %p').lower() if deal.expected_close_date }}</td>
                     <td>{{ deal.account.name }}</td>
                     <td>{{ deal.contact.first_name }} {{ deal.contact.last_name }}</td>
                      <td>{{ deal.dealstage.stage_name }}</td>
