@@ -1,45 +1,74 @@
 from flask import Blueprint
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
-from sqlalchemy import or_
+from sqlalchemy import or_, text
+from datetime import date, timedelta
 import json
 
 from eeazycrm import db
 from .models import Deal, DealStage
 from eeazycrm.accounts.models import Account
-from .forms import NewDeal
+from .forms import NewDeal, FilterDeals
 
 from eeazycrm.rbac import check_access
 
 deals = Blueprint('deals', __name__)
 
 
-@deals.route("/deals")
+@deals.route("/deals", methods=['GET', 'POST'])
 @login_required
 @check_access('deals', 'view')
 def get_deals_view():
     view_t = request.args.get('view_t', 'list', type=str)
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
-    search = request.args.get('sq', None, type=str)
-    search = f'%{search}%' if search else search
+    filters = FilterDeals()
 
-    deals_list = Deal.query\
-        .filter(or_(
-            Deal.name.ilike(search),
-            Deal.website.ilike(search),
-            Deal.email.ilike(search),
-            Deal.address_line.ilike(search)
-        ) if search else True)\
-        .order_by(Deal.date_created.desc())\
-        .paginate(per_page=per_page, page=page)
+    if request.method == 'POST':
+        today = date.today()
+        date_today_filter = True
+        if current_user.role.name == 'admin':
+            owner = text('Deal.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
+        else:
+            owner = text('Deal.owner_id=%d' % current_user.id)
+
+        account = text('Deal.account_id=%d' % filters.accounts.data.id) if filters.accounts.data else True
+        contact = text('Deal.contact_id=%d' % filters.contacts.data.id) if filters.contacts.data else True
+
+        if filters.advanced_user.data:
+            if filters.advanced_user.data['title'] == 'Created Today':
+                date_today_filter = text("Date(Contact.date_created)='%s'" % today)
+            elif filters.advanced_user.data['title'] == 'Created Yesterday':
+                date_today_filter = text("Date(Contact.date_created)='%s'" % (today - timedelta(1)))
+            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
+                date_today_filter = text("Date(Contact.date_created) > current_date - interval '7' day")
+            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
+                date_today_filter = text("Date(Contact.date_created) > current_date - interval '30' day")
+
+        search = f'%{filters.txt_search.data}%'
+
+        query = Deal.query.filter(or_(
+            Deal.title.ilike(search)
+        ) if search else True) \
+            .filter(account) \
+            .filter(contact) \
+            .filter(owner) \
+            .filter(date_today_filter) \
+            .order_by(Deal.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
+    else:
+        owner = True if current_user.role.name == 'admin' else text('Contact.owner_id=%d' % current_user.id)
+        query = Deal.query \
+            .filter(owner) \
+            .order_by(Deal.date_created.desc()) \
+            .paginate(per_page=per_page, page=page)
 
     if view_t == 'kanban':
         return render_template("deals/kanban_view.html", title="Deals View",
-                               deals=deals_list,
+                               deals=query,
                                deal_stages=DealStage.query.order_by(DealStage.display_order.asc()).all())
     else:
-        return render_template("deals/deals_list.html", title="Deals View", deals=deals_list)
+        return render_template("deals/deals_list.html", title="Deals View", deals=query, filters=filters)
 
 
 @deals.route("/deals/<int:deal_id>")
