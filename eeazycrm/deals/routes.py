@@ -27,6 +27,8 @@ def get_deals_view():
     if request.method == 'POST':
         today = date.today()
         date_today_filter = True
+        price = True
+
         if current_user.role.name == 'admin':
             owner = text('Deal.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
         else:
@@ -45,6 +47,15 @@ def get_deals_view():
                 date_today_filter = text("expected_close_date "
                                          "BETWEEN date_trunc('day', current_timestamp) AND "
                                          "date_trunc('day', current_timestamp) + interval '1 day' - interval '1 second'")
+            elif filters.advanced_user.data['title'] == 'Deals Expiring In Next 7 Days':
+                date_today_filter = text("expected_close_date "
+                                         "BETWEEN date_trunc('day', current_timestamp) + interval '1 day' AND "
+                                         "date_trunc('day', current_timestamp) + interval '7 day' - interval '1 second'")
+            elif filters.advanced_user.data['title'] == 'Deals Expiring In Next 30 Days':
+                date_today_filter = text("expected_close_date "
+                                         "BETWEEN date_trunc('day', current_timestamp) + interval '1 day' AND "
+                                         "date_trunc('day', current_timestamp)"
+                                         " + interval '30 day' - interval '1 second'")
             elif filters.advanced_user.data['title'] == 'Created Today':
                 date_today_filter = text("date(Deal.date_created)='%s'" % today)
             elif filters.advanced_user.data['title'] == 'Created Yesterday':
@@ -54,13 +65,31 @@ def get_deals_view():
             elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
                 date_today_filter = text("date(Deal.date_created) > current_date - interval '30' day")
 
+        if filters.price_range.data:
+            if filters.price_range.data['title'] == '< 500':
+                price = text("expected_close_price < 500")
+            elif filters.price_range.data['title'] == '>= 500 and < 1000':
+                price = text("expected_close_price >= 500 and expected_close_price < 1000")
+            elif filters.price_range.data['title'] == '>= 1000 and < 10,000':
+                price = text("expected_close_price >= 1000 and expected_close_price < 10000")
+            elif filters.price_range.data['title'] == '>= 10,000 and < 50,000':
+                price = text("expected_close_price >= 10000 and expected_close_price < 50000")
+            elif filters.price_range.data['title'] == '>= 50,000 and < 100,000':
+                price = text("expected_close_price >= 50000 and expected_close_price < 100000")
+            elif filters.price_range.data['title'] == '>= 100,000':
+                price = text("expected_close_price >= 100000")
+
         search = f'%{filters.txt_search.data}%'
+
+        deal_stage = text("deal_stage_id=%s" % filters.deal_stages.data.id) if filters.deal_stages.data else True
 
         query = Deal.query.filter(or_(
             Deal.title.ilike(search)
         ) if search else True) \
             .filter(account) \
             .filter(contact) \
+            .filter(price) \
+            .filter(deal_stage) \
             .filter(owner) \
             .filter(date_today_filter) \
             .order_by(Deal.date_created.desc()) \

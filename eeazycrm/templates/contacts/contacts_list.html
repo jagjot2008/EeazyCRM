@@ -79,7 +79,7 @@
 
         <!-- pagination -->
         {% if contacts.total > 10 %}
-            {% with view_id="contacts.get_contacts_view", items=leads %}
+            {% with view_id="contacts.get_contacts_view", items=contacts %}
                 {% include "common/pagination.html" %}
             {% endwith %}
         {% endif %}

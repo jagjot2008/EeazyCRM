@@ -47,11 +47,11 @@ class FilterDeals(FlaskForm):
 
     price_range = QuerySelectField(query_factory=lambda: [
         {'id': 1, 'title': '< 500'},
-        {'id': 2, 'title': '500 - 1000'},
-        {'id': 3, 'title': '1000 - 10,000'},
-        {'id': 4, 'title': '10,000 - 50,000'},
-        {'id': 5, 'title': '50,000 - 100,000'},
-        {'id': 6, 'title': '> 100,000'},
+        {'id': 2, 'title': '>= 500 and < 1000'},
+        {'id': 3, 'title': '>= 1000 and < 10,000'},
+        {'id': 4, 'title': '>= 10,000 and < 50,000'},
+        {'id': 5, 'title': '>= 50,000 and < 100,000'},
+        {'id': 6, 'title': '>= 100,000'},
     ],
                                      get_pk=lambda a: a['id'],
                                      get_label=lambda a: a['title'],

@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, session
 from flask_login import current_user, login_user, logout_user
 from flask import render_template, flash, url_for, redirect, request
 
@@ -56,6 +56,7 @@ def register():
 @users.route("/logout")
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('users.login'))
 
 

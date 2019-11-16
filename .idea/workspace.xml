@@ -3,10 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/accounts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/accounts/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/accounts/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/accounts/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/contacts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/contacts/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/deals/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/deals/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/accounts/filters.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/accounts/filters.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/filters.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/filters.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/kanban_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/users/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/users/routes.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

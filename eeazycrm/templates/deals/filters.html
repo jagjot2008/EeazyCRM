@@ -4,7 +4,7 @@
         <div class="mb-2"><strong>Filters</strong></div>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="col-md-3 pl-0">
-                {{ filters.txt_search(class="form-control from-control-lg", placeholder="search contacts ...") }}
+                {{ filters.txt_search(class="form-control from-control-lg", placeholder="search deals ...") }}
             </div>
             <div class="col-md-3 pl-0">
                 <div class="form-group text-left">
@@ -28,6 +28,11 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group text-left">
                     {{ filters.price_range(class="my-select form-control") }}
+                </div>
+            </div>
+            <div class="col-md-3 pl-0">
+                <div class="form-group text-left">
+                    {{ filters.deal_stages(class="my-select form-control") }}
                 </div>
             </div>
             <div class="col-md-3 pl-0">

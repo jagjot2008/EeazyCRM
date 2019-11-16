@@ -35,6 +35,10 @@ class User(db.Model, UserMixin):
     def get_current_user():
         return User.query.filter_by(id=current_user.id).first()
 
+    @staticmethod
+    def get_by_id(user_id):
+        return User.query.filter_by(id=user_id).first()
+
     def get_name(self):
         return self.first_name + ' ' + self.last_name
 

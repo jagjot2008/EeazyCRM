@@ -115,7 +115,7 @@
 
         <!-- pagination -->
         {% if accounts.total > 10 %}
-            {% with view_id="leads.get_leads_view", items=leads %}
+            {% with view_id="accounts.get_accounts_view", items=accounts %}
                 {% include "common/pagination.html" %}
             {% endwith %}
         {% endif %}
