@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/eeazycrm/common/filters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/common/paginate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/accounts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/accounts/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/accounts/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/accounts/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/common/pagination.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/common/pagination.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,26 +19,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>get_</find>
-      <find>get_leads_view</find>
-      <find>url_for</find>
-      <find>BooleanField</find>
-      <find>leads</find>
-      <find>contact</find>
-    </findStrings>
-    <replaceStrings>
-      <replace />
-    </replaceStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

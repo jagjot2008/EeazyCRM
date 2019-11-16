@@ -25,18 +25,22 @@ class NewAccount(FlaskForm):
     submit = SubmitField('Create New Account')
 
 
-class FilterAccounts(FlaskForm):
-    txt_search = StringField()
-    assignees = QuerySelectField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
-                                 get_label=User.get_label, allow_blank=True, blank_text='[-- Select Owner --]')
-    advanced_user = QuerySelectField(query_factory=lambda: [
+def filter_accounts_adv_filters_query():
+    return [
         {'id': 1, 'title': 'Active'},
         {'id': 2, 'title': 'Inactive'},
         {'id': 3, 'title': 'Created Today'},
         {'id': 4, 'title': 'Created Yesterday'},
         {'id': 5, 'title': 'Created In Last 7 Days'},
         {'id': 6, 'title': 'Created In Last 30 Days'}
-    ],
+    ]
+
+
+class FilterAccounts(FlaskForm):
+    txt_search = StringField()
+    assignees = QuerySelectField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
+                                 get_label=User.get_label, allow_blank=True, blank_text='[-- Select Owner --]')
+    advanced_user = QuerySelectField(query_factory=filter_accounts_adv_filters_query,
                                      get_pk=lambda a: a['id'],
                                      get_label=lambda a: a['title'],
                                      allow_blank=True, blank_text='[-- advanced filter --]')
