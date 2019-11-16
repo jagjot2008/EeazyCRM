@@ -14,91 +14,118 @@ from eeazycrm.rbac import check_access
 accounts = Blueprint('accounts', __name__)
 
 
+def set_owner(filters, module, key):
+    if not module or not filters or not key:
+        return None
+
+    if request.method == 'POST':
+        if current_user.role.name == 'admin':
+            if filters.assignees.data:
+                owner = text('%s.owner_id=%d' % (module, filters.assignees.data.id))
+                session[key] = filters.assignees.data.id
+            else:
+                owner = True
+        else:
+            owner = text('%s.owner_id=%d' % (module, current_user.id))
+            session[key] = current_user.id
+    else:
+        if key in session:
+            owner = text('%s.owner_id=%d' % (module, session[key]))
+            filters.assignees.data = User.get_by_id(session[key])
+        else:
+            owner = True if current_user.role.name == 'admin' else text('%s.owner_id=%d' % (module, current_user.id))
+    return owner
+
+
+def set_search(filters, key):
+    search = None
+    if request.method == 'POST':
+        search = filters.txt_search.data
+        session[key] = search
+
+    if key in session:
+        filters.txt_search.data = session[key]
+        search = session[key]
+    return search
+
+
+def set_date_filters(filters, module, key):
+    today = date.today()
+    date_created_filter = True
+    if request.method == 'POST':
+        if filters.advanced_user.data:
+            session[key] = filters.advanced_user.data['id']
+            if filters.advanced_user.data['title'] == 'Created Today':
+                date_created_filter = text("Date(%s.date_created)='%s'" % (module, today))
+            elif filters.advanced_user.data['title'] == 'Created Yesterday':
+                date_created_filter = text("Date(%s.date_created)='%s'" % (module, (today - timedelta(1))))
+            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
+                date_created_filter = text("Date(%s.date_created) > current_date - interval '7' day" % module)
+            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
+                date_created_filter = text("Date(%s.date_created) > current_date - interval '30' day" % module)
+
+    if key in session:
+        filters.advanced_user.data['id'] = session[key]
+    return date_created_filter
+
+
+def reset_accounts_filters():
+    if 'accounts_owner' in session:
+        del session['accounts_owner']
+    if 'accounts_search' in session:
+        del session['accounts_search']
+    if 'account_active' in session:
+        del session['account_active']
+    if 'accounts_date_created' in session:
+        del session['accounts_date_created']
+
+
+def set_active_filter(filters, key):
+    active = True
+    if request.method == 'POST':
+        if filters.advanced_user.data:
+            if filters.advanced_user.data['title'] == 'Active':
+                active = text("Account.is_active=True")
+                session[key] = filters.advanced_user.data['id']
+            elif filters.advanced_user.data['title'] == 'Inactive':
+                active = text("Account.is_active=False")
+                session[key] = filters.advanced_user.data['id']
+
+    if key in session:
+        filters.advanced_user.data['id'] = session[key]
+    return active
+
+
 @accounts.route("/accounts", methods=['GET', 'POST'])
 @login_required
 @check_access('accounts', 'view')
 def get_accounts_view():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
-    search = None
     filters = FilterAccounts()
 
-    if request.method == 'POST':
-        today = date.today()
-        date_today_filter = True
-        active = True
-        if current_user.role.name == 'admin':
-            if filters.assignees.data:
-                owner = text('Account.owner_id=%d' % filters.assignees.data.id)
-                session['accounts_owner'] = filters.assignees.data.id
-            else:
-                owner = True
-        else:
-            owner = text('Account.owner_id=%d' % current_user.id)
-            session['accounts_owner'] = current_user.id
+    search = set_search(filters, 'accounts_search')
+    owner = set_owner(filters, 'Account', 'accounts_owner')
+    active = set_active_filter(filters, 'account_active')
+    date_created_filter = set_date_filters(filters, 'Account', 'accounts_date_created')
 
-        if filters.advanced_user.data:
-            if filters.advanced_user.data['title'] == 'Active':
-                active = text("Account.is_active=True")
-            elif filters.advanced_user.data['title'] == 'Inactive':
-                active = text("Account.is_active=False")
-            elif filters.advanced_user.data['title'] == 'Created Today':
-                date_today_filter = text("Date(Account.date_created)='%s'" % today)
-            elif filters.advanced_user.data['title'] == 'Created Yesterday':
-                date_today_filter = text("Date(Account.date_created)='%s'" % (today - timedelta(1)))
-            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
-                date_today_filter = text("Date(Account.date_created) > current_date - interval '7' day")
-            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
-                date_today_filter = text("Date(Account.date_created) > current_date - interval '30' day")
+    print(search)
 
-        search = filters.txt_search.data
-        if search:
-            session['accounts_search'] = search
-
-        query = Account.query.filter(or_(
-            Account.name.ilike(f'%{search}%'),
-            Account.website.ilike(f'%{search}%'),
-            Account.email.ilike(f'%{search}%'),
-            Account.phone.ilike(f'%{search}%'),
-            Account.address_line.ilike(f'%{search}%'),
-            Account.addr_state.ilike(f'%{search}%'),
-            Account.addr_city.ilike(f'%{search}%'),
-            Account.post_code.ilike(f'%{search}%')
-        ) if search else True) \
-            .filter(owner) \
-            .filter(active) \
-            .filter(date_today_filter) \
-            .order_by(Account.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
-    else:
-        if 'accounts_owner' in session:
-            owner = text('Account.owner_id=%d' % session['accounts_owner'])
-        else:
-            owner = True if current_user.role.name == 'admin' else text('Account.owner_id=%d' % current_user.id)
-
-        if 'accounts_search' in session:
-            search = session['accounts_search']
-
-        query = Account.query \
-            .filter(or_(
-                Account.name.ilike(f'%{search}%'),
-                Account.website.ilike(f'%{search}%'),
-                Account.email.ilike(f'%{search}%'),
-                Account.phone.ilike(f'%{search}%'),
-                Account.address_line.ilike(f'%{search}%'),
-                Account.addr_state.ilike(f'%{search}%'),
-                Account.addr_city.ilike(f'%{search}%'),
-                Account.post_code.ilike(f'%{search}%')
-            ) if search else True) \
-            .filter(owner) \
-            .order_by(Account.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
-
-    if 'accounts_owner' in session:
-        filters.assignees.data = User.get_by_id(session['accounts_owner'])
-
-    if 'accounts_search' in session:
-        filters.txt_search.data = session['accounts_search']
+    query = Account.query.filter(or_(
+        Account.name.ilike(f'%{search}%'),
+        Account.website.ilike(f'%{search}%'),
+        Account.email.ilike(f'%{search}%'),
+        Account.phone.ilike(f'%{search}%'),
+        Account.address_line.ilike(f'%{search}%'),
+        Account.addr_state.ilike(f'%{search}%'),
+        Account.addr_city.ilike(f'%{search}%'),
+        Account.post_code.ilike(f'%{search}%')
+    ) if search else True) \
+        .filter(owner) \
+        .filter(active) \
+        .filter(date_created_filter) \
+        .order_by(Account.date_created.desc()) \
+        .paginate(per_page=per_page, page=page)
 
     return render_template("accounts/accounts_list.html", title="Accounts View",
                            accounts=query, filters=filters)
@@ -160,9 +187,6 @@ def delete_account(account_id):
 @login_required
 @check_access('accounts', 'view')
 def reset_filters():
-    if 'accounts_owner' in session:
-        del session['accounts_owner']
-    if 'accounts_search' in session:
-        del session['accounts_search']
+    reset_accounts_filters()
     return redirect(url_for('accounts.get_accounts_view'))
 
