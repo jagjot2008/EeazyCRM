@@ -15,7 +15,7 @@ class Paginate:
 
         if self.page < 1:
             self.page = 1
-        elif self.page > self.pages:
+        elif self.page > self.pages > 0:
             self.page = self.pages
 
         self.current_page = self.page
