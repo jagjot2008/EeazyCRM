@@ -1,12 +1,14 @@
 from flask_login import current_user, login_required
-from flask import render_template, flash, url_for, redirect, request, Blueprint
+from flask import render_template, flash, url_for, redirect, request, Blueprint, session
 import json
 from sqlalchemy import or_, text
 from datetime import date, timedelta
 
 from eeazycrm import db
 from .models import Contact
-from .forms import NewContact, FilterContacts
+from eeazycrm.common.paginate import Paginate
+from eeazycrm.common.filters import CommonFilters
+from .forms import NewContact, FilterContacts, filter_contacts_adv_filters_query
 from eeazycrm.users.utils import upload_avatar
 
 from eeazycrm.rbac import check_access
@@ -14,60 +16,72 @@ from eeazycrm.rbac import check_access
 contacts = Blueprint('contacts', __name__)
 
 
+def set_filters(f_id, module):
+    today = date.today()
+    filter_d = True
+    if f_id == 1:
+        filter_d = text("Date(%s.date_created)='%s'" % (module, today))
+    elif f_id == 2:
+        filter_d = text("Date(%s.date_created)='%s'" % (module, (today - timedelta(1))))
+    elif f_id == 3:
+        filter_d = text("Date(%s.date_created) > current_date - interval '7' day" % module)
+    elif f_id == 4:
+        filter_d = text("Date(%s.date_created) > current_date - interval '30' day" % module)
+    return filter_d
+
+
+def set_date_filters(filters, module, key):
+    filter_d = True
+    if request.method == 'POST':
+        if filters.advanced_user.data:
+            filter_d = set_filters(filters.advanced_user.data['id'], module)
+            session[key] = filters.advanced_user.data['id']
+    else:
+        if key in session:
+            filter_d = set_filters(session[key], module)
+            filters.advanced_user.data = filter_contacts_adv_filters_query()[session[key] - 1]
+    return filter_d
+
+
+def reset_contacts_filters():
+    if 'contacts_owner' in session:
+        del session['contacts_owner']
+    if 'contacts_search' in session:
+        del session['contacts_search']
+    if 'contacts_acc_owner' in session:
+        del session['contacts_acc_owner']
+    if 'contacts_date_created' in session:
+        del session['contacts_date_created']
+
+
 @contacts.route("/contacts", methods=['GET', 'POST'])
 @login_required
 @check_access('contacts', 'view')
 def get_contacts_view():
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
     filters = FilterContacts()
+    search = CommonFilters.set_search(filters, 'contacts_search')
+    owner = CommonFilters.set_owner(filters, 'Contact', 'contacts_owner')
+    account = CommonFilters.set_owner(filters, 'Contact', 'contacts_acc_owner')
+    advanced_filters = set_date_filters(filters, 'Contact', 'contacts_date_created')
 
-    if request.method == 'POST':
-        today = date.today()
-        date_today_filter = True
-        if current_user.role.name == 'admin':
-            owner = text('Contact.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
-        else:
-            owner = text('Contact.owner_id=%d' % current_user.id)
+    query = Contact.query.filter(or_(
+            Contact.first_name.ilike(f'%{search}%'),
+            Contact.last_name.ilike(f'%{search}%'),
+            Contact.email.ilike(f'%{search}%'),
+            Contact.phone.ilike(f'%{search}%'),
+            Contact.mobile.ilike(f'%{search}%'),
+            Contact.address_line.ilike(f'%{search}%'),
+            Contact.addr_state.ilike(f'%{search}%'),
+            Contact.addr_city.ilike(f'%{search}%'),
+            Contact.post_code.ilike(f'%{search}%')
+        ) if search else True)\
+        .filter(account) \
+        .filter(owner) \
+        .filter(advanced_filters) \
+        .order_by(Contact.date_created.desc())
 
-        account = text('Contact.account_id=%d' % filters.accounts.data.id) if filters.accounts.data else True
-
-        if filters.advanced_user.data:
-            if filters.advanced_user.data['title'] == 'Created Today':
-                date_today_filter = text("Date(Contact.date_created)='%s'" % today)
-            elif filters.advanced_user.data['title'] == 'Created Yesterday':
-                date_today_filter = text("Date(Contact.date_created)='%s'" % (today - timedelta(1)))
-            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
-                date_today_filter = text("Date(Contact.date_created) > current_date - interval '7' day")
-            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
-                date_today_filter = text("Date(Contact.date_created) > current_date - interval '30' day")
-
-        search = f'%{filters.txt_search.data}%'
-
-        query = Contact.query.filter(or_(
-            Contact.first_name.ilike(search),
-            Contact.last_name.ilike(search),
-            Contact.email.ilike(search),
-            Contact.phone.ilike(search),
-            Contact.mobile.ilike(search),
-            Contact.address_line.ilike(search),
-            Contact.addr_state.ilike(search),
-            Contact.addr_city.ilike(search),
-            Contact.post_code.ilike(search)
-        ) if search else True) \
-            .filter(account) \
-            .filter(owner) \
-            .filter(date_today_filter) \
-            .order_by(Contact.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
-    else:
-        owner = True if current_user.role.name == 'admin' else text('Contact.owner_id=%d' % current_user.id)
-        query = Contact.query \
-            .filter(owner) \
-            .order_by(Contact.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
-
-    return render_template("contacts/contacts_list.html", title="Contacts View", contacts=query, filters=filters)
+    return render_template("contacts/contacts_list.html", title="Contacts View",
+                           contacts=Paginate(query=query), filters=filters)
 
 
 @contacts.route("/contacts/acc/<int:account_id>")
@@ -142,4 +156,12 @@ def delete_contact(contact_id):
     Contact.query.filter_by(id=contact_id).delete()
     db.session.commit()
     flash('Contact removed successfully!', 'success')
+    return redirect(url_for('contacts.get_contacts_view'))
+
+
+@contacts.route("/contacts/reset_filters")
+@login_required
+@check_access('contacts', 'view')
+def reset_filters():
+    reset_contacts_filters()
     return redirect(url_for('contacts.get_contacts_view'))

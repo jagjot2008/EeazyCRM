@@ -80,9 +80,8 @@ def get_accounts_view():
         .filter(advanced_filters) \
         .order_by(Account.date_created.desc())
 
-    paginate = Paginate(query=query)
     return render_template("accounts/accounts_list.html", title="Accounts View",
-                           accounts=paginate, filters=filters)
+                           accounts=Paginate(query=query), filters=filters)
 
 
 @accounts.route("/accounts/<int:account_id>")

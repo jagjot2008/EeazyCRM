@@ -103,10 +103,10 @@
 
             if (accId !== '__None') {
                 $('.ajax_indicator')
-                .css('display', 'block')
-                .text('loading ...')
-                .removeClass('done')
-                .addClass('processing');
+                    .css('display', 'block')
+                    .text('loading ...')
+                    .removeClass('done')
+                    .addClass('processing');
             }
 
             $.ajax({
@@ -115,13 +115,16 @@
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function(data) {
-                    $.each(data, function(i, d) {
-                        $('#deal_contacts').append('<option value="' + d.id + '">' + d.name + '</option>');
-                        $('.ajax_indicator')
+
+                    $('.ajax_indicator')
                             .removeClass('processing')
                             .addClass('done')
                             .text("done")
                             .fadeOut(2000);
+
+                    $.each(data, function(i, d) {
+                        $('#deal_contacts').append('<option value="' + d.id + '">' + d.name + '</option>');
+
                     })
                 },
             });

@@ -32,18 +32,22 @@ class NewContact(FlaskForm):
     submit = SubmitField('Create New Contact')
 
 
+def filter_contacts_adv_filters_query():
+    return [
+        {'id': 1, 'title': 'Created Today'},
+        {'id': 2, 'title': 'Created Yesterday'},
+        {'id': 3, 'title': 'Created In Last 7 Days'},
+        {'id': 4, 'title': 'Created In Last 30 Days'}
+    ]
+
+
 class FilterContacts(FlaskForm):
     txt_search = StringField()
-    accounts = QuerySelectField('Account', query_factory=Account.account_list_query, get_pk=lambda a: a.id,
+    accounts = QuerySelectField(query_factory=Account.account_list_query, get_pk=lambda a: a.id,
                                 get_label=Account.get_label, blank_text='[-- Select Account--]', allow_blank=True)
     assignees = QuerySelectField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
                                  get_label=User.get_label, allow_blank=True, blank_text='[-- Select Owner --]')
-    advanced_user = QuerySelectField(query_factory=lambda: [
-        {'id': 3, 'title': 'Created Today'},
-        {'id': 4, 'title': 'Created Yesterday'},
-        {'id': 5, 'title': 'Created In Last 7 Days'},
-        {'id': 6, 'title': 'Created In Last 30 Days'}
-    ],
+    advanced_user = QuerySelectField(query_factory=filter_contacts_adv_filters_query,
                                      get_pk=lambda a: a['id'],
                                      get_label=lambda a: a['title'],
                                      allow_blank=True, blank_text='[-- advanced filter --]')
