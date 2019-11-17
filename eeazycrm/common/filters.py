@@ -18,6 +18,7 @@ class CommonFilters:
                     owner = text('%s.owner_id=%d' % (module, filters.assignees.data.id))
                     session[key] = filters.assignees.data.id
                 else:
+                    session.pop(key, None)
                     owner = True
             else:
                 owner = text('%s.owner_id=%d' % (module, current_user.id))
@@ -40,6 +41,8 @@ class CommonFilters:
             if filters.accounts.data:
                 account = text('%s.account_id=%d' % (module, filters.accounts.data.id))
                 session[key] = filters.accounts.data.id
+            else:
+                session.pop(key, None)
         else:
             if key in session:
                 account = text('%s.account_id=%d' % (module, session[key]))

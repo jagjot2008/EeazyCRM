@@ -36,6 +36,8 @@ def set_date_filters(filters, module, key):
         if filters.advanced_user.data:
             filter_d = set_filters(filters.advanced_user.data['id'], module)
             session[key] = filters.advanced_user.data['id']
+        else:
+            session.pop(key, None)
     else:
         if key in session:
             filter_d = set_filters(session[key], module)
@@ -45,13 +47,13 @@ def set_date_filters(filters, module, key):
 
 def reset_contacts_filters():
     if 'contacts_owner' in session:
-        del session['contacts_owner']
+        session.pop('contacts_owner', None)
     if 'contacts_search' in session:
-        del session['contacts_search']
+        session.pop('contacts_search', None)
     if 'contacts_acc_owner' in session:
-        del session['contacts_acc_owner']
+        session.pop('contacts_acc_owner', None)
     if 'contacts_date_created' in session:
-        del session['contacts_date_created']
+        session.pop('contacts_date_created', None)
 
 
 @contacts.route("/contacts", methods=['GET', 'POST'])
@@ -61,7 +63,7 @@ def get_contacts_view():
     filters = FilterContacts()
     search = CommonFilters.set_search(filters, 'contacts_search')
     owner = CommonFilters.set_owner(filters, 'Contact', 'contacts_owner')
-    account = CommonFilters.set_owner(filters, 'Contact', 'contacts_acc_owner')
+    account = CommonFilters.set_accounts(filters, 'Contact', 'contacts_acc_owner')
     advanced_filters = set_date_filters(filters, 'Contact', 'contacts_date_created')
 
     query = Contact.query.filter(or_(

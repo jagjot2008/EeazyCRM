@@ -48,13 +48,13 @@ def set_date_filters(filters, module, key):
 
 def reset_accounts_filters():
     if 'accounts_owner' in session:
-        del session['accounts_owner']
+        session.pop('accounts_owner', None)
     if 'accounts_search' in session:
-        del session['accounts_search']
+        session.pop('accounts_search', None)
     if 'account_active' in session:
-        del session['account_active']
+        session.pop('account_active', None)
     if 'accounts_date_created' in session:
-        del session['accounts_date_created']
+        session.pop('accounts_date_created', None)
 
 
 @accounts.route("/accounts", methods=['GET', 'POST'])

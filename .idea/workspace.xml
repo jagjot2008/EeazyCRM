@@ -5,11 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/accounts/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/accounts/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/common/filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/common/filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/contacts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/contacts/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/contacts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/contacts/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/contacts/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/contacts/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/contacts/filters.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/filters.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/new_deal.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/new_deal.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
