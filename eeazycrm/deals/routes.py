@@ -1,14 +1,16 @@
-from flask import Blueprint
+from flask import Blueprint, session
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
-from sqlalchemy import or_, text
-from datetime import date, timedelta
+from sqlalchemy import or_
 import json
 
 from eeazycrm import db
 from .models import Deal, DealStage
+from eeazycrm.common.paginate import Paginate
+from eeazycrm.common.filters import CommonFilters
 from eeazycrm.accounts.models import Account
 from .forms import NewDeal, FilterDeals
+from .filters import set_date_filters, set_price_filters, set_deal_stage_filters
 
 from eeazycrm.rbac import check_access
 
@@ -20,93 +22,34 @@ deals = Blueprint('deals', __name__)
 @check_access('deals', 'view')
 def get_deals_view():
     view_t = request.args.get('view_t', 'list', type=str)
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
     filters = FilterDeals()
 
-    if request.method == 'POST':
-        today = date.today()
-        date_today_filter = True
-        price = True
+    search = CommonFilters.set_search(filters, 'deals_search')
+    owner = CommonFilters.set_owner(filters, 'Deal', 'deals_owner')
+    account = CommonFilters.set_accounts(filters, 'Deal', 'deals_acc_owner')
+    contact = CommonFilters.set_contacts(filters, 'Deal', 'deals_contacts_owner')
+    advanced_filters = set_date_filters(filters, 'Deal', 'deals_date_created')
+    price_filters = set_price_filters(filters, 'Deal', 'deal_price')
+    deal_stage_filters = set_deal_stage_filters(filters, 'deal_stage')
 
-        if current_user.role.name == 'admin':
-            owner = text('Deal.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
-        else:
-            owner = text('Deal.owner_id=%d' % current_user.id)
-
-        account = text('Deal.account_id=%d' % filters.accounts.data.id) if filters.accounts.data else True
-        contact = text('Deal.contact_id=%d' % filters.contacts.data.id) if filters.contacts.data else True
-
-        if filters.advanced_user.data:
-            if filters.advanced_user.data['title'] == 'All Expired Deals':
-                date_today_filter = text("current_timestamp > Deal.expected_close_date")
-            elif filters.advanced_user.data['title'] == 'All Active Deals':
-                date_today_filter = text("current_timestamp <= Deal.expected_close_date OR "
-                                         "Date(Deal.expected_close_date) IS NULL")
-            elif filters.advanced_user.data['title'] == 'Deals Expiring Today':
-                date_today_filter = text("expected_close_date "
-                                         "BETWEEN date_trunc('day', current_timestamp) AND "
-                                         "date_trunc('day', current_timestamp) + interval '1 day' - interval '1 second'")
-            elif filters.advanced_user.data['title'] == 'Deals Expiring In Next 7 Days':
-                date_today_filter = text("expected_close_date "
-                                         "BETWEEN date_trunc('day', current_timestamp) + interval '1 day' AND "
-                                         "date_trunc('day', current_timestamp) + interval '7 day' - interval '1 second'")
-            elif filters.advanced_user.data['title'] == 'Deals Expiring In Next 30 Days':
-                date_today_filter = text("expected_close_date "
-                                         "BETWEEN date_trunc('day', current_timestamp) + interval '1 day' AND "
-                                         "date_trunc('day', current_timestamp)"
-                                         " + interval '30 day' - interval '1 second'")
-            elif filters.advanced_user.data['title'] == 'Created Today':
-                date_today_filter = text("date(Deal.date_created)='%s'" % today)
-            elif filters.advanced_user.data['title'] == 'Created Yesterday':
-                date_today_filter = text("date(Deal.date_created)='%s'" % (today - timedelta(1)))
-            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
-                date_today_filter = text("date(Deal.date_created) > current_date - interval '7' day")
-            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
-                date_today_filter = text("date(Deal.date_created) > current_date - interval '30' day")
-
-        if filters.price_range.data:
-            if filters.price_range.data['title'] == '< 500':
-                price = text("expected_close_price < 500")
-            elif filters.price_range.data['title'] == '>= 500 and < 1000':
-                price = text("expected_close_price >= 500 and expected_close_price < 1000")
-            elif filters.price_range.data['title'] == '>= 1000 and < 10,000':
-                price = text("expected_close_price >= 1000 and expected_close_price < 10000")
-            elif filters.price_range.data['title'] == '>= 10,000 and < 50,000':
-                price = text("expected_close_price >= 10000 and expected_close_price < 50000")
-            elif filters.price_range.data['title'] == '>= 50,000 and < 100,000':
-                price = text("expected_close_price >= 50000 and expected_close_price < 100000")
-            elif filters.price_range.data['title'] == '>= 100,000':
-                price = text("expected_close_price >= 100000")
-
-        search = f'%{filters.txt_search.data}%'
-
-        deal_stage = text("deal_stage_id=%s" % filters.deal_stages.data.id) if filters.deal_stages.data else True
-
-        query = Deal.query.filter(or_(
-            Deal.title.ilike(search)
-        ) if search else True) \
-            .filter(account) \
-            .filter(contact) \
-            .filter(price) \
-            .filter(deal_stage) \
-            .filter(owner) \
-            .filter(date_today_filter) \
-            .order_by(Deal.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
-    else:
-        owner = True if current_user.role.name == 'admin' else text('Contact.owner_id=%d' % current_user.id)
-        query = Deal.query \
-            .filter(owner) \
-            .order_by(Deal.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
+    query = Deal.query.filter(or_(
+        Deal.title.ilike(search)
+    ) if search else True) \
+        .filter(account) \
+        .filter(contact) \
+        .filter(price_filters) \
+        .filter(deal_stage_filters) \
+        .filter(owner) \
+        .filter(advanced_filters) \
+        .order_by(Deal.date_created.desc())
 
     if view_t == 'kanban':
         return render_template("deals/kanban_view.html", title="Deals View",
-                               deals=query,
+                               deals=Paginate(query),
                                deal_stages=DealStage.query.order_by(DealStage.display_order.asc()).all())
     else:
-        return render_template("deals/deals_list.html", title="Deals View", deals=query, filters=filters)
+        return render_template("deals/deals_list.html", title="Deals View",
+                               deals=Paginate(query), filters=filters)
 
 
 @deals.route("/deals/<int:deal_id>")

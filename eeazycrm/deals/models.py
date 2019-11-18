@@ -20,6 +20,10 @@ class DealStage(db.Model):
     def get_label(deal_stage):
         return deal_stage.stage_name
 
+    @staticmethod
+    def get_deal_stage(deal_stage_id):
+        return DealStage.query.filter_by(id=deal_stage_id).first()
+
     def __repr__(self):
         return f"DealStage('{self.stage_name}')"
 

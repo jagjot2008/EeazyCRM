@@ -31,6 +31,31 @@ class NewDeal(FlaskForm):
     submit = SubmitField('Create New Deal')
 
 
+def filter_deals_adv_filters_query():
+    return [
+        {'id': 1, 'title': 'All Expired Deals'},
+        {'id': 2, 'title': 'All Active Deals'},
+        {'id': 3, 'title': 'Deals Expiring Today'},
+        {'id': 4, 'title': 'Deals Expiring In Next 7 Days'},
+        {'id': 5, 'title': 'Deals Expiring In Next 30 Days'},
+        {'id': 6, 'title': 'Created Today'},
+        {'id': 7, 'title': 'Created Yesterday'},
+        {'id': 8, 'title': 'Created In Last 7 Days'},
+        {'id': 9, 'title': 'Created In Last 30 Days'}
+    ]
+
+
+def filter_deals_price_query():
+    return [
+        {'id': 1, 'title': '< 500'},
+        {'id': 2, 'title': '>= 500 and < 1000'},
+        {'id': 3, 'title': '>= 1000 and < 10,000'},
+        {'id': 4, 'title': '>= 10,000 and < 50,000'},
+        {'id': 5, 'title': '>= 50,000 and < 100,000'},
+        {'id': 6, 'title': '>= 100,000'},
+    ]
+
+
 class FilterDeals(FlaskForm):
     txt_search = StringField()
     assignees = QuerySelectField(query_factory=User.user_list_query, get_pk=lambda a: a.id,
@@ -45,29 +70,12 @@ class FilterDeals(FlaskForm):
     deal_stages = QuerySelectField(query_factory=DealStage.deal_stage_list_query, get_pk=lambda a: a.id,
                                    get_label=DealStage.get_label, blank_text='[-- Deal Stage --]', allow_blank=True)
 
-    price_range = QuerySelectField(query_factory=lambda: [
-        {'id': 1, 'title': '< 500'},
-        {'id': 2, 'title': '>= 500 and < 1000'},
-        {'id': 3, 'title': '>= 1000 and < 10,000'},
-        {'id': 4, 'title': '>= 10,000 and < 50,000'},
-        {'id': 5, 'title': '>= 50,000 and < 100,000'},
-        {'id': 6, 'title': '>= 100,000'},
-    ],
-                                     get_pk=lambda a: a['id'],
-                                     get_label=lambda a: a['title'],
-                                     allow_blank=True, blank_text='[-- Price Range --]')
+    price_range = QuerySelectField(query_factory=filter_deals_price_query,
+                                   get_pk=lambda a: a['id'],
+                                   get_label=lambda a: a['title'],
+                                   allow_blank=True, blank_text='[-- Price Range --]')
 
-    advanced_user = QuerySelectField(query_factory=lambda: [
-        {'id': 1, 'title': 'All Expired Deals'},
-        {'id': 2, 'title': 'All Active Deals'},
-        {'id': 3, 'title': 'Deals Expiring Today'},
-        {'id': 4, 'title': 'Deals Expiring In Next 7 Days'},
-        {'id': 5, 'title': 'Deals Expiring In Next 30 Days'},
-        {'id': 6, 'title': 'Created Today'},
-        {'id': 7, 'title': 'Created Yesterday'},
-        {'id': 8, 'title': 'Created In Last 7 Days'},
-        {'id': 9, 'title': 'Created In Last 30 Days'}
-    ],
+    advanced_user = QuerySelectField(query_factory=filter_deals_adv_filters_query,
                                      get_pk=lambda a: a['id'],
                                      get_label=lambda a: a['title'],
                                      allow_blank=True, blank_text='[-- advanced filter --]')

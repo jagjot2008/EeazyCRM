@@ -3,6 +3,7 @@ from flask_login import current_user
 from sqlalchemy import text
 from eeazycrm.users.models import User
 from eeazycrm.accounts.models import Account
+from eeazycrm.contacts.models import Contact
 
 
 class CommonFilters:
@@ -48,6 +49,24 @@ class CommonFilters:
                 account = text('%s.account_id=%d' % (module, session[key]))
                 filters.accounts.data = Account.get_account(session[key])
         return account
+
+    @staticmethod
+    def set_contacts(filters, module, key):
+        if not module or not filters or not key:
+            return None
+
+        contact = True
+        if request.method == 'POST':
+            if filters.contacts.data:
+                contact = text('%s.contact_id=%d' % (module, filters.contacts.data.id))
+                session[key] = filters.contacts.data.id
+            else:
+                session.pop(key, None)
+        else:
+            if key in session:
+                contact = text('%s.contact_id=%d' % (module, session[key]))
+                filters.contacts.data = Contact.get_contact(session[key])
+        return contact
 
     @staticmethod
     def set_search(filters, key):
