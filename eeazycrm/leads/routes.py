@@ -1,7 +1,7 @@
 import pandas as pd
-from sqlalchemy import or_, text
+from sqlalchemy import or_
 
-from flask import Blueprint
+from flask import Blueprint, session
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 
@@ -11,11 +11,50 @@ from eeazycrm.common.paginate import Paginate
 from eeazycrm.common.filters import CommonFilters
 from .filters import set_date_filters
 from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads
-from datetime import date, timedelta
 
 from eeazycrm.rbac import check_access
 
 leads = Blueprint('leads', __name__)
+
+
+def reset_lead_filters():
+    if 'lead_owner' in session:
+        session.pop('lead_owner', None)
+    if 'lead_search' in session:
+        session.pop('lead_search', None)
+    if 'lead_date_created' in session:
+        session.pop('lead_date_created', None)
+
+
+@leads.route("/leads", methods=['GET', 'POST'])
+@login_required
+@check_access('leads', 'view')
+def get_leads_view():
+    filters = FilterLeads()
+    search = CommonFilters.set_search(filters, 'lead_search')
+    owner = CommonFilters.set_owner(filters, 'Lead', 'lead_owner')
+    advanced_filters = set_date_filters(filters, 'lead_date_created')
+    lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
+    lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
+
+    query = Lead.query \
+        .filter(or_(
+            Lead.title.ilike(f'%{search}'),
+            Lead.first_name.ilike(f'%{search}'),
+            Lead.last_name.ilike(f'%{search}'),
+            Lead.email.ilike(f'%{search}'),
+            Lead.company_name.ilike(f'%{search}'),
+            Lead.phone.ilike(f'%{search}'),
+            Lead.mobile.ilike(f'%{search}'),
+        ) if search else True) \
+        .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
+        .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
+        .filter(owner) \
+        .filter(advanced_filters) \
+        .order_by(Lead.date_created.desc())
+
+    return render_template("leads/leads_list.html", title="Leads View",
+                           leads=Paginate(query), filters=filters)
 
 
 @leads.route("/leads/new", methods=['GET', 'POST'])
@@ -47,37 +86,6 @@ def new_lead():
                 print(error)
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("leads/new_lead.html", title="New Lead", form=form)
-
-
-@leads.route("/leads", methods=['GET', 'POST'])
-@login_required
-@check_access('leads', 'view')
-def get_leads_view():
-    filters = FilterLeads()
-    search = CommonFilters.set_search(filters, 'leads_search')
-    owner = CommonFilters.set_owner(filters, 'Lead', 'lead_owner')
-    advanced_filters = set_date_filters(filters, 'lead_date_created')
-    lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
-    lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
-
-    query = Lead.query \
-        .filter(or_(
-            Lead.title.ilike(f'%{search}'),
-            Lead.first_name.ilike(f'%{search}'),
-            Lead.last_name.ilike(f'%{search}'),
-            Lead.email.ilike(f'%{search}'),
-            Lead.company_name.ilike(f'%{search}'),
-            Lead.phone.ilike(f'%{search}'),
-            Lead.mobile.ilike(f'%{search}'),
-        ) if search else True) \
-        .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
-        .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
-        .filter(owner) \
-        .filter(advanced_filters) \
-        .order_by(Lead.date_created.desc())
-
-    return render_template("leads/leads_list.html", title="Leads View",
-                           leads=Paginate(query), filters=filters)
 
 
 @leads.route("/leads/<int:lead_id>")
@@ -151,3 +159,11 @@ def import_bulk_leads():
         else:
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("leads/leads_import.html", title="Import Leads", form=form)
+
+
+@leads.route("/leads/reset_filters")
+@login_required
+@check_access('leads', 'view')
+def reset_filters():
+    reset_lead_filters()
+    return redirect(url_for('leads.get_leads_view'))

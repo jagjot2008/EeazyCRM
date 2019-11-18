@@ -19,13 +19,14 @@ def lead_source_query():
 
 
 class NewLead(FlaskForm):
-    title = StringField('Lead Title', validators=[DataRequired(message='Lead title is mandatory')])
+    title = StringField('Lead Title')
     first_name = StringField('First Name')
-    last_name = StringField('Last Name')
-    email = StringField('Email', validators=[
-        DataRequired(message='Email address is mandatory'), Email(message='Invalid Email Address!')])
-    company = StringField('Company Name')
-    address_line = StringField('Address')
+    last_name = StringField('Last Name', validators=[DataRequired(message='Last name is mandatory')])
+    email = StringField('Email', validators=[Email(message='Invalid Email Address!')])
+    company = StringField('Company Name', validators=[DataRequired(message='Company name is mandatory')])
+    phone = StringField('Work Phone')
+    mobile = StringField('Mobile')
+    address_line = StringField('Street Address')
     addr_state = StringField('State')
     addr_city = StringField('City')
     post_code = StringField('Postcode')

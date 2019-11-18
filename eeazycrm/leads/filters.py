@@ -26,8 +26,10 @@ def assign_filter(filter_obj, key):
     filter_d = True
     if filter_obj.data:
         filter_d = set_filters(filter_obj.data['id'])
-    else:
         session[key] = filter_obj.data['id']
+    else:
+        if key in session:
+            session.pop(key, None)
     return filter_d
 
 

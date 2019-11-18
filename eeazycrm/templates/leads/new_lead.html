@@ -48,14 +48,14 @@
                 <div class="col">
                     {{ form.company.label(class="form-control-label") }}
                   {% if form.company.errors %}
-                    {{ form.company(class="form-control form-control-lg is-invalid") }}
+                    {{ form.company(class="form-control required form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.company.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                   {% else %}
-                    {{ form.company(class="form-control from-control-lg", placeholder="company name ...") }}
+                    {{ form.company(class="form-control required from-control-lg", placeholder="company name ...") }}
                   {% endif %}
                 </div>
             </div>
