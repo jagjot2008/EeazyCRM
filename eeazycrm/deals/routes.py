@@ -49,10 +49,8 @@ def get_deals_view():
     price_filters = set_price_filters(filters, 'deal_price')
     deal_stage_filters = set_deal_stage_filters(filters, 'deal_stage')
 
-    print(account)
-
     query = Deal.query.filter(or_(
-        Deal.title.ilike(search)
+        Deal.title.ilike(f'%{search}%')
     ) if search else True) \
         .filter(account) \
         .filter(contact) \

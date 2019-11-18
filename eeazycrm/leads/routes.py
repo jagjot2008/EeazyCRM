@@ -7,6 +7,9 @@ from flask import render_template, flash, url_for, redirect, request
 
 from eeazycrm import db
 from .models import Lead
+from eeazycrm.common.paginate import Paginate
+from eeazycrm.common.filters import CommonFilters
+from .filters import set_date_filters
 from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads
 from datetime import date, timedelta
 
@@ -50,66 +53,31 @@ def new_lead():
 @login_required
 @check_access('leads', 'view')
 def get_leads_view():
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
     filters = FilterLeads()
-    today = date.today()
+    search = CommonFilters.set_search(filters, 'leads_search')
+    owner = CommonFilters.set_owner(filters, 'Lead', 'lead_owner')
+    advanced_filters = set_date_filters(filters, 'lead_date_created')
+    lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
+    lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
 
-    if request.method == 'POST':
-        lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
-        lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
-        date_today_filter = True
+    query = Lead.query \
+        .filter(or_(
+            Lead.title.ilike(f'%{search}'),
+            Lead.first_name.ilike(f'%{search}'),
+            Lead.last_name.ilike(f'%{search}'),
+            Lead.email.ilike(f'%{search}'),
+            Lead.company_name.ilike(f'%{search}'),
+            Lead.phone.ilike(f'%{search}'),
+            Lead.mobile.ilike(f'%{search}'),
+        ) if search else True) \
+        .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
+        .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
+        .filter(owner) \
+        .filter(advanced_filters) \
+        .order_by(Lead.date_created.desc())
 
-        if current_user.role.name == 'admin':
-            owner = text('Lead.owner_id=%d' % filters.assignees.data.id) if filters.assignees.data else True
-        else:
-            owner = text('Lead.owner_id=%d' % current_user.id)
-
-        if filters.advanced_admin.data:
-            if filters.advanced_admin.data['title'] == 'Unassigned':
-                owner = text('Lead.owner_id IS NULL')
-            elif filters.advanced_admin.data['title'] == 'Created Today':
-                date_today_filter = text("Date(Lead.date_created)='%s'" % today)
-            elif filters.advanced_admin.data['title'] == 'Created Yesterday':
-                date_today_filter = text("Date(Lead.date_created)='%s'" % (today - timedelta(1)))
-            elif filters.advanced_admin.data['title'] == 'Created In Last 7 Days':
-                date_today_filter = text("Date(Lead.date_created) > current_date - interval '7' day")
-            elif filters.advanced_admin.data['title'] == 'Created In Last 30 Days':
-                date_today_filter = text("Date(Lead.date_created) > current_date - interval '30' day")
-
-        if filters.advanced_user.data:
-            if filters.advanced_user.data['title'] == 'Created Today':
-                date_today_filter = text("Date(Lead.date_created)='%s'" % today)
-            elif filters.advanced_user.data['title'] == 'Created Yesterday':
-                date_today_filter = text("Date(Lead.date_created)='%s'" % (today - timedelta(1)))
-            elif filters.advanced_user.data['title'] == 'Created In Last 7 Days':
-                date_today_filter = text("Date(Lead.date_created) > current_date - interval '7' day")
-            elif filters.advanced_user.data['title'] == 'Created In Last 30 Days':
-                date_today_filter = text("Date(Lead.date_created) > current_date - interval '30' day")
-
-        search = f'%{filters.txt_search.data}%'
-
-        query = Lead.query \
-            .filter(or_(
-                Lead.title.ilike(search),
-                Lead.first_name.ilike(search),
-                Lead.last_name.ilike(search),
-                Lead.email.ilike(search),
-                Lead.company_name.ilike(search)
-            ) if search else True) \
-            .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
-            .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
-            .filter(owner) \
-            .filter(date_today_filter) \
-            .order_by(Lead.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
-    else:
-        owner = True if current_user.role.name == 'admin' else text('Lead.owner_id=%d' % current_user.id)
-        query = Lead.query \
-            .filter(owner) \
-            .order_by(Lead.date_created.desc()) \
-            .paginate(per_page=per_page, page=page)
-    return render_template("leads/leads_list.html", title="Leads View", leads=query, filters=filters)
+    return render_template("leads/leads_list.html", title="Leads View",
+                           leads=Paginate(query), filters=filters)
 
 
 @leads.route("/leads/<int:lead_id>")

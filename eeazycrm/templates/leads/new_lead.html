@@ -17,16 +17,7 @@
         <div class="col-9">
             <div class="form-group">
                 {{ form.title.label(class="form-control-label") }}
-                {% if form.title.errors %}
-                    {{ form.title(class="form-control form-control-lg required is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.title.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                  {% else %}
-                    {{ form.title(class="form-control required from-control-lg", placeholder="what is the lead about? ...") }}
-                  {% endif %}
+                {{ form.title(class="form-control from-control-lg", placeholder="what is the lead about? ...") }}
             </div>
 
             <div class="form-row mb-3">
@@ -36,23 +27,23 @@
                 </div>
                 <div class="col">
                     {{ form.last_name.label(class="form-control-label") }}
-                   {{ form.last_name(class="form-control from-control-lg", placeholder="last name ...") }}
+                    {% if form.last_name.errors %}
+                        {{ form.last_name(class="form-control form-control-lg required is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.last_name(class="form-control required from-control-lg", placeholder="last name ...") }}
+                      {% endif %}
                 </div>
             </div>
 
             <div class="form-row mb-3">
                 <div class="col">
                     {{ form.email.label(class="form-control-label") }}
-                  {% if form.email.errors %}
-                    {{ form.email(class="form-control form-control-lg required is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                  {% else %}
-                    {{ form.email(class="form-control required from-control-lg", placeholder="email address ...") }}
-                  {% endif %}
+                    {{ form.email(class="form-control from-control-lg", placeholder="email address ...") }}
                 </div>
                 <div class="col">
                     {{ form.company.label(class="form-control-label") }}
@@ -66,6 +57,17 @@
                   {% else %}
                     {{ form.company(class="form-control from-control-lg", placeholder="company name ...") }}
                   {% endif %}
+                </div>
+            </div>
+
+            <div class="form-row mb-3">
+                <div class="col">
+                    {{ form.phone.label(class="form-control-label") }}
+                    {{ form.phone(class="form-control from-control-lg", placeholder="phone ...") }}
+                </div>
+                <div class="col">
+                    {{ form.mobile.label(class="form-control-label") }}
+                    {{ form.mobile(class="form-control from-control-lg", placeholder="mobile ...") }}
                 </div>
             </div>
 
