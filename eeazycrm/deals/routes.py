@@ -63,7 +63,8 @@ def get_deals_view():
     if view_t == 'kanban':
         return render_template("deals/kanban_view.html", title="Deals View",
                                deals=query.all(),
-                               deal_stages=DealStage.query.order_by(DealStage.display_order.asc()).all())
+                               deal_stages=DealStage.query.order_by(DealStage.display_order.asc()).all(),
+                               filters=filters)
     else:
         return render_template("deals/deals_list.html", title="Deals View",
                                deals=Paginate(query), filters=filters)
@@ -129,5 +130,6 @@ def update_deal_stage_ajax(deal_id, stage_id):
 @check_access('deals', 'view')
 def reset_filters():
     reset_deal_filters()
-    return redirect(url_for('deals.get_deals_view'))
+    view_t = request.args.get('view_t', 'list', type=str)
+    return redirect(url_for('deals.get_deals_view', view_t=view_t))
 

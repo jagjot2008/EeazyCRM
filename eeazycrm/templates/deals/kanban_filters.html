@@ -1,0 +1,46 @@
+<form class="form-lead-filter" method="POST">
+    {{ filters.hidden_tag() }} <!-- security 'csrf' token -->
+    <div class="d-flex flex-column justify-content-between flex-wrap flex-md-nowrap pb-4 mb-3">
+        <div class="mb-2"><strong>Filters</strong></div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="col-md-3 pl-0">
+                {{ filters.txt_search(class="form-control from-control-lg", placeholder="search deals ...") }}
+            </div>
+            <div class="col-md-3 pl-0">
+                <div class="form-group text-left">
+                    {{ filters.accounts(class="my-select form-control") }}
+                </div>
+            </div>
+            <div class="col-md-3 pl-0">
+                <div class="form-group text-left">
+                    {{ filters.contacts(class="my-select form-control") }}
+                </div>
+            </div>
+            {% if current_user.role.name == 'admin' %}
+            <div class="col-md-3 pl-0">
+                <div class="form-group text-left">
+                    {{ filters.assignees(class="my-select form-control") }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="btn-toolbar mb-1 mb-md-0">
+            <div class="col-md-3 pl-0">
+                <div class="form-group text-left">
+                    {{ filters.price_range(class="my-select form-control") }}
+                </div>
+            </div>
+            <div class="col-md-3 pl-0">
+                <div class="form-group text-left">
+                     {{ filters.advanced_user(class="my-select form-control") }}
+                </div>
+            </div>
+            <div class="col-md-3 pl-0">
+                {{ filters.submit(class="btn btn-md btn-outline-info mr-2") }}
+                <a href="{{ url_for('deals.reset_filters', view_t='kanban') }}" class="btn btn-md btn-outline-secondary" role="button">
+                    <span data-feather="x-circle"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
