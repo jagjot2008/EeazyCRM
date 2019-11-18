@@ -9,7 +9,7 @@ from eeazycrm import db
 from .models import Lead
 from eeazycrm.common.paginate import Paginate
 from eeazycrm.common.filters import CommonFilters
-from .filters import set_date_filters
+from .filters import set_date_filters, set_source, set_status
 from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads
 
 from eeazycrm.rbac import check_access
@@ -24,6 +24,10 @@ def reset_lead_filters():
         session.pop('lead_search', None)
     if 'lead_date_created' in session:
         session.pop('lead_date_created', None)
+    if 'lead_source' in session:
+        session.pop('lead_source', None)
+    if 'lead_status' in session:
+        session.pop('lead_status', None)
 
 
 @leads.route("/leads", methods=['GET', 'POST'])
@@ -34,8 +38,8 @@ def get_leads_view():
     search = CommonFilters.set_search(filters, 'lead_search')
     owner = CommonFilters.set_owner(filters, 'Lead', 'lead_owner')
     advanced_filters = set_date_filters(filters, 'lead_date_created')
-    lead_sources_list = tuple(map(lambda item: item.id, filters.lead_source.data))
-    lead_status_list = tuple(map(lambda item: item.id, filters.lead_status.data))
+    source_filter = set_source(filters, 'lead_source')
+    status_filter = set_status(filters, 'lead_status')
 
     query = Lead.query \
         .filter(or_(
@@ -47,8 +51,8 @@ def get_leads_view():
             Lead.phone.ilike(f'%{search}'),
             Lead.mobile.ilike(f'%{search}'),
         ) if search else True) \
-        .filter(Lead.lead_source_id.in_(lead_sources_list) if lead_sources_list else True) \
-        .filter(Lead.lead_status_id.in_(lead_status_list) if lead_status_list else True) \
+        .filter(source_filter) \
+        .filter(status_filter) \
         .filter(owner) \
         .filter(advanced_filters) \
         .order_by(Lead.date_created.desc())

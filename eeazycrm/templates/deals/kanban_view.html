@@ -18,7 +18,7 @@
             </a>
         </div>
     </div>
-    {% if deals.items|length > 0 %}
+    {% if deals|length > 0 %}
         <div class="container-fluid" style="background-color: #f1f1f1; padding: 20px;">
             <div class="kanban-container">
                 {% for stage_item in deal_stages %}
@@ -27,7 +27,7 @@
                   <div id="cb_{{ stage_item.id }}" class="card-body"
                        data-dropstage="{{ stage_item.id }}" ondrop="drop(event)" ondragover="allowDrop(event)">
                     <h5 class="card-title">{{ stage_item.stage_name }}</h5>
-                      {% for deal in deals.items %}
+                      {% for deal in deals %}
                         {% if deal.dealstage.stage_name == stage_item.stage_name %}
 
                             <div id="item_{{ deal.id }}" data-dealid="{{ deal.id }}" class="card inner-card bg-light mb-3"

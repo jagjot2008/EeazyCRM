@@ -11,6 +11,10 @@ class LeadStatus(db.Model):
     def lead_status_query():
         return LeadStatus.query
 
+    @staticmethod
+    def get_by_id(lead_status_id):
+        return LeadStatus.query.filter_by(id=lead_status_id).first()
+
     def __repr__(self):
         return f"LeadStatus('{self.status_name}')"
 
