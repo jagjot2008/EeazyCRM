@@ -70,17 +70,17 @@ def set_date_filters(filters, module, key):
     return filter_d
 
 
-def set_price_filters(filters, module, key):
+def set_price_filters(filters, key):
     filter_d = True
     if request.method == 'POST':
         if filters.price_range.data:
-            filter_d = set_p_filters(filters.price_range.data['id'], module)
+            filter_d = set_p_filters(filters.price_range.data['id'])
             session[key] = filters.price_range.data['id']
         else:
             session.pop(key, None)
     else:
         if key in session:
-            filter_d = set_p_filters(session[key], module)
+            filter_d = set_p_filters(session[key])
             filters.price_range.data = filter_deals_price_query()[session[key] - 1]
     return filter_d
 
@@ -91,13 +91,13 @@ def set_deal_stage_filters(filters, key):
 
     deal_stage = True
     if request.method == 'POST':
-        if filters.contacts.data:
-            deal_stage = text('Deal.deal_stage_id=%d' % filters.contacts.data.id)
-            session[key] = filters.contacts.data.id
+        if filters.deal_stages.data:
+            deal_stage = text('Deal.deal_stage_id=%d' % filters.deal_stages.data.id)
+            session[key] = filters.deal_stages.data.id
         else:
             session.pop(key, None)
     else:
         if key in session:
-            deal_stage = text('.deal_stage_id=%d' % session[key])
-            filters.contacts.data = DealStage.get_deal_stage(session[key])
+            deal_stage = text('Deal.deal_stage_id=%d' % session[key])
+            filters.deal_stages.data = DealStage.get_deal_stage(session[key])
     return deal_stage

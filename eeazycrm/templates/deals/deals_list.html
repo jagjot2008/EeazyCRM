@@ -28,7 +28,7 @@
                       <input type="checkbox" id="select_all" value="all" />
                   </th>
                     <th width="250"></th>
-                    <th width="300" scope="col">Title</th>
+                    <th width="350" scope="col">Title</th>
                   <th width="200" scope="col">Expected Close Price</th>
                   <th width="200" scope="col">Expected Close Date</th>
                   <th width="300" scope="col">Account</th>
@@ -57,8 +57,9 @@
                         </a>
                     </th>
                     <td>{{ deal.title }}</td>
-                  <td>$ {{ deal.expected_close_price }}</td>
-                  <td>{{ deal.expected_close_date.strftime('%Y-%m-%d %I:%M %p').lower() if deal.expected_close_date }}</td>
+                  <td>{{ "$ {:,.2f}".format(deal.expected_close_price) }}</td>
+                    <td>{% if deal.is_expired() %}<span class="icon-warning" data-feather="alert-circle"></span>{%endif%}
+                        {{ deal.expected_close_date.strftime('%Y-%m-%d %I:%M %p').lower() if deal.expected_close_date }}</td>
                     <td>{{ deal.account.name }}</td>
                     <td>{{ deal.contact.first_name }} {{ deal.contact.last_name }}</td>
                      <td>{{ deal.dealstage.stage_name }}</td>
@@ -71,7 +72,7 @@
         </div>
 
         <!-- pagination -->
-        {% if deals.total > 10 %}
+        {% if deals.total_records > 10 %}
             {% with view_id="deals.get_deals_view", items=deals %}
                 {% include "common/pagination.html" %}
             {% endwith %}

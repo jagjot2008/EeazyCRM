@@ -17,6 +17,23 @@ from eeazycrm.rbac import check_access
 deals = Blueprint('deals', __name__)
 
 
+def reset_deal_filters():
+    if 'deals_owner' in session:
+        session.pop('deals_owner', None)
+    if 'deals_search' in session:
+        session.pop('deals_search', None)
+    if 'deals_acc_owner' in session:
+        session.pop('deals_acc_owner', None)
+    if 'deals_contacts_owner' in session:
+        session.pop('deals_contacts_owner', None)
+    if 'deals_date_created' in session:
+        session.pop('deals_date_created', None)
+    if 'deal_price' in session:
+        session.pop('deal_price', None)
+    if 'deal_stage' in session:
+        session.pop('deal_stage', None)
+
+
 @deals.route("/deals", methods=['GET', 'POST'])
 @login_required
 @check_access('deals', 'view')
@@ -29,8 +46,10 @@ def get_deals_view():
     account = CommonFilters.set_accounts(filters, 'Deal', 'deals_acc_owner')
     contact = CommonFilters.set_contacts(filters, 'Deal', 'deals_contacts_owner')
     advanced_filters = set_date_filters(filters, 'Deal', 'deals_date_created')
-    price_filters = set_price_filters(filters, 'Deal', 'deal_price')
+    price_filters = set_price_filters(filters, 'deal_price')
     deal_stage_filters = set_deal_stage_filters(filters, 'deal_stage')
+
+    print(account)
 
     query = Deal.query.filter(or_(
         Deal.title.ilike(search)
@@ -106,4 +125,11 @@ def update_deal_stage_ajax(deal_id, stage_id):
     db.session.commit()
     return json.dumps({'success': True, 'message': 'Done'})
 
+
+@deals.route("/deals/reset_filters")
+@login_required
+@check_access('deals', 'view')
+def reset_filters():
+    reset_deal_filters()
+    return redirect(url_for('deals.get_deals_view'))
 
