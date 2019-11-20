@@ -12,77 +12,58 @@
 
     <div class="row">
         <div class="col-9 mb-4">
-            <canvas id="myChart" width="700" height="300"></canvas>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" id="ds_price" class="btn btn-sm btn-outline-secondary">Price</button>
+              <button type="button" id="ds_count" class="btn btn-sm btn-outline-secondary">Volume</button>
+            </div>
+            <canvas id="myChart1" width="700" height="300"></canvas>
+            <canvas id="myChart2" style="display: none;" width="700" height="300"></canvas>
+            <script src="{{ url_for('static', filename='scripts/reports/deal_stage_reports.js') }}"></script>
             <script>
             $(document).ready(function() {
+                var label_arr = [];
+                var data_arr = [];
+                var data_arr1 = [];
 
-            var label_arr = [];
-            var data_arr = [];
-            {% for deal in deals %}
-                label_arr.push('{{ deal.stage_name }}');
-                data_arr.push({{ deal.total_price }});
-            {% endfor %}
+                {% for deal in deals %}
+                    label_arr.push('{{ deal.stage_name }}');
+                    data_arr.push({{ deal.total_price }});
+                    data_arr1.push({{ deal.total_count }});
+                {% endfor %}
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: label_arr,
-        datasets: [{
-            label: '# Deal Stages Price in USD',
-            data: data_arr,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        layout: {
-           padding: {
-              right: 12
-           }
-        },
-        scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
-                        callback: function(value) {
-                             var ranges = [
-                                { divider: 1e6, suffix: 'M' },
-                                { divider: 1e3, suffix: 'k' }
-                             ];
-                             function formatNumber(n) {
-                                for (var i = 0; i < ranges.length; i++) {
-                                   if (n >= ranges[i].divider) {
-                                      return (n / ranges[i].divider).toString() + ranges[i].suffix;
-                                   }
-                                }
-                                return n;
-                             }
-                             return '$' + formatNumber(value);
-                          }
-                    }
-                }
-            ]
-        }
-    }
-});
-});
+                plot_deal_stage_report_price_bar_graph(label_arr, data_arr);
+                plot_deal_stage_report_count_bar_graph(label_arr, data_arr1);
+
+                $('#ds_price')
+                    .removeClass('btn-outline-secondary')
+                    .addClass('btn-secondary');
+
+                $('#ds_price').on('click', function() {
+                    $('#myChart1').css('display', 'block');
+                    $('#myChart2').css('display', 'none');
+
+                    $('#ds_price')
+                        .removeClass('btn-outline-secondary')
+                        .addClass('btn-secondary');
+
+                    $('#ds_count')
+                        .removeClass('btn-secondary')
+                        .addClass('btn-outline-secondary');
+                });
+
+                 $('#ds_count').on('click', function() {
+                    $('#myChart1').css('display', 'none');
+                    $('#myChart2').css('display', 'block');
+
+                    $('#ds_price')
+                        .removeClass('btn-secondary')
+                        .addClass('btn-outline-secondary');
+
+                    $('#ds_count')
+                        .removeClass('btn-outline-secondary')
+                        .addClass('btn-secondary');
+                 });
+            });
 </script>
         </div>
         <div class="col-6">
