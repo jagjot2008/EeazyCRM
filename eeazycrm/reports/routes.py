@@ -23,7 +23,8 @@ def deals_closed():
             func.count(Deal.id).label('total_count')
         ) \
         .join(Deal.deal_stage) \
-        .group_by(DealStage.stage_name) \
+        .group_by(DealStage.stage_name if current_user.role.name == 'admin'
+                  else text('DealStage.stage_name, Deal.owner_id')) \
         .having(Deal.owner_id == current_user.id if current_user.role.name != 'admin' else True) \
         .order_by(text('total_price DESC'))
     return render_template("reports/deals_stages.html",
