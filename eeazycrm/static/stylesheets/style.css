@@ -199,7 +199,7 @@ body {
 .kanban-container .card.inner-card .card-title .text {
     flex: 1;
     color: #444;
-    font-weight: 600;
+    font-weight: 300;
     padding-bottom: 10px;
 }
 
@@ -210,7 +210,7 @@ body {
 }
 
 .card-text .price {
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .kanban-container .card.inner-card {

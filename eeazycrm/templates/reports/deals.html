@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('leads.new_lead') }}">
+                <span data-feather="plus"></span>
+                  New
+            </a>
+        </div>
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{{ url_for('reports.deals_closed') }}">Deals closed</a></li>
+      <li class="list-group-item">Deals by owner</li>
+      <li class="list-group-item">Morbi leo risus</li>
+      <li class="list-group-item">Porta ac consectetur ac</li>
+      <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+    {% endblock %}

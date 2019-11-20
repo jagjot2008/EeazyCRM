@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('reports.deal_reports') }}">
+                <span data-feather="arrow-left"></span>
+                  Back to Deal Reports
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9 mb-4">
+            <canvas id="myChart" width="700" height="300"></canvas>
+            <script>
+            $(document).ready(function() {
+
+            var label_arr = [];
+            var data_arr = [];
+            {% for deal in deals %}
+                label_arr.push('{{ deal.stage_name }}');
+                data_arr.push({{ deal.total_price }});
+            {% endfor %}
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: label_arr,
+        datasets: [{
+            label: '# Deal Stages Price in USD',
+            data: data_arr,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        layout: {
+           padding: {
+              right: 12
+           }
+        },
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function(value) {
+                             var ranges = [
+                                { divider: 1e6, suffix: 'M' },
+                                { divider: 1e3, suffix: 'k' }
+                             ];
+                             function formatNumber(n) {
+                                for (var i = 0; i < ranges.length; i++) {
+                                   if (n >= ranges[i].divider) {
+                                      return (n / ranges[i].divider).toString() + ranges[i].suffix;
+                                   }
+                                }
+                                return n;
+                             }
+                             return '$' + formatNumber(value);
+                          }
+                    }
+                }
+            ]
+        }
+    }
+});
+});
+</script>
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9">
+
+    {% if deals|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover fixed-layout-table">
+              <thead class="thead-light">
+                <tr>
+                    <th width="150" scope="col">Deal Stage</th>
+                    <th width="150" scope="col">Total Cost</th>
+                    <th width="150" scope="col">Deals Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for deal in deals %}
+                <tr>
+                      <td>{{ deal.stage_name }}</td>
+                      <td>{{ "$ {:,.2f}".format(deal.total_price) }}</td>
+                    <td><span class="badge badge-info">{{ deal.total_count }}</span></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>No deal stage records found.</p>
+        </div>
+    {% endif %}
+        </div>
+    </div>
+    {% endblock %}

@@ -39,6 +39,18 @@ class Deal(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'), nullable=True)
     notes = db.Column(db.String(200), nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    deal_stage = db.relationship(
+        'DealStage',
+        backref='deal',
+        uselist=False,
+        lazy=True
+    )
+    owner = db.relationship(
+        'User',
+        backref='deal',
+        uselist=False,
+        lazy=True
+    )
 
     def is_expired(self):
         today = datetime.today()
