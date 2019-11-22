@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('reports.deal_reports') }}">
+                <span data-feather="arrow-left"></span>
+                  Back to Deal Reports
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            <canvas id="deals_closed_bg" class="seg_chart_1" width="600" height="300"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+    {% if deals|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover fixed-layout-table">
+              <thead class="thead-light">
+                <tr>
+                    <th width="150" scope="col">User</th>
+                    <th width="150" scope="col">Deal Stage</th>
+                    <th width="150" scope="col">Total Cost</th>
+                    <th width="150" scope="col">Deals Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for deal in deals %}
+                <tr>
+                    <th colspan="4">{{ deal.owner }}</th>
+                </tr>
+                    {% for item in deal.rows %}
+                        <tr>
+                            <td></td>
+                            <td>{{ item[0] }}</td>
+                            <td>{{ "$ {:,.2f}".format(item[1]) }}</td>
+                            <td>{{ item[2] }}</td>
+                        </tr>
+                    {% endfor %}
+                <tr>
+                    <th>Total</th>
+                    <th></th>
+                    <th>{{ "$ {:,.2f}".format(deal.total_cost) }}</th>
+                    <th>{{ "{:,}".format(deal.total_qty) }}</th>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>No deal stage records found.</p>
+        </div>
+    {% endif %}
+        </div>
+    </div>
+<script src="{{ url_for('static', filename='scripts/reports/deal_closed_by_user_reports.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        var labels = [];
+        var data_won = [];
+        var data_lost = [];
+
+        {% for deal in deals_closed[0] %}
+            labels.push('{{ deal.first_name }} {{ deal.last_name }}');
+            data_won.push({{ deal.total_price }});
+        {% endfor %}
+
+        {% for deal in deals_closed[1] %}
+            data_lost.push({{ deal.total_price }});
+        {% endfor %}
+
+        plot_deal_closed_report_price_bar_graph('deals_closed_bg', labels, data_won, data_lost);
+    });
+</script>
+    {% endblock %}

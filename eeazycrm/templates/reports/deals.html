@@ -11,12 +11,17 @@
     </div>
 
     <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ url_for('reports.deal_stages') }}">Deal stage pipeline report</a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ url_for('reports.deals_closed') }}">Deals stage reports by Account</a>
+        </li>
         {% if current_user.role.name == 'admin' %}
-        <li class="list-group-item"><a href="{{ url_for('reports.deals_closed') }}">Net revenue (volume) deals stage report</a></li>
-        <li class="list-group-item"><a href="#">User wise revenue (volume) deal stage report</a></li>
+            <li class="list-group-item">
+                <a href="{{ url_for('reports.deal_stage_by_users') }}">Deals stage reports by Users</a>
+            </li>
         {% endif %}
-        <li class="list-group-item">Deals by owner</li>
-      <li class="list-group-item">Morbi leo risus</li>
       <li class="list-group-item">Porta ac consectetur ac</li>
       <li class="list-group-item">Vestibulum at eros</li>
     </ul>

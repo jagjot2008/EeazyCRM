@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('reports.deal_reports') }}">
+                <span data-feather="arrow-left"></span>
+                  Back to Deal Reports
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+    {% if deals|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover fixed-layout-table">
+              <thead class="thead-light">
+                <tr>
+                    <th width="150" scope="col">Deal Stage</th>
+                    <th width="150" scope="col">Account Name</th>
+                    <th width="150" scope="col">Total Cost</th>
+                    <th width="150" scope="col">Deals Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for deal in deals %}
+                <tr>
+                    <td colspan="4">{{ deal.stage_name }}
+                        <span class="badge badge-info">{{ deal.accounts_count }} accounts</span>
+                    </td>
+                </tr>
+                    {% for item in deal.rows %}
+                        <tr>
+                            <td></td>
+                            <td>{{ item[0] }}</td>
+                            <td>{{ "$ {:,.2f}".format(item[1]) }}</td>
+                            <td>{{ item[2] }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="container text-center pt-4">
+            <div><span data-feather="eye-off"></span></div>
+            <p>No deal stage records found.</p>
+        </div>
+    {% endif %}
+        </div>
+    </div>
+    {% endblock %}

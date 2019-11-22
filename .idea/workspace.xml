@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/eeazycrm/static/scripts/reports/deal_closed_by_user_reports.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/reports/deals_closed.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/reports/deals_stage_by_users.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/contacts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/contacts/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/reports/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/reports/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/static/scripts/reports/deal_stage_reports.js" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/static/scripts/reports/deal_stage_reports.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/templates/reports/deals.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/reports/deals.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/reports/deals_stages.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/reports/deals_stages.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

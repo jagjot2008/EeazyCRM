@@ -78,3 +78,34 @@ function plot_deal_stage_report_count_bar_graph(labels, data) {
                         }
                     });
                 }
+
+function plot_deal_stage_report_price_pie_chart(labels, data) {
+    var ctx = document.getElementById('myChart3').getContext('2d');
+    var dynamicColors = function() {
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ", 0.55)";
+    };
+
+    colors = []
+    for (var i=0; i < data.length; i++) {
+        colors.push(dynamicColors());
+    }
+
+    var new_data = {
+        datasets: [{
+            data: data,
+            backgroundColor: colors
+        }],
+        labels: labels
+    }
+
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: new_data,
+        options: {
+            cutoutPercentage: 0,
+        }
+    });
+}

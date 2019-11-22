@@ -11,62 +11,16 @@
     </div>
 
     <div class="row">
-        <div class="col-9 mb-4">
+        <div class="col-6 mb-4">
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" id="ds_price" class="btn btn-sm btn-outline-secondary">Price</button>
               <button type="button" id="ds_count" class="btn btn-sm btn-outline-secondary">Volume</button>
             </div>
-            <canvas id="myChart1" width="700" height="300"></canvas>
-            <canvas id="myChart2" style="display: none;" width="700" height="300"></canvas>
-            <script src="{{ url_for('static', filename='scripts/reports/deal_stage_reports.js') }}"></script>
-            <script>
-            $(document).ready(function() {
-                var label_arr = [];
-                var data_arr = [];
-                var data_arr1 = [];
-
-                {% for deal in deals %}
-                    label_arr.push('{{ deal.stage_name }}');
-                    data_arr.push({{ deal.total_price }});
-                    data_arr1.push({{ deal.total_count }});
-                {% endfor %}
-
-                plot_deal_stage_report_price_bar_graph(label_arr, data_arr);
-                plot_deal_stage_report_count_bar_graph(label_arr, data_arr1);
-
-                $('#ds_price')
-                    .removeClass('btn-outline-secondary')
-                    .addClass('btn-secondary');
-
-                $('#ds_price').on('click', function() {
-                    $('#myChart1').css('display', 'block');
-                    $('#myChart2').css('display', 'none');
-
-                    $('#ds_price')
-                        .removeClass('btn-outline-secondary')
-                        .addClass('btn-secondary');
-
-                    $('#ds_count')
-                        .removeClass('btn-secondary')
-                        .addClass('btn-outline-secondary');
-                });
-
-                 $('#ds_count').on('click', function() {
-                    $('#myChart1').css('display', 'none');
-                    $('#myChart2').css('display', 'block');
-
-                    $('#ds_price')
-                        .removeClass('btn-secondary')
-                        .addClass('btn-outline-secondary');
-
-                    $('#ds_count')
-                        .removeClass('btn-outline-secondary')
-                        .addClass('btn-secondary');
-                 });
-            });
-</script>
+            <canvas id="myChart1" class="seg_chart_1" width="400" height="300"></canvas>
+            <canvas id="myChart2" class="seg_chart_2" style="display: none;" width="400" height="300"></canvas>
         </div>
-        <div class="col-6">
+        <div class="col-6 mb-4">
+            <canvas id="myChart3" class="seg_chart_1" width="400" height="300"></canvas>
         </div>
     </div>
 
@@ -102,4 +56,52 @@
     {% endif %}
         </div>
     </div>
+<script src="{{ url_for('static', filename='scripts/reports/deal_stage_reports.js') }}"></script>
+    <script>
+            $(document).ready(function() {
+                var label_arr = [];
+                var data_arr = [];
+                var data_arr1 = [];
+
+                {% for deal in deals %}
+                    label_arr.push('{{ deal.stage_name }}');
+                    data_arr.push({{ deal.total_price }});
+                    data_arr1.push({{ deal.total_count }});
+                {% endfor %}
+
+                plot_deal_stage_report_price_bar_graph(label_arr, data_arr);
+                plot_deal_stage_report_count_bar_graph(label_arr, data_arr1);
+                plot_deal_stage_report_price_pie_chart(label_arr, data_arr);
+
+                $('#ds_price')
+                    .removeClass('btn-outline-secondary')
+                    .addClass('btn-secondary');
+
+                $('#ds_price').on('click', function() {
+                    $('#myChart1').css('display', 'block');
+                    $('#myChart2').css('display', 'none');
+
+                    $('#ds_price')
+                        .removeClass('btn-outline-secondary')
+                        .addClass('btn-secondary');
+
+                    $('#ds_count')
+                        .removeClass('btn-secondary')
+                        .addClass('btn-outline-secondary');
+                });
+
+                 $('#ds_count').on('click', function() {
+                    $('#myChart1').css('display', 'none');
+                    $('#myChart2').css('display', 'block');
+
+                    $('#ds_price')
+                        .removeClass('btn-secondary')
+                        .addClass('btn-outline-secondary');
+
+                    $('#ds_count')
+                        .removeClass('btn-outline-secondary')
+                        .addClass('btn-secondary');
+                 });
+            });
+    </script>
     {% endblock %}

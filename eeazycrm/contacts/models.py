@@ -36,7 +36,7 @@ class Contact(db.Model):
         else:
             contacts = Contact.query \
                 .filter(Contact.account_id == account if account else True) \
-                .filter(owner_id=current_user.id)
+                .filter(Contact.owner_id == current_user.id)
         return contacts
 
     @staticmethod
