@@ -4,5 +4,5 @@
 
 ##### It's still WORK IN PROGRESS
 ##### But I have a small DEMO image below
-![alt text](http://i.ibb.co/f0xgK2X/eeazycrm-demo.gif)
+![alt text](https://i.ibb.co/BsWm9Kf/eeazycrm-demo1.gif)
 
