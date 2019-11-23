@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/EeazyCRM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EeazyCRM.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/reports/reports.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/reports/reports.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +29,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/eeazycrm/static/stylesheets" />
