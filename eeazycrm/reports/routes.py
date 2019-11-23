@@ -15,7 +15,7 @@ reports = Blueprint('reports', __name__)
 @reports.route("/reports/deals")
 @login_required
 def deal_reports():
-    return render_template("reports/deals.html", title="Deal Reports")
+    return render_template("reports/reports.html", title="Reports")
 
 
 @reports.route("/reports/deal_stages")
@@ -147,3 +147,30 @@ def deal_stage_by_users():
                            deals=data,
                            deals_closed=get_users_deals())
 
+
+@reports.route("/reports/deal_closed_by_date")
+@login_required
+def deal_closed_by_date():
+    query = Deal.query \
+        .with_entities(
+            Deal.owner_id.label('owner'),
+            User.first_name,
+            User.last_name,
+            DealStage.stage_name,
+            Deal.expected_close_price.label('total_price')
+        ) \
+        .filter(DealStage.stage_name.in_(['Closed - Won', 'Closed - Lost'])) \
+        .join(Deal.owner, Deal.deal_stage) \
+        .group_by(
+            Deal.owner_id,
+            User.first_name,
+            User.last_name,
+            DealStage.stage_name,
+            Deal.expected_close_date,
+            Deal.expected_close_price) \
+        .order_by(text('owner'))
+
+    return render_template("reports/deals_closed_by_time.html",
+                           title="Reports: Deal Stages by Users",
+                           deals=data,
+                           deals_closed=get_users_deals())

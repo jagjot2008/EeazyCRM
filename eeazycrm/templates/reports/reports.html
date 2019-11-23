@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+    {% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a class="btn btn btn-sm btn-outline-primary" role="button" href="{{ url_for('leads.new_lead') }}">
+                <span data-feather="plus"></span>
+                  New
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="reports-heading"><span data-feather="dollar-sign"></span> Deal (Sales) Reports</div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{{ url_for('reports.deal_stages') }}">Net revenue report by deal stages</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ url_for('reports.deals_closed') }}">Deal stage revenue report (Account wise)</a>
+                </li>
+                {% if current_user.role.name == 'admin' %}
+                    <li class="list-group-item">
+                        <a href="{{ url_for('reports.deal_stage_by_users') }}">Deal stage revenue report (User wise)</a>
+                    </li>
+                {% endif %}
+                <li class="list-group-item">
+                    <a href="#">Deals closed (sales) by Time</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">Sales forecast</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-4">
+            <div class="reports-heading"><span data-feather="users"></span> Customer (Accounts) Reports</div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{{ url_for('reports.deal_stages') }}">Deal stage pipeline report</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ url_for('reports.deals_closed') }}">Deal stage reports by Account</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endblock %}

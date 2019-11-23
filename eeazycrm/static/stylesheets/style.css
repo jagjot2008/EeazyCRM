@@ -270,5 +270,11 @@ body {
     color: red;
 }
 
+.reports-heading {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
 
 

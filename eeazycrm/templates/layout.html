@@ -88,7 +88,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('accounts.get_accounts_view') }}">
-              <span data-feather="shopping-cart"></span>
+              <span data-feather="map-pin"></span>
               Accounts
             </a>
           </li>
@@ -100,7 +100,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('deals.get_deals_view') }}">
-              <span data-feather="users"></span>
+              <span data-feather="dollar-sign"></span>
               Deals
             </a>
           </li>
@@ -111,13 +111,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+            <a class="nav-link" href="{{ url_for('reports.deal_reports') }}">
               <span data-feather="bar-chart-2"></span>
               Reports
             </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="{{ url_for('reports.deal_reports') }}">Deal Reports</a>
-            </div>
           </li>
           {% if current_user.is_admin %}
           <li class="nav-item">
