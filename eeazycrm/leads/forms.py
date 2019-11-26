@@ -135,3 +135,11 @@ class BulkLeadSourceAssign(FlaskForm):
     submit = SubmitField('Assign Lead Source')
 
 
+class BulkLeadStatusAssign(FlaskForm):
+    lead_status_list = QuerySelectField(query_factory=LeadStatus.lead_status_query, get_pk=lambda a: a.id,
+                                        get_label='status_name', allow_blank=False,
+                                        validators=[DataRequired(message='Please select lead status')])
+    submit = SubmitField('Assign Lead Status')
+
+
+

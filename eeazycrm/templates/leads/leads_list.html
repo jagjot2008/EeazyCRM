@@ -13,7 +13,7 @@
                   {% if current_user.is_admin %}
                 <a class="dropdown-item " href="#" data-toggle="modal" data-target="#leadOwnerAssignModal">Assign Owner</a>
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#leadSourceAssignModal">Assign Source</a>
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#leadAssignStatus">Assign Status</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#leadStatusAssignModal">Assign Status</a>
                     <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Delete</a>
                   <div class="dropdown-divider"></div>
@@ -157,5 +157,8 @@
 
 <!-- Lead Source Assign Modal -->
 {% include "leads/bulk_lead_source_assign_modal.html" %}
+
+<!-- Lead Status Assign Modal -->
+{% include "leads/bulk_lead_status_assign_modal.html" %}
 
 {% endblock %}

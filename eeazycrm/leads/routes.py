@@ -10,7 +10,8 @@ from .models import Lead
 from eeazycrm.common.paginate import Paginate
 from eeazycrm.common.filters import CommonFilters
 from .filters import set_date_filters, set_source, set_status
-from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads, BulkOwnerAssign, BulkLeadSourceAssign
+from .forms import NewLead, ImportLeads, ConvertLead, \
+    FilterLeads, BulkOwnerAssign, BulkLeadSourceAssign, BulkLeadStatusAssign
 
 from eeazycrm.rbac import check_access, is_admin
 
@@ -59,7 +60,8 @@ def get_leads_view():
 
     bulk_form = {
         'owner': BulkOwnerAssign(),
-        'lead_source': BulkLeadSourceAssign()
+        'lead_source': BulkLeadSourceAssign(),
+        'lead_status': BulkLeadStatusAssign()
     }
 
     return render_template("leads/leads_list.html", title="Leads View",
@@ -214,6 +216,27 @@ def bulk_lead_source_assign():
                     }, synchronize_session=False)
                 db.session.commit()
                 flash(f'Lead Source `{form.lead_source_list.data.source_name}` has been '
+                      f'assigned to {len(ids)} lead(s) successfully!', 'success')
+        else:
+            print(form.errors)
+    return redirect(url_for('leads.get_leads_view'))
+
+
+@leads.route("/leads/bulk_lead_status_assign", methods=['POST'])
+@is_admin
+def bulk_lead_status_assign():
+    form = BulkLeadStatusAssign()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            if form.lead_status_list.data:
+                ids = [int(x) for x in request.form['leads_status'].split(',')]
+                Lead.query \
+                    .filter(Lead.id.in_(ids)) \
+                    .update({
+                        Lead.lead_status_id: form.lead_status_list.data.id
+                    }, synchronize_session=False)
+                db.session.commit()
+                flash(f'Lead status `{form.lead_status_list.data.status_name}` has been '
                       f'assigned to {len(ids)} lead(s) successfully!', 'success')
         else:
             print(form.errors)
