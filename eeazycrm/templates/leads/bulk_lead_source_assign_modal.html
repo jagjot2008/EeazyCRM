@@ -1,0 +1,39 @@
+<div class="modal fade ba_modal" id="leadSourceAssignModal" tabindex="-1" role="dialog" aria-labelledby="leadSourceAssignModalLabel"
+     aria-hidden="true">
+    <form id="bulk-assign-lead-form" method="POST" action="{{ url_for('leads.bulk_lead_source_assign') }}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="leadSourceAssignModalLabel">Bulk Lead Source Assign ...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-notif-area"></div>
+                        {{ bulk_form.lead_source.hidden_tag() }} <!-- security 'csrf' token -->
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                {{ bulk_form.lead_source.lead_source_list.label(class="form-control-label") }}
+                                {% if bulk_form.lead_source.lead_source_list.errors %}
+                                {{ bulk_form.lead_source.lead_source_list(class="form-control form-control-lg required is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in bulk_form.lead_source.lead_source_list.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                              {% else %}
+                                {{ bulk_form.lead_source.lead_source_list(class="form-control required from-control-lg") }}
+                              {% endif %}
+                             </div>
+                            <input type="hidden" class="leads_data" name="leads_source">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{ bulk_form.lead_source.submit(class="btn btn-primary") }}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

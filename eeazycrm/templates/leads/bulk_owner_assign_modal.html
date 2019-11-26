@@ -1,0 +1,41 @@
+<div class="modal fade ba_modal" id="leadOwnerAssignModal" tabindex="-1" role="dialog"
+     aria-labelledby="leadOwnerAssignModalLabel"
+     aria-hidden="true">
+    <form class="bulk-assign-lead-form" method="POST" action="{{ url_for('leads.bulk_owner_assign') }}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leadOwnerAssignModalLabel">Bulk Owner Assign ...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-notif-area"></div>
+                    {{ bulk_form.owner.hidden_tag() }} <!-- security 'csrf' token -->
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            {{ bulk_form.owner.owners_list.label(class="form-control-label") }}
+                            {% if bulk_form.owner.owners_list.errors %}
+                            {{ bulk_form.owner.owners_list(class="form-control form-control-lg required is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in bulk_form.owner.owners_list.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                          {% else %}
+                            {{ bulk_form.owner.owners_list(class="form-control required from-control-lg") }}
+                          {% endif %}
+                         </div>
+                        <input type="hidden" class="leads_data" name="leads_owner">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {{ bulk_form.owner.submit(id="bulk-lead-submit", class="btn btn-primary") }}
+            </div>
+        </div>
+    </div>
+     </form>
+</div>

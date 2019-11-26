@@ -3,6 +3,25 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
         <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-primary mr-2 dropdown-toggle bulk_assign disabled"
+                      type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                  <span data-feather="settings"></span> Bulk Actions
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {% if current_user.is_admin %}
+                <a class="dropdown-item " href="#" data-toggle="modal" data-target="#leadOwnerAssignModal">Assign Owner</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#leadSourceAssignModal">Assign Source</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#leadAssignStatus">Assign Status</a>
+                    <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Delete</a>
+                  <div class="dropdown-divider"></div>
+                  {% endif %}
+                <a class="dropdown-item" href="#">Export to CSV</a>
+              </div>
+
+            </div>
             {% if current_user.is_admin %}
             <a class="btn btn-sm btn-outline-secondary mr-2" role="button" href="{{ url_for('leads.import_bulk_leads') }}">
                 <span data-feather="upload"></span>
@@ -112,10 +131,31 @@
 
             if (items.length > 0) {
                 $('#convert_lead').removeClass('disabled');
+                $('.bulk_assign').removeClass('disabled');
             } else {
                 $('#convert_lead').addClass('disabled');
+                $('.bulk_assign').addClass('disabled');
             }
         }
+
+        $('.ba_modal').on('show.bs.modal', function (e) {
+          // do something...
+          $('.modal-notif-area').html(`
+                <div class="alert alert-success" role="alert">
+                  You have selected <strong>${items.length}</strong> leads for bulk assignment.
+                </div>`);
+
+          // store the values
+          console.log(items);
+          $('.leads_data').val(items);
+        });
     });
 </script>
+
+<!-- Lead Owner Assign Modal -->
+{% include "leads/bulk_owner_assign_modal.html" %}
+
+<!-- Lead Source Assign Modal -->
+{% include "leads/bulk_lead_source_assign_modal.html" %}
+
 {% endblock %}

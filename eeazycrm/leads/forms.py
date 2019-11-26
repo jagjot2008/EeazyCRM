@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.fields.html5 import DateField
-from flask_login import current_user
-from wtforms import StringField, SubmitField, FloatField, BooleanField
+from wtforms import StringField, SubmitField, FloatField, BooleanField, HiddenField
 from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, Email, Optional
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
@@ -120,5 +119,19 @@ class ConvertLead(FlaskForm):
     assignees = QuerySelectField('Assign To', query_factory=User.user_list_query, get_pk=lambda a: a.id,
                                  get_label=User.get_label, default=User.get_current_user)
     submit = SubmitField('Covert Lead')
+
+
+class BulkOwnerAssign(FlaskForm):
+    owners_list = QuerySelectField('Assign Owner', query_factory=User.user_list_query, get_pk=lambda a: a.id,
+                                   get_label=User.get_label, default=User.get_current_user, allow_blank=False,
+                                   validators=[DataRequired(message='Please select the owner')])
+    submit = SubmitField('Assign Owner')
+
+
+class BulkLeadSourceAssign(FlaskForm):
+    lead_source_list = QuerySelectField('Assign Lead Source', query_factory=lead_source_query, get_pk=lambda a: a.id,
+                                        get_label='source_name', allow_blank=False,
+                                        validators=[DataRequired(message='Please select lead source')])
+    submit = SubmitField('Assign Lead Source')
 
 

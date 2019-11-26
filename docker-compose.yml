@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    # volumes:
+    #   - /home/db:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: python run.py
+    volumes:
+      - .:/app
+    image: jsingh/eeazycrm
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db

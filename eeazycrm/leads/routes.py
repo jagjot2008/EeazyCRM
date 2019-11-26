@@ -1,7 +1,7 @@
 import pandas as pd
-from sqlalchemy import or_
+from sqlalchemy import or_, case
 
-from flask import Blueprint, session
+from flask import Blueprint, session, jsonify
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 
@@ -10,9 +10,9 @@ from .models import Lead
 from eeazycrm.common.paginate import Paginate
 from eeazycrm.common.filters import CommonFilters
 from .filters import set_date_filters, set_source, set_status
-from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads
+from .forms import NewLead, ImportLeads, ConvertLead, FilterLeads, BulkOwnerAssign, BulkLeadSourceAssign
 
-from eeazycrm.rbac import check_access
+from eeazycrm.rbac import check_access, is_admin
 
 leads = Blueprint('leads', __name__)
 
@@ -57,8 +57,13 @@ def get_leads_view():
         .filter(advanced_filters) \
         .order_by(Lead.date_created.desc())
 
+    bulk_form = {
+        'owner': BulkOwnerAssign(),
+        'lead_source': BulkLeadSourceAssign()
+    }
+
     return render_template("leads/leads_list.html", title="Leads View",
-                           leads=Paginate(query), filters=filters)
+                           leads=Paginate(query), filters=filters, bulk_form=bulk_form)
 
 
 @leads.route("/leads/new", methods=['GET', 'POST'])
@@ -170,4 +175,37 @@ def import_bulk_leads():
 @check_access('leads', 'view')
 def reset_filters():
     reset_lead_filters()
+    return redirect(url_for('leads.get_leads_view'))
+
+
+@leads.route("/leads/bulk_owner_assign", methods=['POST'])
+@is_admin
+def bulk_owner_assign():
+    form = BulkOwnerAssign()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            if form.owners_list.data:
+                ids = [int(x) for x in request.form['leads_owner'].split(',')]
+                Lead.query\
+                    .filter(Lead.id.in_(ids))\
+                    .update({
+                        Lead.owner_id: form.owners_list.data.id
+                    }, synchronize_session=False)
+                db.session.commit()
+        else:
+            print(form.errors)
+
+    return redirect(url_for('leads.get_leads_view'))
+
+
+@leads.route("/leads/bulk_lead_source_assign", methods=['POST'])
+@is_admin
+def bulk_lead_source_assign():
+    form = BulkLeadSourceAssign()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            print(form.lead_source_list.data)
+            print(request.form['leads_source'])
+        else:
+            print(form.errors)
     return redirect(url_for('leads.get_leads_view'))
