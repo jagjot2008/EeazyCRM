@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/bulk_lead_source_assign_modal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/bulk_owner_assign_modal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/leads/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/leads/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
