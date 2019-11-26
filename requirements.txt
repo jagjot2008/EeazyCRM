@@ -11,7 +11,6 @@ WTForms==2.2.1
 WTForms-SQLAlchemy==0.1
 Flask-SQLAlchemy==2.4.1
 Werkzeug==0.16.0
-bcrypt==3.7.1
 cffi==1.13.2
 itsdangerous==1.1.0
 numpy==1.17.4

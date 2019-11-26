@@ -1,7 +1,7 @@
 import pandas as pd
-from sqlalchemy import or_, case
+from sqlalchemy import or_
 
-from flask import Blueprint, session, jsonify
+from flask import Blueprint, session
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 
@@ -192,6 +192,7 @@ def bulk_owner_assign():
                         Lead.owner_id: form.owners_list.data.id
                     }, synchronize_session=False)
                 db.session.commit()
+                flash(f'Owner has been assigned to {len(ids)} lead(s) successfully!', 'success')
         else:
             print(form.errors)
 
@@ -204,8 +205,16 @@ def bulk_lead_source_assign():
     form = BulkLeadSourceAssign()
     if request.method == 'POST':
         if form.validate_on_submit():
-            print(form.lead_source_list.data)
-            print(request.form['leads_source'])
+            if form.lead_source_list.data:
+                ids = [int(x) for x in request.form['leads_source'].split(',')]
+                Lead.query \
+                    .filter(Lead.id.in_(ids)) \
+                    .update({
+                        Lead.lead_source_id: form.lead_source_list.data.id
+                    }, synchronize_session=False)
+                db.session.commit()
+                flash(f'Lead Source `{form.lead_source_list.data.source_name}` has been '
+                      f'assigned to {len(ids)} lead(s) successfully!', 'success')
         else:
             print(form.errors)
     return redirect(url_for('leads.get_leads_view'))
