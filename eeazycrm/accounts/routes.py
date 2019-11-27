@@ -11,6 +11,7 @@ from eeazycrm.common.filters import CommonFilters
 from .forms import NewAccount, FilterAccounts, filter_accounts_adv_filters_query
 
 from eeazycrm.rbac import check_access
+from wtforms import Label
 
 accounts = Blueprint('accounts', __name__)
 
@@ -82,6 +83,50 @@ def get_accounts_view():
 
     return render_template("accounts/accounts_list.html", title="Accounts View",
                            accounts=Paginate(query=query), filters=filters)
+
+
+@accounts.route("/accounts/edit/<int:account_id>", methods=['GET', 'POST'])
+@login_required
+@check_access('accounts', 'update')
+def update_account(account_id):
+    account = Account.get_account(account_id)
+    if not account:
+        return redirect(url_for('accounts.get_accounts_view'))
+
+    form = NewAccount()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            account.name = form.name.data
+            account.website = form.website.data
+            account.email = form.email.data
+            account.phone = form.phone.data
+            account.address_line = form.address_line.data
+            account.addr_state = form.addr_state.data
+            account.addr_city = form.addr_city.data
+            account.post_code = form.post_code.data
+            account.country = form.country.data
+            account.account_owner = form.assignees.data
+            account.notes = form.notes.data
+            db.session.commit()
+            flash('The account has been successfully updated', 'success')
+            return redirect(url_for('accounts.get_account_view', account_id=account.id))
+        else:
+            print(form.errors)
+            flash('Accounts update failed! Form has errors', 'danger')
+    elif request.method == 'GET':
+        form.name.data = account.name
+        form.website.data = account.website
+        form.email.data = account.email
+        form.phone.data = account.phone
+        form.address_line.data = account.address_line
+        form.addr_state.data = account.addr_state
+        form.addr_city.data = account.addr_city
+        form.post_code.data = account.post_code
+        form.country.data = account.country
+        form.assignees.data = account.account_owner
+        form.notes.data = account.notes
+        form.submit.label = Label('update_account', 'Update Account')
+    return render_template("accounts/new_account.html", title="Update Account", form=form)
 
 
 @accounts.route("/accounts/<int:account_id>")

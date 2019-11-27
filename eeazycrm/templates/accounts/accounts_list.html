@@ -46,7 +46,7 @@
                       <input class="cb" type="checkbox" value="{{ account.id }}" />
                   </th>
                     <th>
-                        <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                        <a href="{{ url_for('accounts.update_account', account_id=account.id) }}" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="edit"></span>
                         </a>
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1"
