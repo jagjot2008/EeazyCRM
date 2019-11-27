@@ -43,7 +43,16 @@
             <div class="form-row mb-3">
                 <div class="col">
                     {{ form.email.label(class="form-control-label") }}
-                    {{ form.email(class="form-control from-control-lg", placeholder="email address ...") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.email(class="form-control from-control-lg", placeholder="last name ...") }}
+                      {% endif %}
                 </div>
                 <div class="col">
                     {{ form.company.label(class="form-control-label") }}

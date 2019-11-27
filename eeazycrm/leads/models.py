@@ -56,6 +56,10 @@ class Lead(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'), nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
+    @staticmethod
+    def get_by_id(lead_id):
+        return Lead.query.filter_by(id=lead_id).first()
+
     def __repr__(self):
         return f"Lead('{self.last_name}', '{self.email}', '{self.company_name}')"
 

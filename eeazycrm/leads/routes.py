@@ -1,5 +1,6 @@
 import pandas as pd
 from sqlalchemy import or_
+from wtforms import Label
 
 from flask import Blueprint, session, Response
 from flask_login import current_user, login_required
@@ -98,6 +99,60 @@ def new_lead():
                 print(error)
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("leads/new_lead.html", title="New Lead", form=form)
+
+
+@leads.route("/leads/edit/<int:lead_id>", methods=['GET', 'POST'])
+@login_required
+@check_access('leads', 'update')
+def update_lead(lead_id):
+    lead = Lead.get_by_id(lead_id)
+    if not lead:
+        return redirect(url_for('leads.get_leads_view'))
+
+    form = NewLead()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            lead.title = form.title.data
+            lead.first_name = form.first_name.data
+            lead.last_name = form.last_name.data
+            lead.email = form.email.data
+            lead.company_name = form.company.data
+            lead.phone = form.phone.data
+            lead.mobile = form.mobile.data
+            lead.address_line = form.address_line.data
+            lead.addr_state = form.addr_state.data
+            lead.addr_city = form.addr_city.data
+            lead.post_code = form.post_code.data
+            lead.country = form.country.data
+            lead.owner = form.assignees.data
+            lead.source = form.lead_source.data
+            lead.status = form.lead_status.data
+            lead.notes = form.notes.data
+            db.session.commit()
+            flash('The lead has been successfully updated', 'success')
+            return redirect(url_for('leads.get_lead_view', lead_id=lead.id))
+        else:
+            print(form.errors)
+            flash('User update failed! Form has errors', 'danger')
+    elif request.method == 'GET':
+        form.title.data = lead.title
+        form.first_name.data = lead.first_name
+        form.last_name.data = lead.last_name
+        form.email.data = lead.email
+        form.company.data = lead.company_name
+        form.phone.data = lead.phone
+        form.mobile.data = lead.mobile
+        form.address_line.data = lead.address_line
+        form.addr_state.data = lead.addr_state
+        form.addr_city.data = lead.addr_city
+        form.post_code.data = lead.post_code
+        form.country.data = lead.country
+        form.assignees.data = lead.owner
+        form.lead_source.data = lead.source
+        form.lead_status.data = lead.status
+        form.notes.data = lead.notes
+        form.submit.label = Label('update_lead', 'Update Lead')
+    return render_template("leads/new_lead.html", title="Update Lead", form=form)
 
 
 @leads.route("/leads/<int:lead_id>")

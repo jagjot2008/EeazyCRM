@@ -41,7 +41,11 @@
               </li>
                 <li class="list-group-item g_field">
                   <div class="label">Lead Source</div>
-                  <div class="text">{{ lead.source if lead.company_name else '_' }}</div>
+                  <div class="text">{{ lead.source.source_name if lead.source else '_' }}</div>
+              </li>
+                <li class="list-group-item g_field">
+                  <div class="label">Lead Status</div>
+                  <div class="text">{{ lead.status.status_name if lead.status else '_' }}</div>
               </li>
                 <li class="list-group-item g_field">
                   <div class="label">Owner</div>
