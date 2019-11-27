@@ -9,16 +9,16 @@
                       aria-expanded="false">
                   <span data-feather="settings"></span> Bulk Actions
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-menu dd-sm" aria-labelledby="dropdownMenuButton">
                   {% if current_user.is_admin %}
                 <a class="dropdown-item " href="#" data-toggle="modal" data-target="#leadOwnerAssignModal">Assign Owner</a>
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#leadSourceAssignModal">Assign Source</a>
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#leadStatusAssignModal">Assign Status</a>
                     <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Delete</a>
+                  <a class="dropdown-item" data-toggle="modal" data-target="#leadsDeleteModal" href="#">Delete</a>
                   <div class="dropdown-divider"></div>
                   {% endif %}
-                <a class="dropdown-item" href="#">Export to CSV</a>
+                <a class="dropdown-item" id="export_leads_to_csv" href="#">Export to CSV</a>
               </div>
 
             </div>
@@ -149,6 +149,12 @@
           console.log(items);
           $('.leads_data').val(items);
         });
+
+        $('#export_leads_to_csv').on('click', function(e) {
+            e.preventDefault();
+            window.location = "{{ url_for('leads.write_to_csv') }}?lead_ids=" + items
+        });
+
     });
 </script>
 
@@ -160,5 +166,9 @@
 
 <!-- Lead Status Assign Modal -->
 {% include "leads/bulk_lead_status_assign_modal.html" %}
+
+<!-- Lead Bulk Delete Modal -->
+{% include "leads/bulk_lead_delete_modal.html" %}
+
 
 {% endblock %}

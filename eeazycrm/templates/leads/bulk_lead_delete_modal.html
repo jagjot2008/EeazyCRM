@@ -1,0 +1,28 @@
+<div class="modal fade ba_modal" id="leadsDeleteModal" tabindex="-1" role="dialog"
+     aria-labelledby="leadsDeleteModalLabel"
+     aria-hidden="true">
+    <form class="bulk-assign-lead-form" method="POST" action="{{ url_for('leads.bulk_delete') }}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leadsDeleteModalLabel">Delete Leads</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert">
+                  <h5 class="alert-heading">Are you sure?</h5>
+                    <p>Please note that once deleted the records cannot be recovered</p>
+                </div>
+                {{ bulk_form.delete.hidden_tag() }} <!-- security 'csrf' token -->
+                <input type="hidden" class="leads_data" name="leads_to_delete">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {{ bulk_form.delete.submit(id="bulk-lead-submit", class="btn btn-primary") }}
+            </div>
+        </div>
+    </div>
+     </form>
+</div>

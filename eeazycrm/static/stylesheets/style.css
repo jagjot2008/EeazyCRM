@@ -276,5 +276,8 @@ body {
     margin-bottom: 10px;
 }
 
+.dd-sm .dropdown-item {
+    font-size: 14px;
+}
 
 

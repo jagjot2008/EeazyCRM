@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/bulk_lead_status_assign_modal.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/bulk_lead_delete_modal.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/leads/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/leads/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/static/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/layout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

@@ -142,4 +142,8 @@ class BulkLeadStatusAssign(FlaskForm):
     submit = SubmitField('Assign Lead Status')
 
 
+class BulkDelete(FlaskForm):
+    submit = SubmitField('Delete Selected Leads')
+
+
 

@@ -1,7 +1,7 @@
 import pandas as pd
 from sqlalchemy import or_
 
-from flask import Blueprint, session
+from flask import Blueprint, session, Response
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 
@@ -11,7 +11,7 @@ from eeazycrm.common.paginate import Paginate
 from eeazycrm.common.filters import CommonFilters
 from .filters import set_date_filters, set_source, set_status
 from .forms import NewLead, ImportLeads, ConvertLead, \
-    FilterLeads, BulkOwnerAssign, BulkLeadSourceAssign, BulkLeadStatusAssign
+    FilterLeads, BulkOwnerAssign, BulkLeadSourceAssign, BulkLeadStatusAssign, BulkDelete
 
 from eeazycrm.rbac import check_access, is_admin
 
@@ -61,7 +61,8 @@ def get_leads_view():
     bulk_form = {
         'owner': BulkOwnerAssign(),
         'lead_source': BulkLeadSourceAssign(),
-        'lead_status': BulkLeadStatusAssign()
+        'lead_status': BulkLeadStatusAssign(),
+        'delete': BulkDelete()
     }
 
     return render_template("leads/leads_list.html", title="Leads View",
@@ -149,6 +150,8 @@ def convert_lead(lead_id):
 
 
 @leads.route("/leads/import", methods=['GET', 'POST'])
+@login_required
+@is_admin
 def import_bulk_leads():
     form = ImportLeads()
     if request.method == 'POST':
@@ -181,6 +184,7 @@ def reset_filters():
 
 
 @leads.route("/leads/bulk_owner_assign", methods=['POST'])
+@login_required
 @is_admin
 def bulk_owner_assign():
     form = BulkOwnerAssign()
@@ -202,6 +206,7 @@ def bulk_owner_assign():
 
 
 @leads.route("/leads/bulk_lead_source_assign", methods=['POST'])
+@login_required
 @is_admin
 def bulk_lead_source_assign():
     form = BulkLeadSourceAssign()
@@ -223,6 +228,7 @@ def bulk_lead_source_assign():
 
 
 @leads.route("/leads/bulk_lead_status_assign", methods=['POST'])
+@login_required
 @is_admin
 def bulk_lead_status_assign():
     form = BulkLeadStatusAssign()
@@ -241,3 +247,41 @@ def bulk_lead_status_assign():
         else:
             print(form.errors)
     return redirect(url_for('leads.get_leads_view'))
+
+
+@leads.route("/leads/bulk_delete", methods=['POST'])
+@is_admin
+def bulk_delete():
+    form = BulkDelete()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            ids = [int(x) for x in request.form['leads_to_delete'].split(',')]
+            Lead.query \
+                .filter(Lead.id.in_(ids)) \
+                .delete(synchronize_session=False)
+            db.session.commit()
+            flash(f'Successfully deleted {len(ids)} lead(s)!', 'success')
+        else:
+            print(form.errors)
+    return redirect(url_for('leads.get_leads_view'))
+
+
+@leads.route("/leads/write_csv")
+@login_required
+def write_to_csv():
+    ids = [int(x) for x in request.args.get('lead_ids').split(',')]
+    query = Lead.query \
+        .filter(Lead.id.in_(ids))
+    csv = 'Title,Last Name,Email,Company Name,Phone,' \
+          'Mobile,Owner,Lead Source,Lead Status,Date Created\n'
+    for lead in query.all():
+        csv += f'{lead.title},{lead.first_name},' \
+               f'{lead.last_name},{lead.email},' \
+               f'{lead.company_name},{lead.phone},{lead.mobile},' \
+               f'{lead.owner.first_name} {lead.owner.last_name},' \
+               f'{lead.source.source_name},{lead.status.status_name},' \
+               f'{lead.date_created}\n'
+    return Response(csv,
+                    mimetype='text/csv',
+                    headers={"Content-disposition":
+                             "attachment; filename=leads.csv"})
