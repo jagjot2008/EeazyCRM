@@ -7,7 +7,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             {{ form.submit(class="btn btn-md btn-outline-info mr-2") }}
             <input type="reset" class="btn btn-md btn-outline-secondary mr-2" />
-            <a href="{{ url_for('leads.get_leads_view') }}" class="btn btn-md btn-outline-secondary" role="button">
+            <a href="{{ url_for('deals.get_deals_view') }}" class="btn btn-md btn-outline-secondary" role="button">
                 <span data-feather="arrow-left"></span>
                   Back to List
             </a>
@@ -45,14 +45,14 @@
                 <div class="col">
                     {{ form.accounts.label(class="form-control-label") }}
                          {% if form.accounts.errors %}
-                             {{ form.accounts(id="deal_accounts", class="form-control form-control-lg required is-invalid") }}
+                             {{ form.accounts(id="deal_accounts", class="my-select form-control form-control-lg required is-invalid") }}
                             <div class="invalid-feedback">
                                 {% for error in form.accounts.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
                          {% else %}
-                            {{ form.accounts(id="deal_accounts", class="form-control from-control-lg required") }}
+                            {{ form.accounts(id="deal_accounts", class="my-select form-control from-control-lg required") }}
                          {% endif %}
                 </div>
             </div>
@@ -60,19 +60,19 @@
             <div class="form-row mb-3">
                 <div class="col">
                     {{ form.contacts.label(class="form-control-label") }}
-                    {{ form.contacts(id="deal_contacts" ,class="form-control from-control-lg") }}
+                    {{ form.contacts(id="deal_contacts" ,class="my-select form-control from-control-lg") }}
                 </div>
                 <div class="col">
                     {{ form.deal_stages.label(class="form-control-label") }}
                     {% if form.deal_stages.errors %}
-                        {{ form.deal_stages(class="form-control form-control-lg required is-invalid") }}
+                        {{ form.deal_stages(class="my-select form-control form-control-lg required is-invalid") }}
                             <div class="invalid-feedback">
                                 {% for error in form.deal_stages.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
                     {% else %}
-                    {{ form.deal_stages(class="form-control from-control-lg required") }}
+                    {{ form.deal_stages(class="my-select form-control from-control-lg required") }}
                     {% endif %}
                 </div>
             </div>
@@ -95,6 +95,18 @@
 </form>
 <script>
     $(document).ready(function() {
+
+        var deal_acc = $('#deal_accounts').val();
+
+        if (deal_acc !== '__None') {
+            console.log(deal_acc);
+        } else {
+            console.log('deal is null');
+        }
+
+        function on_account_change() {
+        }
+
         $('#deal_accounts').on('change', function() {
 
             $('#deal_contacts').empty();
@@ -122,10 +134,20 @@
                             .text("done")
                             .fadeOut(2000);
 
-                    $.each(data, function(i, d) {
-                        $('#deal_contacts').append('<option value="' + d.id + '">' + d.name + '</option>');
+                    // remove the previous options if any
+                    $('#deal_contacts')
+                        .find('option')
+                        .remove()
+                        .end();
 
-                    })
+                    // add the new options
+                    $.each(data, function(i, d) {
+                        console.log(d);
+                        $('#deal_contacts').append('<option value="' + d.id + '">' + d.name + '</option>');
+                    });
+
+                    // refresh bootstrao-select on change
+                    $('#deal_contacts.my-select').selectpicker('refresh');
                 },
             });
             return false;

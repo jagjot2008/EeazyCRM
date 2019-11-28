@@ -45,7 +45,7 @@
                       <input class="cb" type="checkbox" value="{{ deal.id }}" />
                   </th>
                     <th>
-                        <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                        <a href="{{ url_for('deals.update_deal', deal_id=deal.id) }}" class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="edit"></span>
                         </a>
                         <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">

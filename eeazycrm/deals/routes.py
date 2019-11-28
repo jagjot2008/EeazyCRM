@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request
 from sqlalchemy import or_
 import json
+from wtforms import Label
 
 from eeazycrm import db
 from .models import Deal, DealStage
@@ -113,6 +114,51 @@ def new_deal():
                 print(error)
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("deals/new_deal.html", title="New Deal", form=form)
+
+
+@deals.route("/deals/edit/<int:deal_id>", methods=['GET', 'POST'])
+@login_required
+@check_access('deals', 'update')
+def update_deal(deal_id):
+    form = NewDeal()
+    account = request.args.get('acc', None, type=int)
+    if account:
+        form.accounts.data = Account.get_account(account)
+
+    deal = Deal.get_deal(deal_id)
+    if not deal:
+        return redirect(url_for('deals.get_deals_view'))
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            deal.title = form.title.data
+            deal.expected_close_price = form.expected_close_price.data
+            deal.expected_close_date = form.expected_close_date.data
+            deal.deal_stage = form.deal_stages.data
+            deal.deal_account = form.accounts.data
+            deal.deal_contact = form.contacts.data
+
+            if current_user.role.name == 'admin':
+                deal.deal_owner = form.assignees.data
+
+            deal.notes = form.notes.data
+            db.session.commit()
+            flash('The deal has been successfully updated', 'success')
+            return redirect(url_for('deals.get_deal_view', deal_id=deal.id))
+        else:
+            print(form.errors)
+            flash('Deal update failed! Form has errors', 'danger')
+    elif request.method == 'GET':
+        form.title.data = deal.title
+        form.expected_close_price.data = deal.expected_close_price
+        form.expected_close_date.data = deal.expected_close_date
+        form.deal_stages.data = deal.deal_stage
+        form.accounts.data = deal.account
+        form.contacts.data = deal.contact
+        form.assignees.data = deal.deal_owner
+        form.notes.data = deal.notes
+        form.submit.label = Label('update_deal', 'Update Deal')
+    return render_template("deals/new_deal.html", title="Update Deal", form=form)
 
 
 @deals.route("/deals/update_stage/<int:deal_id>/<int:stage_id>")

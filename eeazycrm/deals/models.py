@@ -58,5 +58,9 @@ class Deal(db.Model):
             return True
         return False
 
+    @staticmethod
+    def get_deal(deal_id):
+        return Deal.query.filter_by(id=deal_id).first()
+
     def __repr__(self):
         return f"Deal('{self.title}', '{self.deal_stage_id}', '{self.account_id}', '{self.contact_id}', '{self.owner_id}')"
