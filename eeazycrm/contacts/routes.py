@@ -1,6 +1,7 @@
 from flask_login import current_user, login_required
 from flask import render_template, flash, url_for, redirect, request, Blueprint, session
 import json
+from wtforms import Label
 from sqlalchemy import or_, text
 from datetime import date, timedelta
 
@@ -141,6 +142,54 @@ def new_contact():
 
             flash('Your form has errors! Please check the fields', 'danger')
     return render_template("contacts/new_contact.html", title="New Contact", form=form)
+
+
+@contacts.route("/contacts/edit/<int:contact_id>", methods=['GET', 'POST'])
+@login_required
+@check_access('contacts', 'update')
+def update_contact(contact_id):
+    contact = Contact.get_contact(contact_id)
+    if not contact:
+        return redirect(url_for('contacts.get_contacts_view'))
+
+    form = NewContact()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            contact.first_name = form.first_name.data
+            contact.last_name = form.last_name.data
+            contact.email = form.email.data
+            contact.phone = form.phone.data
+            contact.mobile = form.mobile.data
+            contact.address_line = form.address_line.data
+            contact.addr_state = form.addr_state.data
+            contact.addr_city = form.addr_city.data
+            contact.post_code = form.post_code.data
+            contact.country = form.country.data
+            contact.contact_owner = form.assignees.data
+            contact.account = form.accounts.data
+            contact.notes = form.notes.data
+            db.session.commit()
+            flash('The contact has been successfully updated', 'success')
+            return redirect(url_for('contacts.get_contact_view', contact_id=contact.id))
+        else:
+            print(form.errors)
+            flash('Contact update failed! Form has errors', 'danger')
+    elif request.method == 'GET':
+        form.first_name.data = contact.first_name
+        form.last_name.data = contact.last_name
+        form.email.data = contact.email
+        form.phone.data = contact.phone
+        form.mobile.data = contact.mobile
+        form.address_line.data = contact.address_line
+        form.addr_state.data = contact.addr_state
+        form.addr_city.data = contact.addr_city
+        form.post_code.data = contact.post_code
+        form.country.data = contact.country
+        form.assignees.data = contact.contact_owner
+        form.accounts.data = contact.account
+        form.notes.data = contact.notes
+        form.submit.label = Label('update_contact', 'Update Contact')
+    return render_template("contacts/new_contact.html", title="Update Contact", form=form)
 
 
 @contacts.route("/contacts/<int:contact_id>")
