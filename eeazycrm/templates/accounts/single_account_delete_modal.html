@@ -1,0 +1,38 @@
+<!-- Delete Warning Modal -->
+<div class="modal fade" id="accountDeleteNotificationModal_{{ acc.id }}"
+     tabindex="-1" role="dialog" aria-labelledby="accountModalLabel_{{ acc.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="accountModalLabel_{{ acc.id }}">Delete Account `{{ acc.name
+                    }}`?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <h3>Are you sure?</h3>
+                <div class="alert alert-warning" role="alert">
+                    <p>Please note that when you delete this account, all the associated deals and contacts will also be
+                        deleted</p>
+                    <hr>
+                    <ul class="list-group text-left">
+                      <li class="list-group-item">
+                          <span class="badge badge-dark">{{ acc.contacts|length }}</span> contact(s) are linked to this account
+                      </li>
+                      <li class="list-group-item">
+                          <span class="badge badge-dark">{{ acc.deals|length }}</span></strong> deals(s) are linked to this account
+                      </li>
+                    </ul>
+                    <hr>
+                    <div>Please note that once deleted, the account cannot be recovered</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{{ url_for('accounts.delete_account', account_id=acc.id) }}"
+                   class="btn btn-primary">Delete Account</a>
+            </div>
+        </div>
+    </div>
+</div>

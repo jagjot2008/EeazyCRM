@@ -3,6 +3,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
         <div class="btn-toolbar mb-2 mb-md-0">
+
             <div class="dropdown">
               <button class="btn btn-sm btn-outline-primary mr-2 dropdown-toggle bulk_assign disabled"
                       type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -20,8 +21,8 @@
                   {% endif %}
                 <a class="dropdown-item" id="export_leads_to_csv" href="#">Export to CSV</a>
               </div>
-
             </div>
+
             {% if current_user.is_admin %}
             <a class="btn btn-sm btn-outline-secondary mr-2" role="button" href="{{ url_for('leads.import_bulk_leads') }}">
                 <span data-feather="upload"></span>
@@ -68,9 +69,13 @@
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="edit"></span>
                         </a>
-                        <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                        <a href="#" data-toggle="modal" data-target="#singleLeadDeleteModal_{{ lead.id }}"
+                           class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="trash"></span>
                         </a>
+                        {% with lead_id=lead.id %}
+                            {% include 'leads/single_lead_delete_modal.html' %}
+                        {% endwith %}
                         <a href="{{ url_for('leads.get_lead_view', lead_id=lead.id) }}"
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="arrow-up-right"></span>

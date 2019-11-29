@@ -163,6 +163,20 @@ def get_lead_view(lead_id):
     return render_template("leads/lead_view.html", title="View Lead", lead=lead)
 
 
+@leads.route("/leads/del/<int:lead_id>")
+@login_required
+@check_access('leads', 'remove')
+def delete_lead(lead_id):
+    lead = Lead.query.filter_by(id=lead_id).first()
+    if not lead:
+        flash('The lead does not exist', 'danger')
+    else:
+        Lead.query.filter_by(id=lead_id).delete()
+        db.session.commit()
+        flash('The lead has been removed successfully', 'success')
+    return redirect(url_for('leads.get_leads_view'))
+
+
 @leads.route("/leads/convert/<int:lead_id>", methods=['GET', 'POST'])
 @login_required
 @check_access('leads', 'view')

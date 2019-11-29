@@ -51,9 +51,13 @@
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="edit"></span>
                         </a>
-                        <a href="#" class="btn btn-outline-secondary btn-sm mr-1" role="button">
+                        <a href="#" class="btn btn-outline-secondary btn-sm mr-1"
+                           data-target="#singleContactDeleteModal_{{ contact.id }}" data-toggle="modal" role="button">
                             <span data-feather="trash"></span>
                         </a>
+                        {% with contact_id=contact.id %}
+                            {% include 'contacts/single_contact_delete_modal.html' %}
+                        {% endwith %}
                         <a href="{{ url_for('contacts.get_contact_view', contact_id=contact.id) }}"
                            class="btn btn-outline-secondary btn-sm mr-1" role="button">
                             <span data-feather="arrow-up-right"></span>
