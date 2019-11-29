@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/deals/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/deals/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/deals/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/deals_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/deal_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/deal_view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eeazycrm/templates/deals/new_deal.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/deals/new_deal.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

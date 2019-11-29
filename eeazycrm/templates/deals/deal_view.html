@@ -3,7 +3,8 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="#" class="btn btn-md btn-outline-primary mr-2" role="button">
+            <a href="{{ url_for('deals.update_deal', deal_id=deal.id) }}"
+               class="btn btn-md btn-outline-primary mr-2" role="button">
                 <span data-feather="edit-2"></span>
                   Edit
             </a>

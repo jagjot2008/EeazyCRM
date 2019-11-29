@@ -96,22 +96,15 @@
 <script>
     $(document).ready(function() {
 
-        var deal_acc = $('#deal_accounts').val();
-
-        if (deal_acc !== '__None') {
-            console.log(deal_acc);
-        } else {
-            console.log('deal is null');
+        function remove_contact_options() {
+            $('#deal_contacts')
+                        .empty()
+                        .append('<option value="__None">Select A Contact</option>');
         }
 
         function on_account_change() {
-        }
-
-        $('#deal_accounts').on('change', function() {
-
-            $('#deal_contacts').empty();
-            $('#deal_contacts').append('<option value="__None">Select A Contact</option>');
-            var accId = $(this).val();
+            var accId = $('#deal_accounts').val();
+            var contactId = $('#deal_contacts').val();
 
             if (accId !== '__None') {
                 $('.ajax_indicator')
@@ -119,6 +112,11 @@
                     .text('loading ...')
                     .removeClass('done')
                     .addClass('processing');
+            } else {
+                remove_contact_options();
+                // refresh bootstrap-select on change
+                $('#deal_contacts.my-select').selectpicker('refresh');
+                return;
             }
 
             $.ajax({
@@ -135,23 +133,28 @@
                             .fadeOut(2000);
 
                     // remove the previous options if any
-                    $('#deal_contacts')
-                        .find('option')
-                        .remove()
-                        .end();
+                    remove_contact_options();
 
                     // add the new options
                     $.each(data, function(i, d) {
-                        console.log(d);
-                        $('#deal_contacts').append('<option value="' + d.id + '">' + d.name + '</option>');
+                        console.log(contactId)
+                        if (contactId == d.id) {
+                            $('#deal_contacts').append('<option selected value="' + d.id + '">' + d.name + '</option>');
+                        } else {
+                            $('#deal_contacts').append('<option value="' + d.id + '">' + d.name + '</option>');
+                        }
                     });
 
-                    // refresh bootstrao-select on change
+                    // refresh bootstrap-select on change
                     $('#deal_contacts.my-select').selectpicker('refresh');
-                },
+                }
             });
             return false;
-        });
+        }
+
+        on_account_change();
+
+        $('#deal_accounts').on('change', on_account_change);
     });
 </script>
     {% endblock %}

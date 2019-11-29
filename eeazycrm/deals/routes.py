@@ -76,6 +76,7 @@ def get_deals_view():
 @check_access('deals', 'view')
 def get_deal_view(deal_id):
     deal = Deal.query.filter_by(id=deal_id).first()
+    print(deal.account, deal.contact)
     return render_template("deals/deal_view.html", title="Deal View", deal=deal)
 
 
@@ -97,7 +98,8 @@ def new_deal():
                         notes=form.notes.data)
 
             deal.account = form.accounts.data
-            deal.contact = form.contacts.data
+            if deal.account:
+                deal.contact = form.contacts.data
             deal.dealstage = form.deal_stages.data
 
             if current_user.role.name == 'admin':
@@ -136,7 +138,8 @@ def update_deal(deal_id):
             deal.expected_close_date = form.expected_close_date.data
             deal.deal_stage = form.deal_stages.data
             deal.deal_account = form.accounts.data
-            deal.deal_contact = form.contacts.data
+            if form.accounts.data:
+                deal.contact = form.contacts.data
 
             if current_user.role.name == 'admin':
                 deal.deal_owner = form.assignees.data
@@ -155,6 +158,7 @@ def update_deal(deal_id):
         form.deal_stages.data = deal.deal_stage
         form.accounts.data = deal.account
         form.contacts.data = deal.contact
+        print(deal.contact)
         form.assignees.data = deal.deal_owner
         form.notes.data = deal.notes
         form.submit.label = Label('update_deal', 'Update Deal')
