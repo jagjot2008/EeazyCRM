@@ -1,6 +1,9 @@
-from flask import render_template, flash, url_for, redirect, Blueprint
+from flask import render_template, flash, url_for, redirect, Blueprint, current_app
 from eeazycrm import db
 from flask_login import login_required
+from configparser import ConfigParser
+
+parser = ConfigParser()
 
 main = Blueprint('main', __name__)
 
@@ -19,11 +22,12 @@ def create_db():
     return redirect(url_for('main.home'))
 
 
-@main.route("/about")
-def about():
-    return render_template("about.html", title="About")
+@current_app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html', title="Oops! Page Not Found", error=error), 404
 
 
-@main.errorhandler(404)
-def not_found_error(error):
-    return render_template('404.html', title="Page Not Found", error=error), 404
+@current_app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html", title="Page Not Found")
+

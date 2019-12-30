@@ -1,0 +1,72 @@
+{% extends './layout.html' %}
+{% block content %}
+<form class="form-app-config" method="POST">
+    {{ form.hidden_tag() }} <!-- security 'csrf' token -->
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h4">{% if title %}{{title}}{% else %}No Title{% endif %}</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            {{ form.submit(class="btn btn-md btn-outline-info mr-2") }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9">
+            <strong>Currency &amp; TimeZone</strong>
+            <hr>
+            <div class="form-row mt-4 mb-4">
+                 <div class="form-group col-6">
+                    {{ form.default_currency.label(class="form-control-label") }}
+                    {{ form.default_currency(class="my-select form-control from-control-lg required") }}
+                 </div>
+                <div class="form-group col-6">
+                    {{ form.default_timezone.label(class="form-control-label") }}
+                    {{ form.default_timezone(class="my-select form-control from-control-lg required") }}
+                </div>
+            </div>
+            <strong>Date &amp; Address</strong>
+            <hr>
+            <div class="form-row mt-4">
+                 <div class="form-group col-6">
+                    {{ form.date_format.label(class="form-control-label") }}
+                    {{ form.date_format(class="form-control from-control-lg required") }}
+                 </div>
+            </div>
+            <div class="form-row mb-4">
+                 <div class="form-group col-6">
+                    {{ form.address_format.label(class="form-control-label") }}
+                    {{ form.address_format(class="form-control from-control-lg required") }}
+                </div>
+            </div>
+
+            <strong>Email</strong>
+            <hr>
+            <div class="form-row mt-4 mb-4">
+                 <div class="form-group col-6">
+                    {{ form.smtp_user.label(class="form-control-label") }}
+                    {{ form.smtp_user(class="form-control from-control-lg required", placeholder="smtp username ...") }}
+                 </div>
+                <div class="form-group col-6">
+                    {{ form.smtp_port.label(class="form-control-label") }}
+                    {{ form.smtp_port(class="form-control from-control-lg required", placeholder="e.g. 456") }}
+                </div>
+                <div class="form-group col-6">
+                    {{ form.smtp_pass.label(class="form-control-label") }}
+                    {{ form.smtp_pass(class="form-control from-control-lg required", placeholder="smtp password ...") }}
+                </div>
+                <div class="form-group col-6">
+                    {{ form.smtp_charset.label(class="form-control-label") }}
+                    {{ form.smtp_charset(class="form-control from-control-lg required", placeholder="charset ...") }}
+                </div>
+                <div class="form-group col-6">
+                    {{ form.sender_name.label(class="form-control-label") }}
+                    {{ form.sender_name(class="form-control from-control-lg required", placeholder="sender name ...") }}
+                </div>
+                <div class="form-group col-6">
+                    {{ form.sender_email.label(class="form-control-label") }}
+                    {{ form.sender_email(class="form-control from-control-lg required", placeholder="sender email ...") }}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

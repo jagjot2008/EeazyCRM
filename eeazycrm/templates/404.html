@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
     {% block content %}
-    <div class="container-fluid">
-        {{ error }}
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">{{ title }}</h1>
+            <p class="lead">{{ error }}</p>
+            <p class="lead">
+              <a href="{{ url_for('main.home') }}" class="btn btn-lg btn-secondary">Back to Dashboard</a>
+            </p>
+        </main>
     </div>
     {% endblock %}

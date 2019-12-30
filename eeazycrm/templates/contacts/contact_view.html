@@ -117,4 +117,43 @@
             </ul>
         </div>
     </div>
+    <div class="row">
+        <div class="col-10 mt-4">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                  <a href="#deals-tab" data-toggle="tab" role="tab" aria-controls="deals" aria-selected="true"
+                     class="nav-link active">Deals</a>
+              </li>
+            </ul>
+            <div class="tab-content p-4">
+              <div class="tab-pane fade show active" id="deals-tab" role="tabpanel" aria-labelledby="deals-tab">
+                <div class="mt-2 mb-4">Deals associated with this contact</div>
+                  {% if contact.deals|length > 0 %}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Account</th>
+                                    <th>Price (USD)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for deal in contact.deals %}
+                                    <tr>
+                                        <td>{{ deal.title }}</td>
+                                        <td>{{ deal.account.name }}</td>
+                                        <td>{{ deal.expected_close_price }}</td>
+                                        <td>{{ deal.title }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                  {% else %}
+                    <p>No deals</p>
+                  {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
     {% endblock %}

@@ -127,7 +127,7 @@
               <a class="dropdown-item" href="{{ url_for('settings.settings_staff_list') }}">Staff Management</a>
               <a class="dropdown-item" href="{{ url_for('settings.settings_roles_view') }}">Roles &amp; Permissions</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Currency Management</a>
+              <a class="dropdown-item" href="{{ url_for('app_config.test') }}">Application Settings</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ url_for('settings.email_settings') }}">Email Settings</a>
               <a class="dropdown-item" href="#">System Settings</a>
@@ -208,3 +208,4 @@
       $('.my-select').selectpicker({ liveSearch: true, actionsBox: true });
     </script>
 </html>
+

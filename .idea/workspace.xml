@@ -5,16 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/accounts/single_account_delete_modal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/single_contact_delete_modal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/single_lead_delete_modal.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/install/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/install/routes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/settings/app_routes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/settings/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/settings/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/install/layout.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/install/start.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/settings/appconfig/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/leads/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/leads/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/accounts/accounts_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/contacts_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/leads/leads_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/main/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/main/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/about.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/contacts/contact_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/contacts/contact_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/layout.html" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,6 +42,11 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -44,13 +56,6 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/eeazycrm/static/scripts/reports" />
-      <recent name="$PROJECT_DIR$/eeazycrm/static/scripts" />
-      <recent name="$PROJECT_DIR$/eeazycrm/templates/leads" />
-      <recent name="$PROJECT_DIR$/eeazycrm/rbac" />
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/eeazycrm/static/stylesheets" />
       <recent name="$PROJECT_DIR$/eeazycrm/static/scripts" />
@@ -58,18 +63,13 @@
       <recent name="$PROJECT_DIR$/eeazycrm/static/imgs" />
       <recent name="$PROJECT_DIR$" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/eeazycrm/templates/settings" />
+      <recent name="$PROJECT_DIR$/eeazycrm/static/scripts/reports" />
+      <recent name="$PROJECT_DIR$/eeazycrm/static/scripts" />
+      <recent name="$PROJECT_DIR$/eeazycrm/templates/leads" />
+      <recent name="$PROJECT_DIR$/eeazycrm/rbac" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.run">
     <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -120,6 +120,18 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -150,5 +162,31 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/templates" />
     </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="528" y="268" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577455726245">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="528" y="268" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1577455726245" />
+    <state width="1659" height="324" key="GridCell.Tab.0.bottom" timestamp="1577682723488">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="324" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723488" />
+    <state width="1659" height="324" key="GridCell.Tab.0.center" timestamp="1577682723486">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="324" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723486" />
+    <state width="1659" height="324" key="GridCell.Tab.0.left" timestamp="1577682723486">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="324" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723486" />
+    <state width="1659" height="324" key="GridCell.Tab.0.right" timestamp="1577682723487">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="324" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723487" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1577634081639">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1577634081639" />
   </component>
 </project>
