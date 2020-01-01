@@ -1,0 +1,62 @@
+<div>
+    <div class="mb-4">
+        <em>Please ensure that the database already exists</em>
+    </div>
+    <form method="POST">
+        {{ form.hidden_tag() }} <!-- security 'csrf' token -->
+        <div class="form-row mb-3">
+            <div class="col-9">
+                {{ form.db_host.label(class="form-control-label") }}
+                {% if form.db_host.errors %}
+                    {{ form.db_host(class="form-control from-control-lg required is-invalid", placeholder="db host (mandatory) ...") }}
+                    {{ form.db_host(class="form-control form-control-lg required is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.db_host.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.db_host(class="form-control from-control-lg required", placeholder="db host (mandatory) ...") }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-9">
+                {{ form.db_user.label(class="form-control-label") }}
+                {% if form.db_user.errors %}
+                    {{ form.db_user(class="form-control from-control-lg required is-invalid", placeholder="db host ...") }}
+                    {{ form.db_user(class="form-control form-control-lg required is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.db_user.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.db_user(class="form-control from-control-lg required", placeholder="db host (mandatory) ...") }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-9">
+                {{ form.db_pass.label(class="form-control-label") }}
+                {{ form.db_pass(class="form-control from-control-lg", placeholder="db password ...") }}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-9">
+                {{ form.db_name.label(class="form-control-label") }}
+                {% if form.db_name.errors %}
+                    {{ form.db_name(class="form-control from-control-lg required is-invalid", placeholder="db name ...") }}
+                    {{ form.db_name(class="form-control form-control-lg required is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.db_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.db_name(class="form-control from-control-lg required", placeholder="db name (mandatory) ...") }}
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</div>

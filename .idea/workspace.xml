@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/eeazycrm/install/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/install/setup_database.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/install/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/install/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/install/start.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/install/start.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +19,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>

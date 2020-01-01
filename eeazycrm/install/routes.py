@@ -1,6 +1,7 @@
 from flask import render_template, flash, url_for, redirect, Blueprint
 from eeazycrm import db
 from flask import current_app
+from eeazycrm.install.forms import SetupDatabaseForm
 
 install = Blueprint('install', __name__)
 
@@ -8,7 +9,8 @@ install = Blueprint('install', __name__)
 @install.route("/")
 @install.route("/install")
 def installation():
-    return render_template("install/start.html", title="Welcome to EeazyCRM Installation")
+    form = SetupDatabaseForm()
+    return render_template("install/start.html", title="Welcome to EeazyCRM Installation", form=form)
 
 
 @current_app.errorhandler(404)
