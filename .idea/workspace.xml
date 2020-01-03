@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/eeazycrm/config_vars.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/config_vars.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/install/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/install/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/install/setup_database.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/install/setup_database.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
