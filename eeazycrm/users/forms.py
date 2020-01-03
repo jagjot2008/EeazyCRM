@@ -22,7 +22,7 @@ class Register(FlaskForm):
                                          message='Confirm Password is mandatory'),
                                          EqualTo('password', 'Passwords do not match')])
     is_admin = BooleanField('Set Admin')
-    submit = SubmitField('Sign Up!')
+    submit = SubmitField('Next: Setup Company Details')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()

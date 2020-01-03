@@ -1,0 +1,38 @@
+<div class="alert alert-primary" role="alert">
+    <i class="fa fa-cog mr-2"></i> System Details
+</div>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Parameter Key</th>
+      <th scope="col">Parameter Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <th>System</th>
+        <td>{{ system_info.sysname }}</td>
+    </tr>
+    <tr>
+        <th>Workstation Name</th>
+        <td>{{ system_info.nodename }}</td>
+    </tr>
+    <tr>
+        <th>System Version</th>
+        <td>{{ system_info.release }}</td>
+    </tr>
+    <tr>
+        <th>Machine</th>
+        <td>{{ system_info.machine }}</td>
+    </tr>
+    <tr>
+        <th>Python Version Installed</th>
+        <td>{{ py_ver }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-right">
+    <a class="btn btn-outline-primary mt-4 mb-4"
+       href="{{ url_for('install.installation', step='create_sys_user') }}" role="button">Next: Create System User <i class="fa fa-arrow-right ml-2 mr-2"></i></a>
+</div>

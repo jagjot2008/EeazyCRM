@@ -14,14 +14,14 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     avatar = db.Column(db.String(25), nullable=True)
     password = db.Column(db.String(60), nullable=False)
-    leads = db.relationship('Lead', backref='owner', lazy=True)
-    accounts = db.relationship('Account', backref='account_owner', lazy=True)
-    contacts = db.relationship('Contact', backref='contact_owner', lazy=True)
-    deals = db.relationship('Deal', backref='deal_owner', lazy=True)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     is_first_login = db.Column(db.Boolean, nullable=False, default=True)
     is_user_active = db.Column(db.Boolean, nullable=False, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='SET NULL'), nullable=True)
+    leads = db.relationship('Lead', backref='owner', lazy=True)
+    accounts = db.relationship('Account', backref='account_owner', lazy=True)
+    contacts = db.relationship('Contact', backref='contact_owner', lazy=True)
+    deals = db.relationship('Deal', backref='deal_owner', lazy=True)
 
     @staticmethod
     def get_label(user):

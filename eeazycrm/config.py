@@ -5,6 +5,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     RBAC_USE_WHITE = True
+    PYTHON_VER_MIN_REQUIRED = '3.5.0'
 
 
 class DevelopmentConfig(Config):
