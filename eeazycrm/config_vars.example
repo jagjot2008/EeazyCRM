@@ -17,11 +17,11 @@ DEV_DB_NAME = '<database_name>'
 # TEST DATABASE SETTINGS
 TEST_DB_HOST = '<database_host>'
 TEST_DB_USER = '<database_user>'
-TEST_DB_PASS = '<database_password>@8395'
+TEST_DB_PASS = '<database_password>'
 TEST_DB_NAME = '<database_name>'
 
 # PRODUCTION DATABASE SETTINGS
 DB_HOST = '<database_host>'
 DB_USER = '<database_user>'
-DB_PASS = '<database_password>@8395'
+DB_PASS = '<database_password>'
 DB_NAME = '<database_name>'
