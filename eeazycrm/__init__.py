@@ -1,11 +1,11 @@
-from flask import Flask, redirect, url_for
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 from sqlalchemy import text
 
-from .config import Config
+from .config import DevelopmentConfig, ProductionConfig
 
 # database handle
 db = SQLAlchemy(session_options={"autoflush": False})
@@ -27,8 +27,14 @@ def run_install(app_ctx):
     return app_ctx
 
 
-def create_app(config_class=Config):
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__, instance_relative_config=True)
+
+    if app.config['ENV'] == 'development':
+        config_class = DevelopmentConfig
+    elif app.config['ENV'] == 'production':
+        config_class = ProductionConfig
+
     app.config.from_object(config_class)
     app.url_map.strict_slashes = False
     app.jinja_env.globals.update(zip=zip)

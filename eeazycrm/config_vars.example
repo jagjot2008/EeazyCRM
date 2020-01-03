@@ -1,0 +1,27 @@
+
+# DEVELOPMENT KEY
+DEV_SECRET_KEY = 'your_secret_key'
+
+# TESTING KEY
+TEST_SECRET_KEY = 'test_secret_key'
+
+# PRODUCTION KEY
+SECRET_KEY = 'your_production_key'
+
+# DEVELOPMENT DATABASE SETTINGS
+DEV_DB_HOST = '<database_host>'
+DEV_DB_USER = '<database_user>'
+DEV_DB_PASS = '<database_password>'
+DEV_DB_NAME = '<database_name>'
+
+# TEST DATABASE SETTINGS
+TEST_DB_HOST = '<database_host>'
+TEST_DB_USER = '<database_user>'
+TEST_DB_PASS = '<database_password>@8395'
+TEST_DB_NAME = '<database_name>'
+
+# PRODUCTION DATABASE SETTINGS
+DB_HOST = '<database_host>'
+DB_USER = '<database_user>'
+DB_PASS = '<database_password>@8395'
+DB_NAME = '<database_name>'

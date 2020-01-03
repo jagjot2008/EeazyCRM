@@ -8,5 +8,5 @@ class SetupDatabaseForm(FlaskForm):
     db_user = StringField('Username', validators=[DataRequired(message='Database username is mandatory')])
     db_pass = PasswordField('Password')
     db_name = StringField('Database Name', validators=[DataRequired(message='Database name is mandatory')])
-    submit = SubmitField('Next')
+    submit = SubmitField('Next: Create Root User')
 

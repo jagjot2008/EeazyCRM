@@ -1,6 +1,6 @@
 <div>
     <div class="mb-4">
-        <em>Please ensure that the database already exists</em>
+        <em>Please ensure that the database name already exists in your Postgresql DB instance</em>
     </div>
     <form method="POST">
         {{ form.hidden_tag() }} <!-- security 'csrf' token -->
@@ -56,6 +56,11 @@
                 {% else %}
                     {{ form.db_name(class="form-control from-control-lg required", placeholder="db name (mandatory) ...") }}
                 {% endif %}
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-9">
+                {{ form.submit(class="btn btn-md btn-outline-info mr-2 mt-4") }}
             </div>
         </div>
     </form>

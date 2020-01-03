@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fda1d0b2-7766-4219-89be-f906cf6c4c1a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/eeazycrm/install/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eeazycrm/templates/install/setup_database.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/config_vars.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eeazycrm/config_vars.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/install/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/install/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/install/start.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/install/start.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/install/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/install/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eeazycrm/templates/install/setup_database.html" beforeDir="false" afterPath="$PROJECT_DIR$/eeazycrm/templates/install/setup_database.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,29 +157,33 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
+    <state x="537" y="335" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1578032273078">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="537" y="335" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1578032273078" />
     <state x="528" y="268" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577455726245">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="528" y="268" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1577455726245" />
-    <state width="1659" height="324" key="GridCell.Tab.0.bottom" timestamp="1577807167190">
-      <screen x="0" y="23" width="1680" height="963" />
+    <state width="1659" height="324" key="GridCell.Tab.0.bottom" timestamp="1578032774937">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="324" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723488" />
+    <state width="1659" height="324" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1578032774937" />
     <state width="1659" height="324" key="GridCell.Tab.0.bottom/0.23.1680.963@0.23.1680.963" timestamp="1577807167190" />
-    <state width="1659" height="324" key="GridCell.Tab.0.center" timestamp="1577807167189">
-      <screen x="0" y="23" width="1680" height="963" />
+    <state width="1659" height="324" key="GridCell.Tab.0.center" timestamp="1578032774936">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="324" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723486" />
+    <state width="1659" height="324" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1578032774936" />
     <state width="1659" height="324" key="GridCell.Tab.0.center/0.23.1680.963@0.23.1680.963" timestamp="1577807167189" />
-    <state width="1659" height="324" key="GridCell.Tab.0.left" timestamp="1577807167189">
-      <screen x="0" y="23" width="1680" height="963" />
+    <state width="1659" height="324" key="GridCell.Tab.0.left" timestamp="1578032774936">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="324" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723486" />
+    <state width="1659" height="324" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1578032774936" />
     <state width="1659" height="324" key="GridCell.Tab.0.left/0.23.1680.963@0.23.1680.963" timestamp="1577807167189" />
-    <state width="1659" height="324" key="GridCell.Tab.0.right" timestamp="1577807167189">
-      <screen x="0" y="23" width="1680" height="963" />
+    <state width="1659" height="324" key="GridCell.Tab.0.right" timestamp="1578032774937">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="324" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1577682723487" />
+    <state width="1659" height="324" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1578032774937" />
     <state width="1659" height="324" key="GridCell.Tab.0.right/0.23.1680.963@0.23.1680.963" timestamp="1577807167189" />
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1577634081639">
       <screen x="0" y="0" width="1680" height="1050" />
