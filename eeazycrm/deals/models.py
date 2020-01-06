@@ -6,6 +6,7 @@ class DealStage(db.Model):
     id = db.Column(db.Integer, db.Sequence('deal_stage_id_seq'), primary_key=True)
     stage_name = db.Column(db.String(20), nullable=False)
     display_order = db.Column(db.Integer, nullable=False)
+    allowed_delete = db.Column(db.Boolean, nullable=False, default=True)
     deals = db.relationship(
         'Deal',
         backref='dealstage',
