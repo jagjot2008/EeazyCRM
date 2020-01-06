@@ -20,7 +20,5 @@ def test():
     form.default_timezone.data = app_cfg.time_zone
     form.date_format.data = app_cfg.date_format
     form.address_format.data = app_cfg.address_format
-    form.smtp_user.data = app_cfg.smtp_user
-    form.smtp_pass.data = app_cfg.smtp_pass
     return render_template("settings/appconfig/index.html", title="Application Configuration",
                            form=form)

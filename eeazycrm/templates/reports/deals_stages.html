@@ -41,7 +41,7 @@
                 {% for deal in deals %}
                 <tr>
                       <td>{{ deal.stage_name }}</td>
-                      <td>{{ "$ {:,.2f}".format(deal.total_price) }}</td>
+                      <td>{{ config.def_currency.symbol }} {{ "{:,.2f}".format(deal.total_price) }}</td>
                     <td><span class="badge badge-info">{{ deal.total_count }}</span></td>
                 </tr>
                 {% endfor %}

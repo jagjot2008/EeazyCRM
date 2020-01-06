@@ -35,7 +35,7 @@
                         <tr>
                             <td></td>
                             <td>{{ item[0] }}</td>
-                            <td>{{ "$ {:,.2f}".format(item[1]) }}</td>
+                            <td>{{ config.def_currency.symbol }} {{ "{:,.2f}".format(item[1]) }}</td>
                             <td>{{ item[2] }}</td>
                         </tr>
                     {% endfor %}

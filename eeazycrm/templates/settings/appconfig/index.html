@@ -41,29 +41,25 @@
             <strong>Email</strong>
             <hr>
             <div class="form-row mt-4 mb-4">
-                 <div class="form-group col-6">
-                    {{ form.smtp_user.label(class="form-control-label") }}
-                    {{ form.smtp_user(class="form-control from-control-lg required", placeholder="smtp username ...") }}
-                 </div>
                 <div class="form-group col-6">
-                    {{ form.smtp_port.label(class="form-control-label") }}
-                    {{ form.smtp_port(class="form-control from-control-lg required", placeholder="e.g. 456") }}
+                    {{ form.smtp_encryption.label(class="form-control-label") }}
+                    {{ form.smtp_encryption(class="form-control from-control-lg", placeholder="charset ...") }}
                 </div>
                 <div class="form-group col-6">
-                    {{ form.smtp_pass.label(class="form-control-label") }}
-                    {{ form.smtp_pass(class="form-control from-control-lg required", placeholder="smtp password ...") }}
+                    {{ form.smtp_port.label(class="form-control-label") }}
+                    {{ form.smtp_port(class="form-control from-control-lg", placeholder="e.g. 456") }}
                 </div>
                 <div class="form-group col-6">
                     {{ form.smtp_charset.label(class="form-control-label") }}
-                    {{ form.smtp_charset(class="form-control from-control-lg required", placeholder="charset ...") }}
+                    {{ form.smtp_charset(class="form-control from-control-lg", placeholder="charset ...") }}
                 </div>
                 <div class="form-group col-6">
                     {{ form.sender_name.label(class="form-control-label") }}
-                    {{ form.sender_name(class="form-control from-control-lg required", placeholder="sender name ...") }}
+                    {{ form.sender_name(class="form-control from-control-lg", placeholder="sender name ...") }}
                 </div>
                 <div class="form-group col-6">
                     {{ form.sender_email.label(class="form-control-label") }}
-                    {{ form.sender_email(class="form-control from-control-lg required", placeholder="sender email ...") }}
+                    {{ form.sender_email(class="form-control from-control-lg", placeholder="sender email ...") }}
                 </div>
             </div>
         </div>

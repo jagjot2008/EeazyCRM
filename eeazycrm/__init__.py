@@ -56,6 +56,12 @@ def create_app(config_class=ProductionConfig):
             if not row:
                 return run_install(app)
 
+        # application is installed so extends the config
+        from eeazycrm.settings.models import AppConfig, Currency, TimeZone
+        app_cfg = AppConfig.query.first()
+        app.config['def_currency'] = Currency.get_currency_by_id(app_cfg.default_currency)
+        app.config['def_tz'] = TimeZone.get_tz_by_id(app_cfg.default_timezone)
+
         # include the routes
         # from eeazycrm import routes
         from eeazycrm.main.routes import main

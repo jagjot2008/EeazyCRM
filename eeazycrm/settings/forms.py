@@ -31,9 +31,10 @@ class AppConfigForm(FlaskForm):
     address_format = TextAreaField('Default Address Format', default=DEFAULT_ADDRESS)
 
     smtp_server = StringField('SMTP Mail Server')
+    smtp_port = StringField('SMTP Port')
     smtp_encryption = QuerySelectField('E-MAIL Encryption', query_factory=email_enc_query,
-                                       get_pk=lambda a:a['key'], get_label=lambda a: a['val'])
-    smtp_charset = StringField('SMTP Charset')
+                                       get_pk=lambda a: a['key'], get_label=lambda a: a['val'])
+    smtp_charset = StringField('SMTP Charset', default='utf-8')
     sender_name = StringField('Sender Name')
     sender_email = StringField('Sender Email')
     submit = SubmitField('Save')

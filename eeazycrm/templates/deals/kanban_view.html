@@ -38,7 +38,7 @@
                                         <div class="text">{{ deal.title|truncate(35, True)}}</div>
                                     </h5>
                                     <div class="card-text">
-                                        <div class="price">{{ "$ {:,.2f}".format(deal.expected_close_price) }}</div>
+                                        <div class="price">{{ config.def_currency.symbol }} {{ "{:,.2f}".format(deal.expected_close_price) }}</div>
                                         <div>{{ deal.account.name }}</div>
                                         <div><span data-feather="user"></span> {{ deal.contact.first_name }} {{ deal.contact.last_name }}</div>
                                         <div><span data-feather="clock"></span> {% if deal.is_expired() %}<span class="icon-warning" data-feather="alert-circle"></span>{%endif%} {{ deal.expected_close_date.strftime('%Y-%m-%d') if deal.expected_close_date else '_' }}</div>

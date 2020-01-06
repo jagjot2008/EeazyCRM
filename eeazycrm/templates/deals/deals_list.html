@@ -57,7 +57,7 @@
                         </a>
                     </th>
                     <td>{{ deal.title }}</td>
-                  <td>{{ "$ {:,.2f}".format(deal.expected_close_price) }}</td>
+                  <td>{{ config.def_currency.symbol }} {{ "{:,.2f}".format(deal.expected_close_price) }}</td>
                     <td>{% if deal.is_expired() %}<span class="icon-warning" data-feather="alert-circle"></span>{%endif%}
                         {{ deal.expected_close_date.strftime('%Y-%m-%d %I:%M %p').lower() if deal.expected_close_date }}</td>
                     <td>{{ deal.account.name }}</td>
