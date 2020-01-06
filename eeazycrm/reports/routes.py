@@ -21,7 +21,7 @@ def deal_reports():
 @reports.route("/reports/deal_stages")
 @login_required
 def deal_stages():
-    if current_user.role.name == 'admin':
+    if current_user.is_admin:
         query = Deal.query \
             .with_entities(
                 DealStage.stage_name.label('stage_name'),
@@ -50,7 +50,7 @@ def deal_stages():
 @reports.route("/reports/deals_closed")
 @login_required
 def deals_closed():
-    if current_user.role.name == 'admin':
+    if current_user.is_admin:
         query = Deal.query \
             .with_entities(
                 Account.name.label('account_name'),

@@ -1,0 +1,62 @@
+{% extends "install/layout.html" %}
+    {% block content %}
+    <div class="alert alert-primary" role="alert">
+        <i class="fa fa-cog mr-2"></i> {{ title }}
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Parameter Key</th>
+          <th scope="col">Parameter Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <th>System</th>
+            <td>{{ system_info.sysname }}</td>
+        </tr>
+        <tr>
+            <th>Workstation Name</th>
+            <td>{{ system_info.nodename }}</td>
+        </tr>
+        <tr>
+            <th>System Version</th>
+            <td>{{ system_info.release }}</td>
+        </tr>
+        <tr>
+            <th>Machine</th>
+            <td>{{ system_info.machine }}</td>
+        </tr>
+        <tr>
+            <th>Python Version Installed</th>
+            <td>{{ py_ver }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Environment Variables</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <th>EMAIL_USER</th>
+            <td>{{ 'Set' if env_vars['email_user'] else 'Not Set' }}</td>
+        </tr>
+        <tr>
+            <th>EMAIL_PASS</th>
+            <td>{{ 'Set' if env_vars['email_pass'] else 'Not Set' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <em>Please ensure that the above environment variables are set correctly<br> in order for the emailing functionality to work</em>
+
+    <div class="text-right">
+        <a class="btn btn-outline-primary mt-4 mb-4"
+           href="{{ url_for('install.setup_sys_user') }}" role="button">Next: Create System User <i class="fa fa-arrow-right ml-2 mr-2"></i></a>
+    </div>
+{% endblock %}

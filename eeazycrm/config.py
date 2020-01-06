@@ -6,6 +6,7 @@ class Config(object):
     TESTING = False
     RBAC_USE_WHITE = True
     PYTHON_VER_MIN_REQUIRED = '3.5.0'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(Config):

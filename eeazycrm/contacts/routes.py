@@ -128,7 +128,7 @@ def new_contact():
                 picture_file = upload_avatar(contact, form.avatar.data)
                 contact.avatar = picture_file
 
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 contact.contact_owner = form.assignees.data
             else:
                 contact.contact_owner = current_user

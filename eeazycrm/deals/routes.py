@@ -102,7 +102,7 @@ def new_deal():
                 deal.contact = form.contacts.data
             deal.dealstage = form.deal_stages.data
 
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 deal.deal_owner = form.assignees.data
             else:
                 deal.deal_owner = current_user
@@ -141,7 +141,7 @@ def update_deal(deal_id):
             if form.accounts.data:
                 deal.contact = form.contacts.data
 
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 deal.deal_owner = form.assignees.data
 
             deal.notes = form.notes.data

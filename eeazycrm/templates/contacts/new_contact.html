@@ -100,7 +100,7 @@
                 </div>
             </div>
 
-            {% if current_user.role.name == 'admin' %}
+            {% if current_user.is_admin %}
             <div class="form-row">
                  <div class="form-group col-6">
                      {{ form.assignees.label(class="form-control-label") }}

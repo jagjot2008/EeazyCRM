@@ -35,7 +35,7 @@ class Account(db.Model):
 
     @staticmethod
     def account_list_query():
-        if current_user.role.name == 'admin':
+        if current_user.is_admin:
             return Account.query
         else:
             return Account.query.filter_by(owner_id=current_user.id)

@@ -1,0 +1,28 @@
+{% extends "install/layout.html" %}
+    {% block content %}
+    <div class="alert alert-primary" role="alert">
+        <i class="fa fa-cogs mr-2"></i> Setup Default Currency & TimeZone
+    </div>
+    <form method="POST">
+        {{ form.hidden_tag() }} <!-- security 'csrf' token -->
+        <div class="col-9">
+            <div class="form-group text-left">
+                {{ form.currency.label(class="form-control-label") }}
+                {{ form.currency(class="form-control") }}
+            </div>
+
+            <div class="form-group text-left">
+                {{ form.time_zone.label(class="form-control-label") }}
+                {{ form.time_zone(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                <a class="btn btn-outline-info mt-3 mr-2"
+                        href="{{ url_for('install.setup_sys_user') }}"
+                        role="button"><i class="fa fa-arrow-left ml-2 mr-2"> Back</i>
+                </a>
+                {{ form.submit(class="btn btn-outline-primary mt-3") }}
+            </div>
+        </div>
+    </form>
+    {% endblock %}

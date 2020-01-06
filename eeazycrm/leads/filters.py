@@ -36,14 +36,14 @@ def assign_filter(filter_obj, key):
 def set_date_filters(filters, key):
     filter_d = True
     if request.method == 'POST':
-        if current_user.role.name == 'admin':
+        if current_user.is_admin:
             filter_d = assign_filter(filters.advanced_admin, key)
         else:
             filter_d = assign_filter(filters.advanced_user, key)
     else:
         if key in session:
             filter_d = set_filters(session[key])
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 filters.advanced_admin.data = filter_leads_adv_filters_admin_query()[session[key] - 1]
             else:
                 filters.advanced_user.data = filter_leads_adv_filters_user_query()[session[key] - 1]

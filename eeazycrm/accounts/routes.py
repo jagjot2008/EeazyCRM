@@ -155,7 +155,7 @@ def new_account():
                               country=form.country.data,
                               notes=form.notes.data)
 
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 account.account_owner = form.assignees.data
             else:
                 account.account_owner = current_user

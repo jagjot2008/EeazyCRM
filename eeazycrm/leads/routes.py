@@ -85,7 +85,7 @@ def new_lead():
                         country=form.country.data, source=form.lead_source.data,
                         status=form.lead_status.data, notes=form.notes.data)
 
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 lead.owner = form.assignees.data
             else:
                 lead.owner = current_user

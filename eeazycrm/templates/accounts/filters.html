@@ -6,7 +6,7 @@
             <div class="col-md-3 pl-0">
                 {{ filters.txt_search(class="form-control from-control-lg", placeholder="search accounts ...") }}
             </div>
-            {% if current_user.role.name == 'admin' %}
+            {% if current_user.is_admin %}
             <div class="col-md-3 pl-0">
                 <div class="form-group text-left">
                     {{ filters.assignees(class="my-select form-control") }}

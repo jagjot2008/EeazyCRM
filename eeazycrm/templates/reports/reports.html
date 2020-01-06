@@ -20,7 +20,7 @@
                 <li class="list-group-item">
                     <a href="{{ url_for('reports.deals_closed') }}">Deal stage revenue report (Account wise)</a>
                 </li>
-                {% if current_user.role.name == 'admin' %}
+                {% if current_user.is_admin %}
                     <li class="list-group-item">
                         <a href="{{ url_for('reports.deal_stage_by_users') }}">Deal stage revenue report (User wise)</a>
                     </li>

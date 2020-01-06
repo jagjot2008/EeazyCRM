@@ -14,7 +14,7 @@ class CommonFilters:
             return None
 
         if request.method == 'POST':
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 if filters.assignees.data:
                     owner = text('%s.owner_id=%d' % (module, filters.assignees.data.id))
                     session[key] = filters.assignees.data.id
@@ -29,7 +29,7 @@ class CommonFilters:
                 owner = text('%s.owner_id=%d' % (module, session[key]))
                 filters.assignees.data = User.get_by_id(session[key])
             else:
-                owner = True if current_user.role.name == 'admin' else text('%s.owner_id=%d' % (module, current_user.id))
+                owner = True if current_user.is_admin else text('%s.owner_id=%d' % (module, current_user.id))
         return owner
 
     @staticmethod

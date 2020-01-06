@@ -1,0 +1,88 @@
+{% extends "install/layout.html" %}
+    {% block content %}
+
+        <div class="alert alert-primary" role="alert">
+            <i class="fa fa-user mr-2"></i> Create System User (Root)
+        </div>
+
+         <form method="POST">
+             {{ form.hidden_tag() }} <!-- security 'csrf' token -->
+            <div class="col-9">
+                <div class="form-group text-left">
+                    {{ form.first_name.label(class="form-control-label") }}
+                      {% if form.first_name.errors %}
+                        {{ form.first_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback text-left">
+                            {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.first_name(class="form-control from-control-lg", placeholder="First Name ...") }}
+                      {% endif %}
+                  </div>
+
+                  <div class="form-group text-left">
+                      {{ form.last_name.label(class="form-control-label") }}
+                      {% if form.last_name.errors %}
+                        {{ form.last_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback text-left">
+                            {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.last_name(class="form-control from-control-lg", placeholder="First Name ...") }}
+                      {% endif %}
+                  </div>
+
+                  <div class="form-group text-left">
+                      {{ form.email.label(class="form-control-label") }}
+                       {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.email(class="form-control from-control-lg", placeholder="Your Email Address ...") }}
+                      {% endif %}
+                  </div>
+                  <div class="form-group text-left">
+                      {{ form.password.label(class="form-control-label") }}
+                      {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.password(class="form-control from-control-lg", placeholder="Password ...") }}
+                      {% endif %}
+                  </div>
+                  <div class="form-group text-left">
+                      {{ form.confirm_password.label(class="form-control-label") }}
+                      {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.confirm_password(class="form-control from-control-lg", placeholder="Confirm Password ...") }}
+                      {% endif %}
+                  </div>
+                </div>
+             <div class="text-right">
+                 <div class="form-group">
+                     <a class="btn btn-outline-info mt-3 mr-2"
+                        href="{{ url_for('install.sys_info') }}"
+                        role="button"><i class="fa fa-arrow-left ml-2 mr-2"> Back</i>
+                     </a>
+                     {{ form.submit(class="btn btn-outline-primary mt-3") }}
+             </div>
+         </form>
+    {% endblock %}

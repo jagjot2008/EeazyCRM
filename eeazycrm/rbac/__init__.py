@@ -44,11 +44,11 @@ def check_access(resource, action):
     def decorator(function):
         @wraps(function)
         def decorated_function(*args, **kwargs):
-            if not current_user.role:
+            if not current_user.is_admin and not current_user.role:
                 return render_template("no_access.html", title="Access Not Allowed")
-            if current_user.role.name == 'admin':
+            if current_user.is_admin:
                 return function(*args, **kwargs)
-            else:
+            elif not current_user.is_admin and current_user.role:
                 try:
                     if not is_allowed(current_user.role_id, resource, action):
                         return render_template("no_access.html", title="Access Not Allowed")
@@ -65,7 +65,7 @@ def check_access(resource, action):
 def is_admin(function):
     @wraps(function)
     def decorator(*args, **kwargs):
-        if current_user.role and current_user.role.name == 'admin':
+        if current_user.is_admin:
             return function(*args, **kwargs)
         else:
             return render_template("no_access.html", title="Access Not Allowed")

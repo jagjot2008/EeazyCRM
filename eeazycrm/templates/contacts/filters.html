@@ -11,7 +11,7 @@
                     {{ filters.accounts(class="my-select form-control") }}
                 </div>
             </div>
-            {% if current_user.role.name == 'admin' %}
+            {% if current_user.is_admin %}
             <div class="col-md-3 pl-0">
                 <div class="form-group text-left">
                     {{ filters.assignees(class="my-select form-control") }}

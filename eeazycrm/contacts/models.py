@@ -30,7 +30,7 @@ class Contact(db.Model):
     @staticmethod
     def contact_list_query():
         account = request.args.get('acc', None, type=int)
-        if current_user.role.name == 'admin':
+        if current_user.is_admin:
             contacts = Contact.query\
                 .filter(Contact.account_id == account if account else True)
         else:

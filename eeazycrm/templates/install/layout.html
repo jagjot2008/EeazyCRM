@@ -32,7 +32,27 @@
               </div>
             <div class="row-fluid">
                 <div class="col-md-12 text-center" style="padding-top: 30px;">
-                    {% block content %}{% endblock %}
+
+                    <div class="container shadow-sm p-3 mb-5 bg-white rounded" style="border-top:1px solid #efefef;">
+                        <div class="row mt-4 text-left">
+                            <div class="col-3">
+                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                  <a class="nav-link {{ 'active' if request.path == '/install' or request.path == '/' }}" id="v-pills-home-tab" role="tab" aria-controls="v-pills-home" aria-selected="true"><span class="badge badge-light">1</span> System Details</a>
+                                  <a class="nav-link {{ 'active' if request.path == '/install/sys_user' }}" id="v-pills-profile-tab" role="tab" aria-controls="v-pills-profile" aria-selected="false"><span class="badge badge-light">2</span> Create System User</a>
+                                  <a class="nav-link {{ 'active' if request.path == '/install/extra_settings' }}" id="v-pills-extra-tab" role="tab" aria-controls="v-pills-messages" aria-selected="false"><span class="badge badge-light">3</span> Currency & TimeZone</a>
+                                  <a class="nav-link {{ 'active' if request.path == '/install/finish' }}" id="v-pills-settings-tab" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span class="badge badge-light">4</span> Finish Installation</a>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="tab-content" id="v-pills-tabContent">
+                                    <div class="tab-pane show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                          {% block content %}{% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
           </div>
