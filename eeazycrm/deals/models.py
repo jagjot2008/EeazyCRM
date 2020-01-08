@@ -6,7 +6,7 @@ class DealStage(db.Model):
     id = db.Column(db.Integer, db.Sequence('deal_stage_id_seq'), primary_key=True)
     stage_name = db.Column(db.String(20), nullable=False)
     display_order = db.Column(db.Integer, nullable=False)
-    allowed_delete = db.Column(db.Boolean, nullable=False, default=True)
+    close_type = db.Column(db.String(10), nullable=True, default=None)
     deals = db.relationship(
         'Deal',
         backref='dealstage',
@@ -40,18 +40,9 @@ class Deal(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='SET NULL'), nullable=True)
     notes = db.Column(db.String(200), nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    deal_stage = db.relationship(
-        'DealStage',
-        backref='deal',
-        uselist=False,
-        lazy=True
-    )
-    owner = db.relationship(
-        'User',
-        backref='deal',
-        uselist=False,
-        lazy=True
-    )
+
+    deal_stage = db.relationship('DealStage', backref='deal', uselist=False, lazy=True)
+    owner = db.relationship('User', backref='deal', uselist=False, lazy=True)
 
     def is_expired(self):
         today = datetime.today()

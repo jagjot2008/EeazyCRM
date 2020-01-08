@@ -1,4 +1,3 @@
-
 INSERT_SQL = """
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -10,23 +9,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
-DROP TABLE IF EXISTS currency;
-DROP TABLE IF EXISTS time_zone;
-
-CREATE TABLE currency (
-id SERIAL NOT NULL, 
-name VARCHAR(100) NOT NULL, 
-iso_code VARCHAR(10) NOT NULL, 
-symbol VARCHAR(10), 
-PRIMARY KEY (id)
-);
-
-CREATE TABLE time_zone (
-id SERIAL NOT NULL,
-name VARCHAR(100) NOT NULL,
-PRIMARY KEY (id)
-);
 
 INSERT INTO currency (id, name, iso_code, symbol) VALUES (1, 'UAE Dirham', 'AED', 'د.إ');
 INSERT INTO currency (id, name, iso_code, symbol) VALUES (2, 'Afghani', 'AFN', '؋');

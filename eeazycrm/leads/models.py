@@ -3,7 +3,7 @@ from eeazycrm import db
 
 
 class LeadStatus(db.Model):
-    id = db.Column(db.Integer, db.Sequence('leadstatus_id_seq'), primary_key=True)
+    id = db.Column(db.Integer, db.Sequence('lead_status_id_seq'), primary_key=True)
     status_name = db.Column(db.String(40), unique=True, nullable=False)
     leads = db.relationship('Lead', backref='status', lazy=True)
 
@@ -20,7 +20,7 @@ class LeadStatus(db.Model):
 
 
 class LeadSource(db.Model):
-    id = db.Column(db.Integer, db.Sequence('leadsource_id_seq'), primary_key=True)
+    id = db.Column(db.Integer, db.Sequence('lead_source_id_seq'), primary_key=True)
     source_name = db.Column(db.String(40), unique=True, nullable=False)
     leads = db.relationship('Lead', backref='source', lazy=True)
 

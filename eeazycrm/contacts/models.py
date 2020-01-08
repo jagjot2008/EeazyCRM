@@ -5,6 +5,7 @@ from flask_login import current_user
 
 
 class Contact(db.Model):
+    __tablename__ = "contact"
     id = db.Column(db.Integer, db.Sequence('contact_id_seq'), primary_key=True)
     first_name = db.Column(db.String(20))
     last_name = db.Column(db.String(20), nullable=False)

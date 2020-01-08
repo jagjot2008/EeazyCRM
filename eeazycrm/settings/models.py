@@ -6,7 +6,7 @@ DEFAULT_ADDRESS = '{address_line}\n{address_state}, {address_city}-{post_code}\n
 
 
 class Currency(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Sequence('currency_id_seq'), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     iso_code = db.Column(db.String(10), nullable=False)
     symbol = db.Column(db.String(10), nullable=True)
@@ -17,14 +17,14 @@ class Currency(db.Model):
 
     @staticmethod
     def get_currency_by_id(currency_id):
-        return Currency.query.get(currency_id)
+        return Currency.query.filter_by(id=currency_id).first()
 
     def __repr__(self):
         return f"Currency('{self.name}', '{self.iso_code}')"
 
 
 class TimeZone(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.Sequence('timezone_id_seq'), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
 
     @staticmethod
@@ -33,7 +33,7 @@ class TimeZone(db.Model):
 
     @staticmethod
     def get_tz_by_id(tz_id):
-        return TimeZone.query.get(tz_id)
+        return TimeZone.query.filter_by(id=tz_id).first()
 
     @staticmethod
     def get_tz_by_name(tz_name):
