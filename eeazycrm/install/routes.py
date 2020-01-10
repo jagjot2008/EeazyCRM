@@ -62,20 +62,20 @@ def setup_sys_user():
 def ex_settings():
     # insert currency & timezone tables with data
     form = CurrencyTz()
-    form.currency.data = Currency.get_currency_by_id(142)
-    local_tz = get_localzone()
-    if local_tz:
-        form.time_zone.data = TimeZone.get_tz_by_name(str(local_tz))
-    else:
-        form.time_zone.data = TimeZone.get_tz_by_id(380)
     if request.method == 'POST':
         if form.validate_on_submit():
-            print(form.currency.data.id)
             session['app_currency_name'] = form.currency.data.name + f'({form.currency.data.symbol})' if form.currency.data.symbol else ''
             session['app_currency_id'] = form.currency.data.id
             session['app_tz_name'] = form.time_zone.data.name
             session['app_tz_id'] = form.time_zone.data.id
             return redirect(url_for('install.finish'))
+    elif request.method == 'GET':
+        form.currency.data = Currency.get_currency_by_id(142)
+        local_tz = get_localzone()
+        if local_tz:
+            form.time_zone.data = TimeZone.get_tz_by_name(str(local_tz))
+        else:
+            form.time_zone.data = TimeZone.get_tz_by_id(380)
     return render_template("install/extra_settings.html", title="Set Currency & TimeZone", form=form)
 
 
