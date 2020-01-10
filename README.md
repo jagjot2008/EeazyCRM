@@ -71,8 +71,19 @@ Installation Steps
 
     .. code-block:: python
     
+        cd eeazycrm
         git remote add origin https://github.com/jagjot2008/EeazyCRM
         git pull origin master
+        
+3. Now create the configuration file using the command
+    .. code-block:: python
+    
+        cp config_vars.example config_vars.py
+        
+    Open the config_vars.py file and add the database connection 
+    parameters in the PRODUCTION DATABASE SETTINGS (Default). 
+    
+    You can also setup the development and testing settings if you wish to.
         
 3. Install the dependencies
    .. code-block:: python
@@ -87,18 +98,19 @@ Installation Steps
        
    If you want to run flask in development or testing mode set
    the following environment variable in addition to the above.
+   .. code-block:: python
    
-   FLASK_ENV = development, or
-   FLASK_ENV = testing
+       FLASK_ENV = development, or
+       FLASK_ENV = testing
    
 5. Run the command
    .. code-block:: python
    
        python3 run.py
        
-   This will run the installation module. Follow the instructions
-   in the module and after finishing installation, stop the 
-   application and start again by running the command in step #5.
+   This will run the installation wizard. Follow the instructions
+   in the wizard and after finishing installation, stop the 
+   application and start again by running the command in step #6.
    
 That's it folks. Your CRM is running.
 
