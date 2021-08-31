@@ -16,7 +16,7 @@ Mako==1.1.0
 MarkupSafe==1.1.1
 numpy==1.17.4
 pandas==0.25.3
-Pillow==8.1.1
+Pillow==8.2.0
 psycopg2==2.8.4
 pycparser==2.19
 python-dateutil==2.8.1
