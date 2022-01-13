@@ -14,9 +14,9 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 Mako==1.1.0
 MarkupSafe==1.1.1
-numpy==1.17.4
+numpy==1.21.0
 pandas==0.25.3
-Pillow==8.3.2
+Pillow==9.0.0
 psycopg2==2.8.4
 pycparser==2.19
 python-dateutil==2.8.1
