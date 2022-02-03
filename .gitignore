@@ -1,6 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+eeazycrm/static/profile_imgs
 venv
 .DS_Store
 .idea
+.env
 .pytest_cache
 eeazycrm/config_vars.py
-eeazycrm/__pycache__
+*.pyc
+.python-version

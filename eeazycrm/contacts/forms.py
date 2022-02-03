@@ -11,7 +11,7 @@ from eeazycrm.accounts.models import Account
 
 class NewContact(FlaskForm):
     first_name = StringField('First Name')
-    last_name = StringField('First Name', validators=[DataRequired(message='Last name is mandatory')])
+    last_name = StringField('Last Name', validators=[DataRequired(message='Last name is mandatory')])
     email = StringField('Email',
                         validators=[DataRequired(message='Email address is mandatory'),
                                     Email(message='Please enter a valid email address e.g. abc@yourcompany.com')])
